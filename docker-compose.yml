@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  bsfm-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: biosignal-fm:latest
+    container_name: bsfm-api
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      - BSFM_ENV=production
+      - BSFM_API_KEY=${BSFM_API_KEY:?Set a strong API key in the deployment environment}
+      - BSFM_MODEL_DIR=/home/bsfm/checkpoints
+    volumes:
+      - ./data:/home/bsfm/data:ro
+      - ./checkpoints:/home/bsfm/checkpoints:ro
+    # Security hardening. NOTE: ModelRegistry() creates
+    # $HOME/.cache/biosignal_fm/registry on startup (before the server even
+    # binds a port) — without a writable mount covering it, read_only:true
+    # makes that mkdir() fail and the container never comes up.
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /home/bsfm/.cache
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  bsfm-ui:
+    image: biosignal-fm:latest
+    container_name: bsfm-ui
+    command: ["python", "-m", "streamlit", "run", "biosignal_fm/ui/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    expose:
+      - "8501"
+    environment:
+      - BSFM_API_URL=http://bsfm-api:8000
+    volumes:
+      - ./data:/home/bsfm/data:ro
+    depends_on:
+      bsfm-api:
+        condition: service_healthy
+    # read_only:true + streamlit's first-run config/credentials write to
+    # $HOME/.streamlit, so that needs its own writable mount too (same
+    # reasoning as bsfm-api's .cache mount above).
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /home/bsfm/.streamlit
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped

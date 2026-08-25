@@ -1,0 +1,97 @@
+BioSignal-FM
+Copyright 2026 Qussai Adlbi
+
+This product includes software developed by Qussai Adlbi
+(https://github.com/qussaiadlbi).
+
+================================================================================
+
+This product includes and/or depends on the following third-party software,
+distributed under their respective licenses:
+
+1. PyTorch
+   Copyright (c) Soumith Chintala and contributors
+   License: BSD-style (https://github.com/pytorch/pytorch/blob/main/LICENSE)
+
+2. NumPy
+   Copyright (c) NumPy Developers
+   License: BSD-3-Clause (https://numpy.org/license.html)
+
+3. SciPy
+   Copyright (c) SciPy Developers
+   License: BSD-3-Clause (https://github.com/scipy/scipy/blob/main/LICENSE.txt)
+
+4. scikit-learn
+   Copyright (c) scikit-learn Developers
+   License: BSD-3-Clause (https://github.com/scikit-learn/scikit-learn/blob/main/COPYING)
+
+5. pandas
+   Copyright (c) AQR Capital Management, LLC, Lambda Foundry, Inc., PyData Development Team
+   License: BSD-3-Clause (https://github.com/pandas-dev/pandas/blob/main/LICENSE)
+
+6. Matplotlib
+   Copyright (c) Matplotlib Development Team
+   License: PSF-based (https://github.com/matplotlib/matplotlib/blob/main/LICENSE/LICENSE)
+
+7. FastAPI
+   Copyright (c) Sebastián Ramírez and contributors
+   License: MIT (https://github.com/tiangolo/fastapi/blob/master/LICENSE)
+
+8. Streamlit
+   Copyright (c) Streamlit Inc.
+   License: Apache 2.0 (https://github.com/streamlit/streamlit/blob/develop/LICENSE)
+
+9. Typer
+   Copyright (c) Sebastián Ramírez
+   License: MIT (https://github.com/tiangolo/typer/blob/master/LICENSE)
+
+10. Rich
+    Copyright (c) Will McGugan
+    License: MIT (https://github.com/Textualize/rich/blob/master/LICENSE)
+
+11. PyYAML
+    Copyright (c) Kirill Simonov
+    License: MIT (https://github.com/yaml/pyyaml/blob/master/LICENSE)
+
+12. PyWavelets
+    Copyright (c) The PyWavelets Developers
+    License: MIT (https://github.com/PyWavelets/pywt/blob/main/LICENSE)
+
+13. MLflow
+    Copyright (c) Databricks, Inc.
+    License: Apache 2.0 (https://github.com/mlflow/mlflow/blob/master/LICENSE)
+
+14. ONNX
+    Copyright (c) Linux Foundation
+    License: Apache 2.0 (https://github.com/onnx/onnx/blob/main/LICENSE)
+
+15. ONNX Runtime
+    Copyright (c) Microsoft Corporation and contributors
+    License: MIT (https://github.com/microsoft/onnxruntime/blob/main/LICENSE)
+
+16. pytest
+    Copyright (c) Holger Krekel and pytest contributors
+    License: MIT (https://github.com/pytest-dev/pytest/blob/main/LICENSE)
+
+17. Ruff
+    Copyright (c) Astral Software Inc.
+    License: MIT (https://github.com/astral-sh/ruff/blob/main/LICENSE)
+
+================================================================================
+
+This product includes reference datasets accessed at runtime but not
+redistributed:
+
+- NinaPro Database (DB5, DB7) — Atzori et al., 2014.
+  License: research use only (https://ninapro.hevs.ch/)
+- PhysioNet MIT-BIH Arrhythmia Database — Goldberger et al., 2000.
+  License: ODC Public Domain Dedication and License (PDDL)
+- PhysioNet EEG Motor Movement/Imagery Dataset — Schalk et al., 2004.
+  License: ODC Public Domain Dedication and License (PDDL)
+- fNIRS datasets from the Brain-BIDS initiative.
+  License: per-dataset (see individual dataset documentation)
+
+================================================================================
+
+For questions about this NOTICE file, contact:
+Qussai Adlbi <qussai.adlbi@proton.me>

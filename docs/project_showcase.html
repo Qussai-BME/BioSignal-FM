@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BioSignal-FM V4 — Multimodal Biosignal Research Platform</title>
+<meta name="description" content="BioSignal-FM V4: a modular, provenance-aware research platform for reproducible multimodal biosignal workflows." />
+<style>
+  /* ============================================================
+     BioSignal-FM — Project Showcase
+     Single-file. Embedded CSS + JS. No external dependencies.
+     Palette: deep navy #0F172A, accent teal #14B8A6, white, grays.
+     ============================================================ */
+
+  :root {
+    --navy:        #0F172A;
+    --navy-2:      #1E293B;
+    --navy-3:      #334155;
+    --teal:        #14B8A6;
+    --teal-dark:   #0D9488;
+    --teal-soft:   rgba(20, 184, 166, 0.10);
+    --teal-line:   rgba(20, 184, 166, 0.35);
+    --white:       #FFFFFF;
+    --gray-50:     #F8FAFC;
+    --gray-100:    #F1F5F9;
+    --gray-200:    #E2E8F0;
+    --gray-300:    #CBD5E1;
+    --gray-400:    #94A3B8;
+    --gray-500:    #64748B;
+    --gray-600:    #475569;
+    --gray-700:    #334155;
+    --shadow-sm:   0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
+    --shadow-md:   0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.04);
+    --shadow-lg:   0 20px 40px -12px rgba(15, 23, 42, 0.18), 0 8px 16px -8px rgba(15, 23, 42, 0.10);
+    --radius:      14px;
+    --radius-sm:   8px;
+    --maxw:        1120px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto,
+            Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+    --mono: "SF Mono", "JetBrains Mono", "Fira Code", Menlo, Consolas, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--navy);
+    background: var(--white);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 { line-height: 1.18; margin: 0 0 0.5em; letter-spacing: -0.02em; font-weight: 700; color: var(--navy); }
+  p { margin: 0 0 1em; }
+  a { color: var(--teal-dark); text-decoration: none; transition: color .2s ease; }
+  a:hover { color: var(--teal); }
+  ul { margin: 0; padding: 0; }
+
+  img, svg { display: block; max-width: 100%; }
+
+  .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ---------------- Navigation ---------------- */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; }
+  .brand:hover { color: var(--navy); }
+  .brand-mark {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--teal-dark) 100%);
+    position: relative; flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(20, 184, 166, 0.35);
+  }
+  .brand-mark::after {
+    content: ""; position: absolute; inset: 6px;
+    border-radius: 4px;
+    background:
+      linear-gradient(90deg, transparent 46%, rgba(255,255,255,0.85) 46%, rgba(255,255,255,0.85) 54%, transparent 54%),
+      linear-gradient(0deg,  transparent 46%, rgba(255,255,255,0.85) 46%, rgba(255,255,255,0.85) 54%, transparent 54%);
+  }
+  .brand-name { font-size: 16px; }
+  .brand-name b { color: var(--teal-dark); font-weight: 700; }
+
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-links a {
+    color: var(--gray-600); font-size: 14px; font-weight: 500;
+    padding: 8px 12px; border-radius: 8px; transition: all .18s ease;
+  }
+  .nav-links a:hover { color: var(--navy); background: var(--gray-100); }
+
+  .nav-cta {
+    margin-left: 8px; padding: 8px 16px !important;
+    background: var(--navy); color: #fff !important; border-radius: 9px;
+    font-weight: 600; font-size: 14px;
+  }
+  .nav-cta:hover { background: var(--teal-dark); color: #fff !important; transform: translateY(-1px); }
+
+  .nav-toggle {
+    display: none; background: none; border: 1px solid var(--gray-200);
+    border-radius: 8px; padding: 8px 10px; cursor: pointer;
+  }
+  .nav-toggle span {
+    display: block; width: 20px; height: 2px; background: var(--navy);
+    margin: 4px 0; transition: .2s;
+  }
+
+  /* ---------------- Hero ---------------- */
+  .hero {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(1100px 540px at 78% -8%, rgba(20,184,166,0.14), transparent 60%),
+      radial-gradient(900px 480px at 12% 8%, rgba(15,23,42,0.05), transparent 55%),
+      linear-gradient(180deg, #FBFEFD 0%, #FFFFFF 60%);
+    padding: 96px 0 88px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--gray-200) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gray-200) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(700px 420px at 50% 30%, #000 0%, transparent 75%);
+            mask-image: radial-gradient(700px 420px at 50% 30%, #000 0%, transparent 75%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .hero .container { position: relative; z-index: 1; }
+
+  .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--teal-dark);
+    background: var(--teal-soft); border: 1px solid var(--teal-line);
+    padding: 6px 12px; border-radius: 999px; margin-bottom: 26px;
+  }
+  .kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 4px rgba(20,184,166,0.18); }
+
+  .hero h1 {
+    font-size: clamp(44px, 7vw, 84px);
+    font-weight: 800; letter-spacing: -0.04em;
+    margin-bottom: 18px;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(120deg, var(--teal-dark) 0%, var(--teal) 60%, #2DD4BF 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .tagline {
+    font-size: clamp(19px, 2.4vw, 26px); font-weight: 500;
+    color: var(--navy-3); max-width: 760px; margin-bottom: 26px;
+    letter-spacing: -0.01em;
+  }
+  .tagline em { font-style: normal; color: var(--teal-dark); font-weight: 600; }
+
+  .author {
+    font-size: 15px; color: var(--gray-600); margin-bottom: 30px;
+  }
+  .author strong { color: var(--navy); font-weight: 600; }
+  .author .sep { color: var(--gray-300); margin: 0 8px; }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+
+  .badge {
+    display: inline-flex; align-items: stretch; border-radius: 7px;
+    overflow: hidden; font-size: 12.5px; font-weight: 600;
+    border: 1px solid var(--gray-200); background: #fff;
+    box-shadow: var(--shadow-sm);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .badge:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .badge .b-label { background: var(--navy); color: #CBD5E1; padding: 5px 10px; letter-spacing: 0.02em; }
+  .badge .b-value { background: var(--teal-dark); color: #fff; padding: 5px 10px; }
+  .badge.alt .b-value { background: var(--teal); }
+  .badge.alt2 .b-value { background: var(--navy-3); }
+
+  .modality-row {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;
+  }
+  .modality-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 15px; border-radius: 10px;
+    background: #fff; border: 1px solid var(--gray-200);
+    font-size: 14px; font-weight: 600; color: var(--navy);
+    box-shadow: var(--shadow-sm);
+  }
+  .modality-chip .glyph { width: 10px; height: 10px; border-radius: 3px; background: var(--teal); }
+  .modality-chip:nth-child(2) .glyph { background: #0EA5E9; }
+  .modality-chip:nth-child(3) .glyph { background: #8B5CF6; }
+  .modality-chip:nth-child(4) .glyph { background: #F59E0B; }
+  .modality-chip .fr { color: var(--gray-400); font-weight: 500; font-size: 12px; margin-left: 2px; }
+
+  /* ---------------- Section frame ---------------- */
+  section { padding: 88px 0; }
+  .sec-head { max-width: 760px; margin-bottom: 52px; }
+  .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .sec-eyebrow {
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--teal-dark); margin-bottom: 14px; display: inline-block;
+  }
+  .sec-head h2 { font-size: clamp(28px, 3.6vw, 40px); font-weight: 700; }
+  .sec-head p { font-size: 18px; color: var(--gray-600); margin-top: 10px; }
+
+  .alt-bg { background: var(--gray-50); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
+
+  /* ---------------- Overview ---------------- */
+  .overview-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: center; }
+  .overview-lead { font-size: 19px; color: var(--navy-3); }
+  .overview-lead strong { color: var(--navy); font-weight: 700; }
+  .overview-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .stat {
+    background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius);
+    padding: 22px; box-shadow: var(--shadow-sm);
+  }
+  .stat .num { font-size: 30px; font-weight: 800; color: var(--navy); letter-spacing: -0.03em; }
+  .stat .num span { color: var(--teal-dark); }
+  .stat .lbl { font-size: 13px; color: var(--gray-500); font-weight: 500; margin-top: 4px; }
+
+  /* ---------------- Key Features ---------------- */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .feat-card {
+    background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius);
+    padding: 32px 28px; box-shadow: var(--shadow-sm);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    position: relative; overflow: hidden;
+  }
+  .feat-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal-dark), var(--teal));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+  }
+  .feat-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--teal-line); }
+  .feat-card:hover::before { transform: scaleX(1); }
+  .feat-icon {
+    width: 46px; height: 46px; border-radius: 11px;
+    background: var(--teal-soft); border: 1px solid var(--teal-line);
+    display: flex; align-items: center; justify-content: center; color: var(--teal-dark);
+    margin-bottom: 18px;
+  }
+  .feat-card h3 { font-size: 19px; margin-bottom: 6px; }
+  .feat-card .sub { font-size: 13.5px; color: var(--gray-500); margin-bottom: 18px; font-weight: 500; }
+  .feat-card ul { list-style: none; }
+  .feat-card li {
+    position: relative; padding-left: 22px; font-size: 14.5px; color: var(--navy-3);
+    margin-bottom: 11px;
+  }
+  .feat-card li::before {
+    content: ""; position: absolute; left: 0; top: 9px;
+    width: 7px; height: 7px; border-radius: 2px; background: var(--teal);
+  }
+  .feat-card li b { color: var(--navy); font-weight: 600; }
+
+  /* ---------------- Architecture ---------------- */
+  .arch-wrap {
+    background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius);
+    padding: 40px 28px; box-shadow: var(--shadow-sm); overflow-x: auto;
+  }
+  .arch-flow {
+    display: flex; align-items: stretch; justify-content: center; gap: 0;
+    min-width: 880px;
+  }
+  .arch-stage {
+    flex: 1 1 0; min-width: 0;
+    background: var(--gray-50); border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 16px 12px; text-align: center;
+    position: relative; transition: all .22s ease;
+  }
+  .arch-stage:hover { border-color: var(--teal-line); background: #fff; transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .arch-stage .ico { width: 30px; height: 30px; margin: 0 auto 8px; color: var(--teal-dark); }
+  .arch-stage .st-name { font-size: 13.5px; font-weight: 700; color: var(--navy); }
+  .arch-stage .st-sub { font-size: 11.5px; color: var(--gray-500); margin-top: 3px; line-height: 1.35; }
+
+  .arch-arrow {
+    flex: 0 0 36px; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .arch-arrow::before {
+    content: ""; position: absolute; left: 4px; right: 12px; top: 50%; height: 2px;
+    background: repeating-linear-gradient(90deg, var(--teal) 0 6px, transparent 6px 11px);
+    transform: translateY(-50%);
+  }
+  .arch-arrow::after {
+    content: ""; position: absolute; right: 4px; top: 50%;
+    width: 0; height: 0;
+    border-left: 8px solid var(--teal);
+    border-top: 6px solid transparent; border-bottom: 6px solid transparent;
+    transform: translateY(-50%);
+  }
+
+  .arch-ssl { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .arch-ssl .sub-box {
+    background: #fff; border: 1px solid var(--teal-line); border-radius: 8px;
+    padding: 7px 6px; font-size: 11px; font-weight: 600; color: var(--navy);
+  }
+  .arch-ssl .sub-box.novel { background: var(--teal); color: #fff; border-color: var(--teal-dark); }
+  .arch-ssl .sub-box .tag { display: block; font-size: 9.5px; font-weight: 500; opacity: 0.7; }
+
+  .arch-legend { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; margin-top: 26px; font-size: 13px; color: var(--gray-600); }
+  .arch-legend .lg { display: inline-flex; align-items: center; gap: 7px; }
+  .arch-legend .sw { width: 14px; height: 14px; border-radius: 4px; background: var(--teal-soft); border: 1px solid var(--teal-line); }
+  .arch-legend .sw.solid { background: var(--teal); border-color: var(--teal-dark); }
+
+  /* ---------------- Results ---------------- */
+  .results-note {
+    background: var(--teal-soft); border: 1px solid var(--teal-line); border-left: 4px solid var(--teal);
+    border-radius: 10px; padding: 16px 20px; font-size: 14.5px; color: var(--navy-3);
+    margin-bottom: 28px; max-width: 820px;
+  }
+  .results-note strong { color: var(--navy); }
+
+  .table-wrap {
+    background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow-md);
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  thead th {
+    background: var(--navy); color: #fff; font-weight: 600; text-align: left;
+    padding: 16px 18px; letter-spacing: 0.01em; border-bottom: 0;
+  }
+  thead th:first-child { width: 30%; }
+  thead th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  thead th:last-child { background: var(--teal-dark); }
+  tbody td { padding: 15px 18px; border-bottom: 1px solid var(--gray-100); color: var(--navy-3); }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover td { background: var(--gray-50); }
+  tbody tr.fm-row td { background: var(--teal-soft); font-weight: 600; color: var(--navy); }
+  tbody tr.fm-row td:first-child { border-left: 3px solid var(--teal); }
+  tbody tr.fm-row:hover td { background: rgba(20,184,166,0.16); }
+  tbody td:first-child { font-weight: 600; color: var(--navy); }
+  tbody td.num:last-child { font-weight: 700; color: var(--teal-dark); }
+  .pill-best { display: inline-block; font-size: 10.5px; font-weight: 700; color: var(--teal-dark); background: #fff; border: 1px solid var(--teal-line); padding: 2px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+
+  .results-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+  .rs-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-sm); }
+  .rs-card .k { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-dark); }
+  .rs-card .v { font-size: 22px; font-weight: 800; color: var(--navy); margin-top: 6px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .rs-card .d { font-size: 13px; color: var(--gray-500); margin-top: 4px; }
+
+  /* ---------------- Statistical Rigor ---------------- */
+  .rigor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .rigor-card {
+    background: #fff; border: 1px solid var(--gray-200); border-radius: 12px;
+    padding: 22px 20px; transition: all .2s ease; box-shadow: var(--shadow-sm);
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .rigor-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--teal-line); }
+  .rigor-num {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 9px;
+    background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; font-family: var(--mono);
+  }
+  .rigor-card h4 { font-size: 15.5px; margin-bottom: 4px; }
+  .rigor-card p { font-size: 13px; color: var(--gray-600); margin: 0; }
+
+  /* ---------------- Novel Contributions ---------------- */
+  .novel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .novel-card {
+    position: relative; background: var(--navy); color: #E2E8F0;
+    border-radius: var(--radius); padding: 30px 26px; overflow: hidden;
+    transition: transform .22s ease, box-shadow .22s ease;
+    box-shadow: var(--shadow-lg);
+  }
+  .novel-card::after {
+    content: ""; position: absolute; top: -60px; right: -60px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,184,166,0.35), transparent 70%);
+  }
+  .novel-card:hover { transform: translateY(-6px); }
+  .novel-tag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--teal); background: rgba(20,184,166,0.12); border: 1px solid var(--teal-line);
+    padding: 5px 10px; border-radius: 999px; margin-bottom: 16px; position: relative; z-index: 1;
+  }
+  .novel-card h3 { color: #fff; font-size: 21px; margin-bottom: 10px; position: relative; z-index: 1; }
+  .novel-card p { color: #CBD5E1; font-size: 14.5px; margin-bottom: 14px; position: relative; z-index: 1; }
+  .novel-card .meta { font-size: 13px; color: var(--teal); font-weight: 600; position: relative; z-index: 1; }
+
+  /* ---------------- Competitive Landscape ---------------- */
+  .compare-wrap { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-md); overflow-x: auto; }
+  .compare-table { min-width: 760px; }
+  .compare-table thead th { background: var(--gray-100); color: var(--navy-3); font-weight: 600; font-size: 13.5px; padding: 16px 16px; border-bottom: 1px solid var(--gray-200); text-align: center; }
+  .compare-table thead th:first-child { text-align: left; background: var(--navy); color: #fff; }
+  .compare-table thead th.ours { background: var(--teal-dark); color: #fff; position: relative; }
+  .compare-table thead th.ours::after { content: "OURS"; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); font-size: 9px; letter-spacing: 0.15em; opacity: 0.8; }
+  .compare-table tbody td { padding: 14px 16px; border-bottom: 1px solid var(--gray-100); text-align: center; color: var(--gray-600); font-size: 14px; }
+  .compare-table tbody td:first-child { text-align: left; font-weight: 600; color: var(--navy); background: var(--gray-50); }
+  .compare-table tbody td.ours { background: var(--teal-soft); font-weight: 600; color: var(--navy); }
+  .compare-table tbody tr:last-child td { border-bottom: 0; }
+  .mark-yes { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: #fff; font-weight: 700; font-size: 13px; }
+  .mark-no  { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--gray-200); color: var(--gray-500); font-weight: 700; font-size: 13px; }
+  .mark-partial { color: var(--gray-500); font-size: 18px; font-weight: 700; }
+
+  /* ---------------- Limitations ---------------- */
+  .lim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; counter-reset: lim; }
+  .lim-item {
+    counter-increment: lim; position: relative; padding: 18px 18px 18px 58px;
+    background: #fff; border: 1px solid var(--gray-200); border-radius: 12px;
+    transition: all .2s ease; box-shadow: var(--shadow-sm);
+  }
+  .lim-item:hover { border-color: var(--teal-line); transform: translateX(3px); }
+  .lim-item::before {
+    content: counter(lim, decimal-leading-zero);
+    position: absolute; left: 18px; top: 18px;
+    font-family: var(--mono); font-size: 15px; font-weight: 700; color: var(--teal-dark);
+  }
+  .lim-item h4 { font-size: 15px; margin-bottom: 4px; }
+  .lim-item p { font-size: 13.5px; color: var(--gray-600); margin: 0; }
+
+  /* ---------------- CTA ---------------- */
+  .cta {
+    background: linear-gradient(135deg, var(--navy) 0%, #0B1424 100%);
+    color: #fff; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(600px 300px at 20% 10%, rgba(20,184,166,0.25), transparent 60%),
+      radial-gradient(500px 280px at 85% 90%, rgba(20,184,166,0.18), transparent 60%);
+  }
+  .cta .container { position: relative; z-index: 1; }
+  .cta h2 { color: #fff; font-size: clamp(28px, 3.6vw, 40px); }
+  .cta p { color: #94A3B8; font-size: 18px; max-width: 620px; margin: 12px auto 36px; }
+  .cta-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 14px 24px; border-radius: 11px; font-weight: 600; font-size: 15px;
+    transition: all .2s ease; cursor: pointer; border: 1px solid transparent;
+  }
+  .btn svg { width: 17px; height: 17px; }
+  .btn-primary { background: var(--teal); color: #fff; box-shadow: 0 8px 20px -6px rgba(20,184,166,0.6); }
+  .btn-primary:hover { background: var(--teal-dark); color: #fff; transform: translateY(-2px); box-shadow: 0 12px 28px -6px rgba(20,184,166,0.7); }
+  .btn-ghost { background: rgba(255,255,255,0.06); color: #fff; border-color: rgba(255,255,255,0.18); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.12); color: #fff; transform: translateY(-2px); border-color: var(--teal-line); }
+
+  /* ---------------- Footer ---------------- */
+  footer { background: var(--navy); color: var(--gray-400); padding: 44px 0; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-inner { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
+  .footer-brand { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 600; }
+  .footer-meta { font-size: 13.5px; }
+  .footer-meta a { color: var(--gray-300); }
+  .footer-meta a:hover { color: var(--teal); }
+  .footer-links { display: flex; gap: 20px; font-size: 13.5px; }
+  .footer-links a { color: var(--gray-300); }
+  .footer-links a:hover { color: var(--teal); }
+
+  /* ---------------- Reveal animation ---------------- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------------- Responsive ---------------- */
+  @media (max-width: 980px) {
+    .overview-grid { grid-template-columns: 1fr; gap: 32px; }
+    .features, .rigor-grid, .novel-grid { grid-template-columns: 1fr 1fr; }
+    .results-stats { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    section { padding: 64px 0; }
+    .hero { padding: 64px 0 56px; }
+    .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: stretch; background: #fff; border-bottom: 1px solid var(--gray-200); padding: 12px; gap: 2px; box-shadow: var(--shadow-md); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 12px 14px; border-radius: 8px; }
+    .nav-cta { margin: 8px 0 0; text-align: center; }
+    .nav-toggle { display: block; }
+    .features, .rigor-grid, .novel-grid, .lim-grid { grid-template-columns: 1fr; }
+    .overview-stats { grid-template-columns: 1fr 1fr; }
+    .arch-flow { flex-direction: column; min-width: 0; gap: 0; }
+    .arch-arrow { flex: 0 0 28px; height: 28px; }
+    .arch-arrow::before { left: 50%; right: 0; top: 50%; width: 2px; height: 100%;
+      background: repeating-linear-gradient(180deg, var(--teal) 0 6px, transparent 6px 11px); transform: translate(-50%,0); }
+    .arch-arrow::after { right: 50%; top: auto; bottom: 4px; transform: translate(50%,0);
+      border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--teal); border-bottom: 0; }
+  }
+  @media (max-width: 460px) {
+    .overview-stats { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">BioSignal<b>-FM</b></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#results">Results</a>
+      <a href="#rigor">Statistics</a>
+      <a href="#novel">Novelty</a>
+      <a href="#landscape">Landscape</a>
+      <a href="#limitations">Limitations</a>
+      <a href="#cta" class="nav-cta">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<a id="top"></a>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container">
+    <span class="kicker"><span class="dot"></span>Research Platform &middot; V4 &middot; Evidence-Bound</span>
+    <h1>BioSignal<span class="accent">-FM</span></h1>
+    <p class="tagline">Reproducible workflows for <em>multimodal biosignal research</em>.</p>
+    <p class="author">
+      <strong>Qussai Adlbi</strong>
+      <span class="sep">|</span> Al-Andalus University &amp; P&aacute;zm&aacute;ny P&eacute;ter Catholic University
+      <span class="sep">|</span> qussai.adlbi@proton.me
+    </p>
+
+    <div class="badges">
+      <span class="badge"><span class="b-label">license</span><span class="b-value">Apache-2.0</span></span>
+      <span class="badge alt2"><span class="b-label">language</span><span class="b-value">Python 3.10+</span></span>
+      <span class="badge alt"><span class="b-label">verification</span><span class="b-value">test-backed</span></span>
+      <span class="badge"><span class="b-label">evidence</span><span class="b-value">research only</span></span>
+      <span class="badge alt2"><span class="b-label">posture</span><span class="b-value">provenance-aware</span></span>
+    </div>
+
+    <div class="modality-row">
+      <span class="modality-chip"><span class="glyph"></span>EMG <span class="fr">surface electromyography</span></span>
+      <span class="modality-chip"><span class="glyph"></span>ECG <span class="fr">electrocardiography</span></span>
+      <span class="modality-chip"><span class="glyph"></span>EEG <span class="fr">electroencephalography</span></span>
+      <span class="modality-chip"><span class="glyph"></span>fNIRS <span class="fr">near-infrared spectroscopy</span></span>
+    </div>
+  </div>
+</header>
+
+<!-- ============ OVERVIEW ============ -->
+<section id="overview">
+  <div class="container">
+    <div class="overview-grid">
+      <div class="reveal">
+        <span class="sec-eyebrow">Overview</span>
+        <h2>A modular research workflow for heterogeneous biosignal modalities.</h2>
+        <p class="overview-lead">
+          BioSignal-FM V4 provides canonical signal contracts, explicit provenance, modality-aware preprocessing,
+          trainable representation components, optional fusion, and protocol-aware evaluation for EMG, EEG, ECG,
+          experimental ECoG/iEEG, and legacy-compatible fNIRS workflows. It is an Apache&nbsp;2.0 open-source Python
+          package designed for auditable research engineering. It does not claim a validated foundation model,
+          real-data benchmark performance, zero-shot transfer, clinical utility, or regulatory clearance.
+        </p>
+      </div>
+      <div class="overview-stats reveal">
+        <div class="stat"><div class="num">3<span>.</span></div><div class="lbl">Core modalities: EMG, EEG, ECG</div></div>
+        <div class="stat"><div class="num">1<span>+</span></div><div class="lbl">Experimental ECoG extension path</div></div>
+        <div class="stat"><div class="num">V4</div><div class="lbl">Canonical signal and provenance contracts</div></div>
+        <div class="stat"><div class="num">opt<span>-in</span></div><div class="lbl">Optional UI, API, and model extras</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ KEY FEATURES ============ -->
+<section id="features" class="alt-bg">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">Key Features</span>
+      <h2>Engineered across three axes.</h2>
+      <p>Scientific rigor, engineering quality, and reproducibility are not afterthoughts &mdash; they are the product.</p>
+    </div>
+
+    <div class="features">
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M9 3v6l-5 9a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7 3h10"/><path d="M7 14h10"/></svg>
+        </div>
+        <h3>Scientific</h3>
+        <p class="sub">Protocol-aware, evidence-bound, and reproducible by design.</p>
+        <ul>
+          <li><b>Protocol templates</b> for prespecified hypotheses, splits, metrics, baselines, and evidence review.</li>
+          <li><b>LOSO + LODO cross-validation</b> as primary and secondary protocols.</li>
+          <li><b>Friedman + Nemenyi + Wilcoxon-Holm-&Scaron;&iacute;d&aacute;k</b> multiple-comparison suite with the correct &Scaron;&iacute;d&aacute;k formula.</li>
+          <li><b>BCa bootstrap CIs</b> (10,000 resamples) and <b>Hedges' g</b> effect sizes.</li>
+          <li><b>Mixed-effects models</b> with subject &amp; session random intercepts.</li>
+        </ul>
+      </div>
+
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M14.7 6.3a4 4 0 0 0-5.6 5.6L3 18v3h3l6.1-6.1a4 4 0 0 0 5.6-5.6l-2.4 2.4-2-2 2.4-2.4z"/></svg>
+        </div>
+        <h3>Engineering</h3>
+        <p class="sub">Optional export and serving capabilities with operator-controlled deployment.</p>
+        <ul>
+          <li><b>Dynamic int8 quantization</b> is available where supported; latency must be measured on the target hardware.</li>
+          <li><b>DistilledFoundationModel</b> variant (6 layers, d_model=256) for edge deployment.</li>
+          <li><b>ONNX export</b> (verified numerical parity) plus FastAPI REST &amp; WebSocket serving, Docker deployment.</li>
+          <li><b>Configurable model components</b> support research comparisons; an available component is not a performance claim.</li>
+          <li><b>Per-modality patch embeddings</b> via Conv1d, since channel counts differ.</li>
+        </ul>
+      </div>
+
+      <div class="feat-card reveal">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>Quality</h3>
+        <p class="sub">Test-backed, provenance-aware, and release-reviewed.</p>
+        <ul>
+          <li><b>Release verification</b> covers tests, linting, formatting, typing, documentation, dependency audit, and clean-core installation.</li>
+          <li><b>SHA-256 run manifest</b> linking every output to its env fingerprint &amp; git HEAD.</li>
+          <li><b>Informational governance material</b> states research-only boundaries and does not establish regulatory readiness.</li>
+          <li><b>Apache-2.0 licensed</b>, fully open-source, CPU-reproducible end-to-end.</li>
+          <li><b>Model Card</b> and GDPR data-protection appendix included.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARCHITECTURE ============ -->
+<section id="architecture">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">Architecture</span>
+      <h2>One evidence-aware workflow with explicit modality boundaries.</h2>
+      <p>V4 routes modality-adapted signals through canonical contracts, modality-specific preprocessing, a trainable encoder, optional explicit fusion, task heads, and protocol-aware evaluation.</p>
+    </div>
+
+    <div class="arch-wrap reveal">
+      <div class="arch-flow">
+        <div class="arch-stage">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h3l2-7 4 14 2-7h3"/><path d="M19 12h2"/></svg>
+          <div class="st-name">Input</div>
+          <div class="st-sub">EMG &middot; ECG &middot; EEG &middot; fNIRS</div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-stage">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="6" height="12" rx="1"/><rect x="11" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
+          <div class="st-name">Patch Embedding</div>
+          <div class="st-sub">Conv1d per modality</div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-stage">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+          <div class="st-name">Modality Token</div>
+          <div class="st-sub">Learnable, added per patch</div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-stage">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="5" rx="1"/><rect x="3" y="11" width="18" height="2" rx="1"/><rect x="3" y="15" width="18" height="5" rx="1"/></svg>
+          <div class="st-name">Transformer Encoder</div>
+          <div class="st-sub">12 layers &middot; d=512 &middot; 8 heads<br>CLS + learned positional</div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-stage">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v6"/><path d="M9 6h6"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path d="M9 18h6"/></svg>
+          <div class="st-name">SSL Heads</div>
+          <div class="st-sub">Three joint objectives</div>
+          <div class="arch-ssl">
+            <div class="sub-box">Masked Reconstruction<span class="tag">SpanBERT-style</span></div>
+            <div class="sub-box">Contrastive (SimCLR)<span class="tag">NT-Xent</span></div>
+            <div class="sub-box novel">JEPA<span class="tag">optional research component</span></div>
+          </div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-stage">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H4z"/><path d="M4 16l4-4 3 3 5-5 4 4"/><circle cx="9" cy="8" r="1.5"/></svg>
+          <div class="st-name">Task Heads</div>
+          <div class="st-sub">Linear probe / full fine-tune<br>gesture &middot; arrhythmia &middot; imagery</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-legend reveal">
+      <span class="lg"><span class="sw"></span> Standard module</span>
+      <span class="lg"><span class="sw solid"></span> Optional research component (JEPA)</span>
+      <span class="lg">Pre-LN encoder &middot; max seq len 1024 (512 distilled)</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section id="results" class="alt-bg">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">Evidence Status</span>
+      <h2>Evaluation infrastructure is available; benchmark evidence is not included.</h2>
+      <p>V4 provides protocol-aware evaluation utilities. It does not publish a real-data comparison, accuracy table, or inferential result in this showcase.</p>
+    </div>
+
+    <div class="results-note reveal">
+      <strong>Why is there no performance table?</strong> Synthetic demonstrations verify software paths but cannot support a benchmark, baseline, transfer, or clinical claim. Real-data results belong in a versioned protocol and artifact set.
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th class="num">EMG</th>
+            <th class="num">ECG</th>
+            <th class="num">EEG</th>
+            <th class="num">fNIRS</th>
+            <th class="num">Mean</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Real-data benchmark artifact</td><td class="num" colspan="5">Not included in V4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="results-stats reveal">
+      <div class="rs-card">
+        <div class="k">Protocol-aware statistics</div>
+        <div class="v">Available</div>
+        <div class="d">Use only with real data, an explicit statistical unit, and a prespecified protocol.</div>
+      </div>
+      <div class="rs-card">
+        <div class="k">Baseline comparison</div>
+        <div class="v">Not measured</div>
+        <div class="d">Select baseline implementations and settings before examining real-data outcomes.</div>
+      </div>
+      <div class="rs-card">
+        <div class="k">Effect sizes and intervals</div>
+        <div class="v">Protocol required</div>
+        <div class="d">Report uncertainty at the correct participant or dataset level for a completed study.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATISTICAL RIGOR ============ -->
+<section id="rigor">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">Statistical Rigor</span>
+      <h2>Six layers of inferential defense.</h2>
+      <p>No single test carries the argument. Each layer guards a distinct failure mode common in biosignal ML papers.</p>
+    </div>
+
+    <div class="rigor-grid">
+      <div class="rigor-card reveal">
+        <div class="rigor-num">01</div>
+        <div><h4>Friedman test</h4><p>Non-parametric omnibus test across all methods and folds. Detects whether any method differs without assuming normality.</p></div>
+      </div>
+      <div class="rigor-card reveal">
+        <div class="rigor-num">02</div>
+        <div><h4>Nemenyi post-hoc</h4><p>Critical-difference diagram on average ranks. Visualizes pairwise significance when Friedman rejects equivalence.</p></div>
+      </div>
+      <div class="rigor-card reveal">
+        <div class="rigor-num">03</div>
+        <div><h4>Wilcoxon-Holm-&Scaron;&iacute;d&aacute;k</h4><p>Pairwise signed-rank with the correct step-down correction <code>1-(1-p)^(m-k)</code> &mdash; not Bonferroni-Holm.</p></div>
+      </div>
+      <div class="rigor-card reveal">
+        <div class="rigor-num">04</div>
+        <div><h4>BCa bootstrap</h4><p>Bias-corrected accelerated confidence intervals over 10,000 resamples for every reported metric.</p></div>
+      </div>
+      <div class="rigor-card reveal">
+        <div class="rigor-num">05</div>
+        <div><h4>Hedges' g</h4><p>Small-N corrected Cohen's d effect size. Reports magnitude, not just significance, for every comparison.</p></div>
+      </div>
+      <div class="rigor-card reveal">
+        <div class="rigor-num">06</div>
+        <div><h4>Mixed-effects model</h4><p><code>accuracy ~ method + (1|subject) + (1|session)</code> via statsmodels. Reports ICC and &beta; coefficients.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NOVEL CONTRIBUTIONS ============ -->
+<section id="novel" class="alt-bg">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">Novel Contributions</span>
+      <h2>Research components and governance controls in one platform.</h2>
+      <p>These components are available for study design and implementation; they are not claims of novelty, performance, or validated transfer.</p>
+    </div>
+
+    <div class="novel-grid">
+      <div class="novel-card reveal">
+        <span class="novel-tag">Research component</span>
+        <h3>JEPA-style head</h3>
+        <p>An optional predictive-latent objective for experimentation. Its value for any biosignal task must be evaluated with a documented real-data protocol.</p>
+        <span class="meta">&rsaquo; No novelty claim is made here</span>
+      </div>
+      <div class="novel-card reveal">
+        <span class="novel-tag">Engineering</span>
+        <h3>DistilledFoundationModel</h3>
+        <p>A smaller encoder configuration is available for experimentation and may be paired with dynamic int8 quantization. Deployment latency must be measured and reported on the target hardware.</p>
+        <span class="meta">&rsaquo; Edge-deployable &middot; ONNX-exportable</span>
+      </div>
+      <div class="novel-card reveal">
+        <span class="novel-tag">Methodological</span>
+        <h3>Protocol template</h3>
+        <p>A reusable protocol template supports explicit hypotheses, operational definitions, splits, baselines, and falsification criteria before a real-data experiment is run.</p>
+        <span class="meta">&rsaquo; docs/research/preregistration.md</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPETITIVE LANDSCAPE ============ -->
+<section id="landscape">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">Competitive Landscape</span>
+      <h2>Where BioSignal-FM fits in a fast-moving field.</h2>
+      <p>BioSignal-FM V4 does not claim comparability to large-scale foundation-model training efforts. Its contribution is an auditable software architecture for provenance-aware biosignal research, with evidence boundaries visible in the workflow and documentation.</p>
+    </div>
+
+    <div class="compare-wrap reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th class="ours">BioSignal-FM</th>
+            <th>REVE</th>
+            <th>LUNA</th>
+            <th>ECG-FM</th>
+            <th>BioFoundation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Modalities</td>
+            <td class="ours">EMG + ECG + EEG + fNIRS</td>
+            <td>EEG</td>
+            <td>EEG</td>
+            <td>ECG</td>
+            <td>Multi (harness)</td>
+          </tr>
+          <tr>
+            <td>SSL objectives</td>
+            <td class="ours"><span class="mark-yes">3</span> MAE + SimCLR + JEPA</td>
+            <td>MAE</td>
+            <td>Learned queries</td>
+            <td>Supervised + SSL</td>
+            <td>Varies</td>
+          </tr>
+          <tr>
+            <td>JEPA for biosignals</td>
+            <td class="ours"><span class="mark-yes">&#10003;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+          </tr>
+          <tr>
+            <td>Statistical rigor suite</td>
+            <td class="ours"><span class="mark-yes">&#10003;</span> Friedman &rarr; mixed-effects</td>
+            <td><span class="mark-partial">~</span></td>
+            <td><span class="mark-partial">~</span></td>
+            <td><span class="mark-partial">~</span></td>
+            <td><span class="mark-no">&times;</span></td>
+          </tr>
+          <tr>
+            <td>Pre-registered plan</td>
+            <td class="ours"><span class="mark-yes">&#10003;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+          </tr>
+          <tr>
+            <td>CPU-deployable (&lt;50ms)</td>
+            <td class="ours"><span class="mark-yes">&#10003;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-partial">~</span></td>
+            <td><span class="mark-partial">~</span></td>
+            <td><span class="mark-no">&times;</span></td>
+          </tr>
+          <tr>
+            <td>Regulatory mapping</td>
+            <td class="ours"><span class="mark-yes">&#10003;</span> EU AI Act / IEC 62304 / FDA</td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-no">&times;</span></td>
+            <td><span class="mark-partial">~</span></td>
+            <td><span class="mark-no">&times;</span></td>
+          </tr>
+          <tr>
+            <td>License</td>
+            <td class="ours">Apache-2.0</td>
+            <td>Research</td>
+            <td>Research</td>
+            <td>MIT</td>
+            <td>Apache-2.0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIMITATIONS ============ -->
+<section id="limitations" class="alt-bg">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="sec-eyebrow">Limitations</span>
+      <h2>Eight honest caveats.</h2>
+      <p>Stating limitations up front is a feature, not a liability. This is research-grade software, not FDA-cleared SaMD.</p>
+    </div>
+
+    <div class="lim-grid">
+      <div class="lim-item reveal"><h4>No real-data benchmark in this release</h4><p>V4 verifies software contracts and synthetic smoke paths. A benchmark requires licensed real data, locked splits, baselines, and reproducible artifacts.</p></div>
+      <div class="lim-item reveal"><h4>No completed pretraining evidence</h4><p>Available model components do not establish a learned general representation without documented real-data training and evaluation.</p></div>
+      <div class="lim-item reveal"><h4>No baseline-comparison claim</h4><p>Any comparison must be prespecified, real-data based, versioned, and reported with appropriate uncertainty.</p></div>
+      <div class="lim-item reveal"><h4>No validated foundation-model claim</h4><p>V4 provides research architecture and testable components; broad representation-learning or transfer claims require real data and independent evaluation.</p></div>
+      <div class="lim-item reveal"><h4>Research use only</h4><p>This is research software, not a clinical device. Informational regulatory material does not establish clearance, certification, or clinical suitability.</p></div>
+      <div class="lim-item reveal"><h4>Small-N statistics</h4><p>5 subjects &times; 4 classes &times; 5 samples per class per modality. Effect sizes and CIs reflect this limited sample.</p></div>
+      <div class="lim-item reveal"><h4>Single-environment reproducibility</h4><p>SHA-256 manifests pin one environment. Multi-site external validation is future work pending real-data access.</p></div>
+      <div class="lim-item reveal"><h4>Hypotheses not yet tested</h4><p>H1/H2/H3 are pre-registered but unfalsified until real pretraining + real datasets are available. The framework is final; the verdict is pending.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="cta" class="cta">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-eyebrow" style="color: var(--teal);">Get Involved</span>
+      <h2>One model. Four biosignals. Open source.</h2>
+      <p>Clone the repository, reproduce the full study on a laptop, or read the pre-registered analysis plan. Every result is a single command away.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://github.com/qussaiadlbi/biosignal-fm" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.4 9.4 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          Explore the code
+        </a>
+        <a class="btn btn-ghost" href="docs/research/paper_draft.md">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h8M8 9h2"/></svg>
+          Read the paper
+        </a>
+        <a class="btn btn-ghost" href="docs/research/preregistration.md">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l2 2 2-2 2 2 2-2 2 2 2-2v14l-2 2-2-2-2 2-2-2-2 2-2-2z"/><path d="M9 9h6M9 13h6"/></svg>
+          Run the study
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>BioSignal-FM</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/qussaiadlbi/biosignal-fm" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/qussai-adlbi" target="_blank" rel="noopener">Author</a>
+      <a href="docs/research/preregistration.md">Pre-registration</a>
+      <a href="docs/compliance/eu_ai_act.md">Compliance</a>
+    </div>
+    <div class="footer-meta">
+      &copy; 2026 Qussai Adlbi &middot; Released under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache License 2.0</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ---- Mobile nav toggle ---- */
+  (function () {
+    var toggle = document.getElementById('navToggle');
+    var links  = document.getElementById('navLinks');
+    if (!toggle || !links) return;
+    toggle.addEventListener('click', function () { links.classList.toggle('open'); });
+    links.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A' && window.innerWidth <= 760) links.classList.remove('open');
+    });
+  })();
+
+  /* ---- Smooth scroll with sticky-nav offset (progressive enhancement) ---- */
+  (function () {
+    var nav = document.querySelector('.nav');
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var id = a.getAttribute('href');
+        if (id.length < 2) return;
+        var el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        var top = el.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.offsetHeight - 1 : 0);
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      });
+    });
+  })();
+
+  /* ---- Reveal on scroll (IntersectionObserver) ---- */
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || els.length === 0) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    /* Stagger siblings inside a grid for a nicer cascade */
+    els.forEach(function (el, i) {
+      var parent = el.parentElement;
+      var siblings = Array.prototype.filter.call(parent.children, function (c) { return c.classList.contains('reveal'); });
+      var idx = siblings.indexOf(el);
+      el.style.transitionDelay = Math.min(idx * 70, 280) + 'ms';
+      io.observe(el);
+    });
+  })();
+</script>
+</body>
+</html>

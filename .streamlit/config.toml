@@ -1,0 +1,35 @@
+# BioSignal-FM Streamlit configuration
+
+# server.address / server.port / browser.serverAddress are deliberately
+# left unset: Streamlit Community Cloud manages these itself, and a
+# hardcoded "localhost" here previously had no effect locally but risked
+# confusing Cloud's own network setup. For local development, pass them
+# on the command line instead, e.g.:
+#   streamlit run biosignal_fm/ui/app.py --server.port 8501
+[server]
+maxUploadSize = 200
+enableCORS = false
+enableXsrfProtection = true
+headless = true
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+# Kept in sync with biosignal_fm/ui/theme.py's COLORS dict — this is
+# Streamlit's native theme engine, which applies before (and alongside)
+# the custom CSS injected by inject_css(), so a mismatch here would show
+# as a flash of the wrong colors or inconsistent native-widget chrome.
+primaryColor = "#0C7A4B"            # COLORS["primary"] — verified AA on white/bg
+backgroundColor = "#FFFFFF"         # COLORS["surface"]
+secondaryBackgroundColor = "#F6F7F9"  # COLORS["bg"]
+textColor = "#141925"               # COLORS["text"]
+font = "sans serif"
+
+[logger]
+level = "INFO"
+messageFormat = "%(asctime)s %(message)s"
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = false

@@ -1,0 +1,11 @@
+# Streamlit Community Cloud dependency file.
+#
+# Community Cloud looks for requirements.txt at the repo root and does not
+# reliably parse this project's PEP 621 pyproject.toml (it assumes Poetry's
+# [tool.poetry] format for pyproject.toml and fails otherwise). This file
+# installs the package itself plus the same extras the Docker image uses
+# (fm, api, ui) so the dashboard's Pretrain/Finetune/Evaluate/Deploy pages
+# work identically to the Docker deployment.
+#
+# For local development, prefer: pip install -e ".[all]"
+-e .[fm,api,ui]

@@ -1,0 +1,5 @@
+Package: biosignal-fm
+Version: 4.0.1
+Git tag: v4.0.1 (run `git rev-parse v4.0.1` for the exact commit hash)
+Archive type: publication source bundle
+Checksum: see accompanying .sha256 file

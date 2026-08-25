@@ -1,0 +1,98 @@
+site_name: BioSignal-FM Documentation
+site_description: Modular multimodal biosignal research platform for reproducible signal processing and evaluation
+site_author: Qussai Adlbi
+site_url: https://github.com/qussaiadlbi/biosignal-fm
+
+repo_name: qussaiadlbi/biosignal-fm
+repo_url: https://github.com/qussaiadlbi/biosignal-fm
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: true
+            show_root_heading: true
+            show_signature_annotations: true
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Architecture:
+      - Current V4 Architecture: architecture_v4.md
+      - Legacy Architecture Reference: architecture.md
+  - Migration:
+      - V4 Migration Notes: migration_notes_v4.md
+      - V4 Migration Audit: migration_audit_v4.md
+      - Scientific Integrity Audit: scientific_integrity_audit_v4.md
+      - Dependency and License Inventory: dependency_license_inventory_v4.md
+      - Known Limitations: known_limitations_v4.md
+      - Test Report: test_report_v4.md
+      - UI Visual Check: ui_visual_check_v4.md
+      - V4 Roadmap: roadmap_v4.md
+      - Data Governance: data_governance.md
+      - Pre-Publication Risk Register: prepublication_risk_register_2026.md
+      - External Evidence Register: references_prepublication_review_2026.md
+  - Quickstart: quickstart.md
+  - API Reference: api_reference.md
+  - Research Chain: research_chain.md
+  - Deployment: deployment.md
+  - Research:
+      - Pre-Registration: research/preregistration.md
+      - Paper Draft: research/paper_draft.md
+  - Compliance:
+      - EU AI Act: compliance/eu_ai_act.md
+      - FDA SaMD: compliance/fda_samd.md
+      - GDPR: compliance/gdpr.md
+      - Regulatory Appendix: compliance/regulatory_appendix.md

@@ -1,0 +1,65 @@
+# Example experiment config for `bsfm pretrain --config configs/exp.yaml`.
+#
+# This is referenced by the README quickstart and the Pretrain page of the
+# Streamlit dashboard, but was never actually included in the repo — every
+# copy-pasted command pointing at it failed with "file not found". This file
+# fixes that, and uses the library's real defaults (a full-size 512-d, 12-layer
+# model) rather than a toy config, so it's a genuine starting point for a real
+# run, not just something that happens to parse.
+#
+# All fields below are optional — anything you omit falls back to the
+# dataclass defaults in biosignal_fm/config.py. This file spells out the ones
+# worth knowing about explicitly rather than listing every field.
+#
+# Generate a fresh copy at any time with:
+#   python -c "from biosignal_fm.config import ExperimentConfig; ExperimentConfig(name='exp001', output_dir='runs/exp001').to_yaml('configs/exp.yaml')"
+
+name: exp001
+output_dir: runs/exp001
+seed: 42
+description: "SSL pretraining, default-scale model, synthetic/demo data"
+
+preprocessing:
+  target_sampling_rate_hz: 200
+  emg_bandpass: [20.0, 450.0]
+  ecg_bandpass: [0.5, 40.0]
+  eeg_bandpass: [0.5, 45.0]
+  fnirs_bandpass: [0.01, 0.5]
+  notch_freq_hz: 50.0          # set to 60.0 for North American mains hum
+  window_length_seconds: 2.0
+  window_overlap_seconds: 0.5
+
+model:
+  d_model: 512
+  n_heads: 8
+  n_layers: 12
+  d_ff: 2048
+  patch_length: 32
+  patch_stride: 16
+  dropout: 0.1
+  max_sequence_length: 1024
+  mask_ratio: 0.5              # fraction of patches masked for SSL reconstruction
+  contrastive_weight: 0.5
+  reconstruction_weight: 1.0
+
+training:
+  batch_size: 64
+  learning_rate: 1.0e-4
+  warmup_steps: 1000
+  max_steps: 100000            # override with `--steps N` for a quick smoke test
+  eval_every_steps: 1000
+  save_every_steps: 5000
+  optimizer: adamw
+  lr_scheduler: cosine
+
+evaluation:
+  protocol: loso                # or lodo
+  alpha: 0.05
+  correction_method: holm_sidak
+  effect_size: hedges_g
+
+deployment:
+  host: 0.0.0.0
+  port: 8000
+  quantize: true
+  onnx_opset: 17
