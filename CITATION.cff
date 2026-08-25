@@ -1,4 +1,4 @@
-cff-version: 1.2.0
+cff-version: "4.0.1"
 message: "If you use BioSignal-FM in your research, please cite it as below."
 title: "BioSignal-FM: A Unified Foundation Model for Surface Biosignals"
 abstract: >-
@@ -13,9 +13,8 @@ abstract: >-
 authors:
   - family-names: Adlbi
     given-names: Qussai
-    # ORCID intentionally omitted rather than shipped as a placeholder —
-    # add the real iD (https://orcid.org/register) before the first
-    # public release or Zenodo deposit.
+    
+    
     affiliation: >-
       Al-Andalus University (Syria) / Pázmány Péter Catholic University (Hungary)
     email: qussai.adlbi@proton.me
@@ -31,16 +30,17 @@ keywords:
   - deep-learning
   - biomedical-engineering
 license: Apache-2.0
-repository-code: "https://github.com/qussaiadlbi/biosignal-fm"
+repository-code: "https://github.com/Qussai-BME/BioSignal-FM"
 version: "4.0.1"
 date-released: "2026-08-25"
 preferred-citation:
   type: software
   title: "BioSignal-FM: A Unified Foundation Model for Surface Biosignals"
+  doi: https://doi.org/10.5281/zenodo.22095717
   authors:
     - family-names: Adlbi
       given-names: Qussai
   year: 2026
-  url: "https://github.com/qussaiadlbi/biosignal-fm"
+  url: "https://github.com/Qussai-BME/BioSignal-FM"
   notes: >-
     DOI placeholder — replace with Zenodo DOI after first release.
