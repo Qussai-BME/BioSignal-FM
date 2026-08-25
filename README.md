@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22095717.svg)](https://doi.org/10.5281/zenodo.22095717)
 
-🚀 **[Live Interactive Demo](https://biosignal-fm-qussai-adlbi.streamlit.app/)
+🚀 **[Live Interactive Demo](https://biosignal-fm-qussai-bme.streamlit.app/)
 
 > **BioSignal-FM is a modular, research-only platform for reproducible multimodal biosignal workflows.** It provides signal contracts, modality-aware preprocessing, representation-learning components, protocol-aware evaluation utilities, and provenance controls for auditable research development.
 
