@@ -33,25 +33,29 @@ class TestNinaProLoaderReal:
         with pytest.raises(FileNotFoundError, match="root_dir does not exist"):
             _ = loader.samples
 
-    def test_synthetic_fallback_warns(self, tmp_path: Path) -> None:
-        """Empty root_dir triggers synthetic fallback with UserWarning."""
+    def test_synthetic_fallback_requires_explicit_opt_in(self, tmp_path: Path) -> None:
+        """Empty root_dir is not silently replaced with synthetic data."""
         from biosignal_fm.data.ninapro import NinaProDB5Loader
 
         loader = NinaProDB5Loader(root_dir=tmp_path, n_subjects=2)
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
-            samples = loader.samples
-        assert len(samples) > 0
-        assert loader.is_synthetic
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
 
-    def test_no_root_dir_returns_synthetic(self) -> None:
-        """When root_dir is None, loader falls back to synthetic with warning."""
+        demo_loader = NinaProDB5Loader(
+            root_dir=tmp_path, n_subjects=2, allow_synthetic_fallback=True
+        )
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
+        assert len(samples) > 0
+        assert demo_loader.is_synthetic
+
+    def test_no_root_dir_requires_opt_in(self) -> None:
+        """A source-free loader cannot silently become a synthetic benchmark path."""
         from biosignal_fm.data.ninapro import NinaProDB5Loader
 
         loader = NinaProDB5Loader(root_dir=None, n_subjects=2)
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
-            samples = loader.samples
-        assert len(samples) > 0
-        assert loader.is_synthetic
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
 
     def test_load_raw_with_no_mat_files(self, tmp_path: Path) -> None:
         """An existing root_dir with no .mat files returns empty list."""
@@ -77,14 +81,18 @@ class TestMITBIHLoaderReal:
         with pytest.raises(FileNotFoundError, match="root_dir does not exist"):
             _ = loader.samples
 
-    def test_synthetic_fallback_warns(self, tmp_path: Path) -> None:
+    def test_synthetic_fallback_requires_explicit_opt_in(self, tmp_path: Path) -> None:
         from biosignal_fm.data.mitbih import MITBIHLoader
 
         loader = MITBIHLoader(root_dir=tmp_path, n_records=2)
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
-            samples = loader.samples
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
+
+        demo_loader = MITBIHLoader(root_dir=tmp_path, n_records=2, allow_synthetic_fallback=True)
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
         assert len(samples) > 0
-        assert loader.is_synthetic
+        assert demo_loader.is_synthetic
 
     def test_load_raw_with_no_hea_files(self, tmp_path: Path) -> None:
         from biosignal_fm.data.mitbih import MITBIHLoader
@@ -109,14 +117,18 @@ class TestEEGMMIDLoaderReal:
         with pytest.raises(FileNotFoundError, match="root_dir does not exist"):
             _ = loader.samples
 
-    def test_synthetic_fallback_warns(self, tmp_path: Path) -> None:
+    def test_synthetic_fallback_requires_explicit_opt_in(self, tmp_path: Path) -> None:
         from biosignal_fm.data.eegmmid import EEGMMIDLoader
 
         loader = EEGMMIDLoader(root_dir=tmp_path, n_subjects=2)
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
-            samples = loader.samples
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
+
+        demo_loader = EEGMMIDLoader(root_dir=tmp_path, n_subjects=2, allow_synthetic_fallback=True)
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
         assert len(samples) > 0
-        assert loader.is_synthetic
+        assert demo_loader.is_synthetic
 
     def test_load_raw_with_no_edf_files(self, tmp_path: Path) -> None:
         from biosignal_fm.data.eegmmid import EEGMMIDLoader
@@ -141,14 +153,18 @@ class TestFnirsLoaderReal:
         with pytest.raises(FileNotFoundError, match="root_dir does not exist"):
             _ = loader.samples
 
-    def test_synthetic_fallback_warns(self, tmp_path: Path) -> None:
+    def test_synthetic_fallback_requires_explicit_opt_in(self, tmp_path: Path) -> None:
         from biosignal_fm.data.fnirs import FnirsLoader
 
         loader = FnirsLoader(root_dir=tmp_path, n_subjects=2)
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
-            samples = loader.samples
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
+
+        demo_loader = FnirsLoader(root_dir=tmp_path, n_subjects=2, allow_synthetic_fallback=True)
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
         assert len(samples) > 0
-        assert loader.is_synthetic
+        assert demo_loader.is_synthetic
 
     def test_load_raw_with_no_files(self, tmp_path: Path) -> None:
         from biosignal_fm.data.fnirs import FnirsLoader

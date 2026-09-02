@@ -1,47 +1,29 @@
-# EU AI Act Annex IV Compliance
+# EU AI Act Research-Use Position
 
-BioSignal-FM is classified as a **limited-risk** AI system under the EU AI Act
-(Annex IV technical documentation requirements). This document outlines the
-required technical documentation.
+**Status:** Informational research-software note; not a legal classification, conformity assessment, or legal advice.  
+**Release scope:** BioSignal-FM `4.0.2` research platform.
 
-## 1. System Description
+> BioSignal-FM is released for research and education. It is not presented as a medical device, a clinical decision-support product, a validated foundation model, or a deployed high-risk AI system. This repository does not assign itself an EU AI Act risk category.
 
-- **Name:** BioSignal-FM
-- **Version:** 0.1.2
-- **Author:** Qussai Adlbi
-- **Description:** A unified transformer-based foundation model for surface
-  biosignals (EMG, ECG, EEG, fNIRS), pretrained via self-supervised learning.
-- **Intended use:** Research and educational use in biomedical engineering,
-  neural interface development, and biosignal analysis.
-- **Not intended for:** Clinical decision-making, medical diagnosis, or any
-  use that requires regulatory clearance.
+## Why a repository cannot self-classify every deployment
 
-## 2. Data Description
+Any legal assessment depends on the concrete intended purpose, functionality, deployment context, actors, data, geographic scope, and applicable product-law framework. A research repository can be reused in a way that changes these facts. Therefore, statements such as “limited risk,” “high risk,” “Annex IV compliant,” or “ready for conformity assessment” are not made for this release.
 
-- **Training data:** Public datasets only (NinaPro, PhysioNet, Brain-BIDS)
-- **No personal data:** No PII collected or stored
-- **Data minimization:** Only biosignal arrays and metadata are loaded
-- **Datasheets:** Each dataset has a Pushkarna et al. (2022) datasheet
+## What the release does provide
 
-## 3. Model Architecture
+| Engineering element | Current, verifiable purpose | What it does not prove |
+|---|---|---|
+| Run and artifact manifests | Reconstructing a declared research execution and its inputs/outputs by reference. | Legal record-keeping sufficiency for a regulated deployment. |
+| Provenance and dataset policy | Preserving source, version, license, processing, and evidence context. | Lawful access, GDPR compliance, or authorized clinical use. |
+| Tests, CI, static checks, and release files | Improving software quality and reproducibility. | Medical-device safety, clinical performance, cybersecurity certification, or regulatory conformity. |
+| Research-only labeling and limitations | Preventing accidental overstatement of present evidence. | Prevention of all downstream misuse. |
 
-See `docs/architecture.md` for the full architecture description.
+## Conditions before considering a regulated or clinical pathway
 
-## 4. Risk Management
+A separate product program would need a fixed intended use, accountable legal manufacturer/deployer roles, quality and risk-management processes, data-governance and cybersecurity plans, human-factors work where relevant, validated performance for the intended population/use environment, and qualified regulatory/legal review. Those activities are outside this repository's current evidence scope.
 
-- **Identified risks:** Misuse for clinical decision-making; biased performance
-  on underrepresented populations; adversarial inputs.
-- **Mitigations:** Clear "research-grade only" labeling; statistical rigor
-  suite for honest reporting; input validation on all REST endpoints.
+## Research-use boundary
 
-## 5. Post-Market Monitoring
+Do not use BioSignal-FM outputs for diagnosis, treatment, monitoring, patient management, or decisions about an individual. Do not describe this software, its models, its benchmarks, or its documentation as EU AI Act compliant, certified, limited-risk, high-risk, medically validated, or regulatory-ready without a separate evidence package and qualified review.
 
-- **Issue tracker:** https://github.com/qussaiadlbi/biosignal-fm/issues
-- **Security policy:** SECURITY.md
-- **Vulnerability reporting:** qussai.adlbi@proton.me
-
-## 6. Transparency
-
-- **Open source:** Apache 2.0
-- **Model cards:** Auto-generated via `biosignal_fm.deployment`
-- **Run manifests:** SHA-256 of all outputs, env fingerprint, git HEAD
+See [`docs/data_governance.md`](../data_governance.md) for data handling and [`RELEASE_MANIFEST.md`](../../RELEASE_MANIFEST.md) for the scientific claim boundary.

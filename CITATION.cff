@@ -1,46 +1,38 @@
-cff-version: "4.0.1"
-message: "If you use BioSignal-FM in your research, please cite it as below."
-title: "BioSignal-FM: A Unified Foundation Model for Surface Biosignals"
+cff-version: "1.2.0"
+message: "If you use BioSignal-FM in research, please cite the software release below."
+title: "BioSignal-FM: Multimodal Biosignal Research Platform"
 abstract: >-
-  BioSignal-FM is a transformer-based foundation model architecture for
-  self-supervised learning on four heterogeneous surface biosignal
-  modalities (EMG, ECG, EEG, fNIRS), targeting unified cross-modality
-  representation learning. The pipeline, statistical evaluation
-  framework, and pre-registered analysis plan (H1-H3) are complete and
-  verified; SSL pretraining on real data and the cross-modal transfer
-  hypothesis (H2) are not yet empirically validated — see the paper
-  draft and pre-registration for the current, honestly-reported status.
+  BioSignal-FM is a modular research platform for reproducible multimodal
+  biosignal processing, representation-learning experiments, modality-specific
+  adapters, evaluation, provenance, and artifact management. EMG, EEG, and ECG
+  are core research tracks; ECoG/iEEG is experimental and fNIRS is an optional
+  extension. The software does not claim a validated universal foundation model,
+  clinical readiness, or cross-modal generalization without separately reported
+  evidence.
 authors:
   - family-names: Adlbi
     given-names: Qussai
-    
-    
-    affiliation: >-
-      Al-Andalus University (Syria) / Pázmány Péter Catholic University (Hungary)
+    affiliation: "Al-Andalus University (Syria) / Pázmány Péter Catholic University (Hungary)"
     email: qussai.adlbi@proton.me
 keywords:
   - biosignal
-  - foundation-model
+  - representation-learning
   - self-supervised-learning
   - EMG
   - ECG
   - EEG
-  - fNIRS
-  - transformer
-  - deep-learning
+  - multimodal
+  - reproducibility
   - biomedical-engineering
 license: Apache-2.0
-repository-code: "https://github.com/Qussai-BME/BioSignal-FM"
-version: "4.0.1"
-date-released: "2026-08-25"
+repository-code: "https://github.com/qussaiadlbi/biosignal-fm"
+version: "4.0.3"
+date-released: "2026-08-26"
 preferred-citation:
   type: software
-  title: "BioSignal-FM: A Unified Foundation Model for Surface Biosignals"
-  doi: https://doi.org/10.5281/zenodo.22095717
+  title: "BioSignal-FM: Multimodal Biosignal Research Platform"
   authors:
     - family-names: Adlbi
       given-names: Qussai
   year: 2026
-  url: "https://github.com/Qussai-BME/BioSignal-FM"
-  notes: >-
-    DOI placeholder — replace with Zenodo DOI after first release.
+  url: "https://github.com/qussaiadlbi/biosignal-fm"

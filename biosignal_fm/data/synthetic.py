@@ -342,7 +342,7 @@ def _generate_signal(
         envelope = class_envelope * burst + session_noise
         signal = carrier[None, :] * envelope[None, :] * np.linspace(0.8, 1.2, n_channels)[:, None]
         signal += rng.normal(0, session_noise, signal.shape)
-        return signal.astype(np.float32)
+        return np.asarray(signal, dtype=np.float32)
 
     elif modality == Modality.ECG:
         # Heart rate: 60 bpm for rest, up to 120 bpm for active
@@ -356,7 +356,7 @@ def _generate_signal(
             ecg += 0.3 * np.exp(-((t - beat_t - 0.2) ** 2) / (2 * 0.04**2))
         signal = np.stack([ecg + 0.1 * rng.normal(0, 1, n_samples) for _ in range(n_channels)])
         signal += subject_offset
-        return signal.astype(np.float32)
+        return np.asarray(signal, dtype=np.float32)
 
     elif modality == Modality.EEG:
         # 10 Hz alpha + class-dependent beta (20-30 Hz)
@@ -368,7 +368,7 @@ def _generate_signal(
         pink = pink / (np.max(np.abs(pink)) + 1e-8) * 0.3
         base = alpha + beta + pink + subject_offset
         signal = np.stack([base + 0.05 * rng.normal(0, 1, n_samples) for _ in range(n_channels)])
-        return signal.astype(np.float32)
+        return np.asarray(signal, dtype=np.float32)
 
     elif modality == Modality.ECOG:
         # Experimental smoke-test waveform: high-frequency carrier with an
@@ -378,7 +378,7 @@ def _generate_signal(
         envelope = 0.2 + class_envelope + 0.1 * np.sin(2 * np.pi * 2 * t)
         base = high_gamma * envelope + subject_offset
         signal = np.stack([base + 0.08 * rng.normal(0, 1, n_samples) for _ in range(n_channels)])
-        return signal.astype(np.float32)
+        return np.asarray(signal, dtype=np.float32)
 
     elif modality == Modality.FNIRS:
         # 0.1 Hz hemodynamic response
@@ -389,7 +389,7 @@ def _generate_signal(
         drift = 0.1 * np.sin(2 * np.pi * 0.01 * t)
         base = hb + drift + subject_offset
         signal = np.stack([base + 0.02 * rng.normal(0, 1, n_samples) for _ in range(n_channels)])
-        return signal.astype(np.float32)
+        return np.asarray(signal, dtype=np.float32)
 
     else:  # pragma: no cover
         raise ValueError(f"Unknown modality: {modality}")

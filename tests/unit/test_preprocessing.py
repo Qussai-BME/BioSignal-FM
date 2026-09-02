@@ -158,3 +158,76 @@ class TestPreprocessingPipeline:
         pipe = PreprocessingPipeline(config=cfg, modality=Modality.EMG)
         with pytest.raises(RuntimeError):
             pipe.transform(np.random.randn(4, 1000), source_sampling_rate_hz=2000)
+
+
+class TestCanonicalSignalPreprocessing:
+    def test_with_data_records_processing_history_and_preserves_time_basis(self) -> None:
+        from biosignal_fm.core import (
+            DataOrigin,
+            Signal,
+            SignalMetadata,
+            SignalProcessingStep,
+            SignalProvenance,
+        )
+
+        signal = Signal(
+            data=np.ones((2, 8), dtype=np.float32),
+            metadata=SignalMetadata(
+                modality="emg",
+                sampling_rate_hz=100.0,
+                channel_names=("E1", "E2"),
+                provenance=SignalProvenance(origin=DataOrigin.REAL),
+            ),
+            timestamps_seconds=np.arange(8, dtype=np.float64) / 100.0,
+            missing_mask=np.zeros((2, 8), dtype=bool),
+        )
+        processed = signal.with_data(
+            signal.data * 2,
+            processing_step=SignalProcessingStep(
+                name="unit-test-filter",
+                version="v1",
+                config_hash="a" * 64,
+            ),
+            preprocessing_status="preprocessed",
+        )
+        assert processed.metadata.preprocessing_status == "preprocessed"
+        assert processed.timestamps_seconds is not None
+        np.testing.assert_array_equal(processed.timestamps_seconds, signal.timestamps_seconds)
+        assert processed.missing_mask is not None
+        assert len(processed.metadata.provenance.processing_history) == 1
+        assert processed.metadata.provenance.processing_history[0].name == "unit-test-filter"
+
+    def test_shape_change_requires_explicit_time_and_missingness_policy(self) -> None:
+        from biosignal_fm.core import Signal, SignalMetadata
+
+        signal = Signal(
+            data=np.ones((1, 8), dtype=np.float32),
+            metadata=SignalMetadata(modality="ecg", sampling_rate_hz=100.0, channel_names=("I",)),
+            timestamps_seconds=np.arange(8, dtype=np.float64) / 100.0,
+        )
+        with pytest.raises(ValueError, match="replacement timestamps_seconds"):
+            signal.with_data(np.ones((1, 4), dtype=np.float32), sampling_rate_hz=50.0)
+
+    def test_transform_signal_records_fitted_pipeline_provenance(self) -> None:
+        from biosignal_fm.core import Signal, SignalMetadata
+
+        rng = np.random.default_rng(7)
+        raw_signals = [rng.normal(size=(2, 4000)).astype(np.float32) for _ in range(2)]
+        pipeline = PreprocessingPipeline(
+            PreprocessingConfig(target_sampling_rate_hz=200), Modality.EMG
+        )
+        pipeline.fit(raw_signals, source_sampling_rate_hz=2000)
+        signal = Signal(
+            data=raw_signals[0],
+            metadata=SignalMetadata(
+                modality="emg", sampling_rate_hz=2000.0, channel_names=("E1", "E2")
+            ),
+            timestamps_seconds=np.arange(4000, dtype=np.float64) / 2000.0,
+        )
+        processed = pipeline.transform_signal(signal)
+        assert processed.metadata.sampling_rate_hz == 200.0
+        assert processed.metadata.preprocessing_status == "preprocessed"
+        assert processed.data.shape == (2, 400)
+        assert processed.timestamps_seconds is not None
+        assert len(processed.metadata.provenance.processing_history) == 1
+        assert processed.metadata.provenance.processing_history[0].name == "emg_preprocessing"

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "biosignal-fm"
-version = "4.0.1"
+version = "4.0.3"
 description = "BioSignal-FM: a modular multimodal biosignal research platform"
 readme = "README.md"
 license = { file = "LICENSE" }

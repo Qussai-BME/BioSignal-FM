@@ -1,0 +1,6 @@
+BioSignal-FM-4.0.3 import/version PASS
+BioSignal-FM-4.0.3 wheel CLI PASS
+MyoSim-0.1.5 import/version PASS
+MyoSim-0.1.5 wheel CLI PASS
+Human-Motor-Intelligence-0.2.1 import/version PASS
+Human-Motor-Intelligence-0.2.1 wheel CLI PASS

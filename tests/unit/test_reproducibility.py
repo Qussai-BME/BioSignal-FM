@@ -159,3 +159,52 @@ class TestNumpyAwareJSONEncoder:
 
         with pytest.raises(TypeError, match="not JSON serializable"):
             json.dumps(Custom(), cls=NumpyAwareJSONEncoder)
+
+
+class TestResearchRecordCompleteness:
+    def test_experiment_id_is_deterministic_for_equivalent_definitions(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        environment = {"python_version": "3.12", "packages": []}
+        monkeypatch.setattr("biosignal_fm.reproducibility.env_fingerprint", lambda: environment)
+        monkeypatch.setattr("biosignal_fm.reproducibility._get_git_head", lambda: "a" * 40)
+        monkeypatch.setattr("biosignal_fm.reproducibility._get_git_dirty", lambda: False)
+        kwargs = {
+            "name": "same-definition",
+            "config": {"preprocessing": {"version": "v1"}},
+            "seed": 7,
+            "model_id": "encoder-v1",
+            "dataset_provenance": {
+                "dataset_id": "demo-dataset",
+                "dataset_version": "1.0",
+                "license_id": "CC-BY-4.0",
+                "origin": "real",
+            },
+            "protocol": {
+                "protocol_id": "loso-v1",
+                "split": "leave-one-subject-out",
+                "metrics": ["macro_f1"],
+                "unit_of_analysis": "subject",
+            },
+        }
+        first = RunManifest.create(**kwargs)
+        second = RunManifest.create(**kwargs)
+        assert first.run_id != second.run_id
+        assert first.experiment_id == second.experiment_id
+        assert first.research_readiness_issues == ()
+        first.validate_research_readiness()
+
+    def test_incomplete_manifest_cannot_support_a_real_data_claim(self) -> None:
+        manifest = RunManifest.create(name="incomplete")
+        assert "dataset_provenance" in manifest.research_readiness_issues
+        assert "model_id" in manifest.research_readiness_issues
+        with pytest.raises(ValueError, match="not complete"):
+            manifest.validate_research_readiness()
+
+    def test_serialized_manifest_recomputes_experiment_identity(self, tmp_path: Path) -> None:
+        manifest = RunManifest.create(name="serialized", model_id="encoder-v1")
+        path = manifest.save(tmp_path / "manifest.json")
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        assert payload["experiment_id"] == manifest.experiment_id
+        loaded = RunManifest.load(path)
+        assert loaded.experiment_id == manifest.experiment_id

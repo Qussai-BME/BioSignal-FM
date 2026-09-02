@@ -6,8 +6,8 @@ This product includes software developed by Qussai Adlbi
 
 ================================================================================
 
-This product includes and/or depends on the following third-party software,
-distributed under their respective licenses:
+This product includes or may interface with the following third-party software,
+distributed under their respective licenses when the relevant optional capability is installed:
 
 1. PyTorch
    Copyright (c) Soumith Chintala and contributors
@@ -82,14 +82,21 @@ distributed under their respective licenses:
 This product includes reference datasets accessed at runtime but not
 redistributed:
 
-- NinaPro Database (DB5, DB7) — Atzori et al., 2014.
-  License: research use only (https://ninapro.hevs.ch/)
-- PhysioNet MIT-BIH Arrhythmia Database — Goldberger et al., 2000.
-  License: ODC Public Domain Dedication and License (PDDL)
-- PhysioNet EEG Motor Movement/Imagery Dataset — Schalk et al., 2004.
-  License: ODC Public Domain Dedication and License (PDDL)
+- NinaPro Database 5 (DB5), Zenodo record 1000116 — Pizzolato et al., 2017.
+  License: Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0).
+  Source: https://doi.org/10.5281/zenodo.1000116
+- PhysioNet MIT-BIH Arrhythmia Database v1.0.0 — Moody and Mark, 2001.
+  License: Open Data Commons Attribution License v1.0 (ODC-By 1.0).
+  Source: https://physionet.org/content/mitdb/1.0.0/
+- PhysioNet EEG Motor Movement/Imagery Database v1.0.0 — Schalk et al., 2004.
+  License: Open Data Commons Attribution License v1.0 (ODC-By 1.0).
+  Source: https://physionet.org/content/eegmmidb/1.0.0/
 - fNIRS datasets from the Brain-BIDS initiative.
-  License: per-dataset (see individual dataset documentation)
+  License: per-dataset; no fNIRS real-data result is distributed or claimed.
+
+Dataset files are never redistributed with BioSignal-FM. The authoritative
+source, version, access, and license records for active validation tracks are
+maintained in `docs/data_source_register.md`.
 
 ================================================================================
 

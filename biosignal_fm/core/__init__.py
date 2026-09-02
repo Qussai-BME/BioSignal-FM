@@ -6,6 +6,7 @@ from .contracts import (
     SignalBatch,
     SignalEvent,
     SignalMetadata,
+    SignalProcessingStep,
     SignalProvenance,
 )
 
@@ -15,5 +16,6 @@ __all__ = [
     "SignalBatch",
     "SignalEvent",
     "SignalMetadata",
+    "SignalProcessingStep",
     "SignalProvenance",
 ]

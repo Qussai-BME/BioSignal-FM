@@ -126,6 +126,21 @@ def test_multimodal_pipeline_fuses_before_task_head() -> None:
     assert trace == ["encode:emg", "encode:eeg", "fuse", "head"]
     assert result.contains_synthetic_data
     assert result.result_label == "synthetic_demo"
+    assert result.task_input.present_modalities == ("emg", "eeg")
+    assert all(
+        representation.present_modalities == ("emg", "eeg")
+        for representation in result.representations
+    )
+
+
+def test_unimodal_pipeline_preserves_explicit_availability_context() -> None:
+    pipeline = ResearchPipeline(
+        registry=default_registry(),
+        encoder=_Encoder([]),
+        task_head=_Head([]),
+    )
+    result = pipeline.run(SignalBatch((_signal("ecg"),)))
+    assert result.task_input.present_modalities == ("ecg",)
 
 
 def test_multimodal_pipeline_rejects_late_task_head_fusion() -> None:

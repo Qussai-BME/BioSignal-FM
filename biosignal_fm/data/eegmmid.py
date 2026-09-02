@@ -12,6 +12,7 @@ on Biomedical Engineering, 51(6), 1034-1043.
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -127,6 +128,8 @@ class EEGMMIDLoader:
         n_subjects: int = 10,
         window_length_seconds: float = 2.0,
         target_sampling_rate_hz: int = 160,
+        runs: tuple[int, ...] = (4, 8, 12),
+        allow_synthetic_fallback: bool = False,
     ) -> None:
         self.root_dir = Path(root_dir) if root_dir else None
         self.cache_dir = (
@@ -137,6 +140,18 @@ class EEGMMIDLoader:
         self.n_subjects = min(max(n_subjects, 1), 109)
         self.window_length_seconds = window_length_seconds
         self.target_sampling_rate_hz = target_sampling_rate_hz
+        self.runs = tuple(sorted(set(runs)))
+        self.allow_synthetic_fallback = allow_synthetic_fallback
+        if target_sampling_rate_hz != self.NATIVE_SAMPLING_RATE_HZ:
+            raise ValueError(
+                "EEGMMIDLoader does not resample raw data; use the explicit "
+                "PreprocessingPipeline after loading canonical signals"
+            )
+        if not self.runs or any(run not in {4, 8, 12} for run in self.runs):
+            raise ValueError(
+                "EEGMMIDLoader supports annotation-defined left/right motor-imagery "
+                "runs 4, 8, and 12 only"
+            )
 
         self._metadata = ModalityMetadata(
             modality=self.MODALITY,
@@ -200,32 +215,13 @@ class EEGMMIDLoader:
             ) from e
 
         samples: list[BiosignalSample] = []
-        # Map EEGMMID run numbers to labels (T = rest, T1 = left fist, etc.)
-        # Run 1 = baseline eyes open, Run 2 = baseline eyes closed,
-        # Run 3, 7, 11 = T (open/close left or right fist)
-        # Run 4, 8, 12 = T1 (imagine left fist)
-        # Run 5, 9, 13 = T2 (imagine right fist)
-        # Run 6, 10, 14 = T3 (both fists or both feet)
-        run_to_label = {
-            1: 0,
-            2: 0,
-            3: 0,  # rest
-            4: 1,
-            8: 1,
-            12: 1,  # left_fist
-            5: 2,
-            9: 2,
-            13: 2,  # right_fist
-            6: 3,
-            10: 3,
-            14: 3,  # both_fists (approx; some are both_feet)
-            7: 0,
-            11: 0,  # rest
-        }
-
-        n_subjects_loaded = 0
+        # Official EEGMMID semantics depend on the run. Restrict this loader to
+        # runs 4/8/12, where T1 and T2 denote imagined left and right fist.
+        annotation_to_label = {"T1": 1, "T2": 2}
         seen_subjects: set[int] = set()
         n_samples_per_window = int(self.NATIVE_SAMPLING_RATE_HZ * self.window_length_seconds)
+        if n_samples_per_window <= 0:
+            raise ValueError("window_length_seconds must be positive")
 
         for edf_path in edf_files:
             # Parse subject + run number from filename like "S001R03.edf".
@@ -234,16 +230,10 @@ class EEGMMIDLoader:
                 run_id = int(edf_path.stem[4:].lstrip("R"))
             except (ValueError, IndexError):
                 continue
-            if subj_id in seen_subjects:
-                pass  # we accept multiple runs per subject
             if len(seen_subjects) >= self.n_subjects and subj_id not in seen_subjects:
                 continue
             seen_subjects.add(subj_id)
-
-            if run_id not in run_to_label:
-                continue
-            label = run_to_label[run_id]
-            if label >= len(self.EEGMMID_LABELS):
+            if run_id not in self.runs:
                 continue
 
             try:
@@ -257,55 +247,65 @@ class EEGMMIDLoader:
                 )
                 continue
 
-            data = raw.get_data().astype(np.float32)  # (n_channels, n_samples)
-            if data.shape[0] != self.NATIVE_N_CHANNELS:
+            if len(raw.ch_names) != self.NATIVE_N_CHANNELS:
                 continue
-
-            # Extract a few windows from the middle of the recording.
-            n_total = data.shape[1]
-            if n_total < n_samples_per_window:
-                continue
-            n_windows = min(5, n_total // n_samples_per_window)
-            for w in range(n_windows):
-                start = (
-                    (n_total // 2)
-                    - (n_windows * n_samples_per_window // 2)
-                    + w * n_samples_per_window
-                )
-                if start < 0 or start + n_samples_per_window > n_total:
+            source_file_sha256 = hashlib.sha256(edf_path.read_bytes()).hexdigest()
+            channel_names = tuple(name.rstrip(".") for name in raw.ch_names)
+            for annotation in raw.annotations:
+                description = str(annotation["description"])
+                if description not in annotation_to_label:
                     continue
-                window = data[:, start : start + n_samples_per_window]
+                start = int(round(float(annotation["onset"]) * self.NATIVE_SAMPLING_RATE_HZ))
+                duration_samples = int(
+                    round(float(annotation["duration"]) * self.NATIVE_SAMPLING_RATE_HZ)
+                )
+                if duration_samples < n_samples_per_window:
+                    continue
+                window = raw.get_data(start=start, stop=start + n_samples_per_window).astype(
+                    np.float32
+                )
+                if window.shape != (self.NATIVE_N_CHANNELS, n_samples_per_window):
+                    continue
+                label = annotation_to_label[description]
                 samples.append(
                     BiosignalSample(
                         signal=window,
                         modality=Modality.EEG,
                         sampling_rate_hz=self.NATIVE_SAMPLING_RATE_HZ,
                         subject_id=subj_id,
-                        session_id=0,
+                        session_id=run_id,
                         label=label,
                         label_name=self.EEGMMID_LABELS[label],
                         metadata={
+                            "dataset_id": "physionet.eegmmidb.1.0.0",
+                            "dataset_version": "1.0.0",
+                            "source_uri": "https://www.physionet.org/content/eegmmidb/1.0.0/",
+                            "license_id": "ODC-BY-1.0",
                             "source_file": edf_path.name,
+                            "source_file_sha256": source_file_sha256,
                             "run_id": run_id,
+                            "event_description": description,
+                            "event_onset_seconds": float(annotation["onset"]),
+                            "channel_names": channel_names,
                         },
                     )
                 )
-            n_subjects_loaded += 1
-            if n_subjects_loaded >= self.n_subjects:
-                break
         return samples
 
     def _load(self) -> list[BiosignalSample]:
-        """Load samples, falling back to synthetic with a UserWarning."""
+        """Load real samples or enter an explicitly requested synthetic smoke path."""
         samples = self._load_raw()
         if not samples:
+            if not self.allow_synthetic_fallback:
+                raise FileNotFoundError(
+                    f"No real EEGMMID windows found at {self.root_dir!r}. "
+                    "Set allow_synthetic_fallback=True only for a development smoke path."
+                )
             import warnings
 
             warnings.warn(
-                f"EEGMMIDLoader falling back to synthetic data. "
-                f"No real .edf files found at {self.root_dir!r}. "
-                f"Download EEGMMID from https://physionet.org/content/eegmmidb/ "
-                f"and set root_dir to the extracted directory for real data.",
+                f"EEGMMIDLoader using explicit synthetic fallback. "
+                f"No real .edf files found at {self.root_dir!r}.",
                 UserWarning,
                 stacklevel=2,
             )

@@ -70,7 +70,14 @@ extra_javascript:
 nav:
   - Home: index.md
   - Architecture:
+      - Master Platform Specification: master_specification.md
       - Current V4 Architecture: architecture_v4.md
+      - Signal Contract: signal-contract.md
+      - Modality Registry: modality-registry.md
+      - Preprocessing: preprocessing.md
+      - Encoders: encoders.md
+      - Tasks: tasks.md
+      - Multimodal Learning: multimodal.md
       - Legacy Architecture Reference: architecture.md
   - Migration:
       - V4 Migration Notes: migration_notes_v4.md
@@ -81,7 +88,25 @@ nav:
       - Test Report: test_report_v4.md
       - UI Visual Check: ui_visual_check_v4.md
       - V4 Roadmap: roadmap_v4.md
+      - Master Roadmap: roadmap.md
+      - Evaluation: evaluation.md
+      - Provenance: provenance.md
+      - Reproducibility: reproducibility.md
+      - Security: security.md
+      - Specification Convergence Report: specification_convergence_report.md
       - Data Governance: data_governance.md
+      - Real-Data Source Register: data_source_register.md
+      - EMG Source Notes: data_source_notes_emg.md
+      - EEG Source Notes: data_source_notes_eeg.md
+      - ECG Source Notes: data_source_notes_ecg.md
+      - Phase 4 EMG Validation: phase_04_emg_validation.md
+      - Phase 5 EEG Validation: phase_05_eeg_validation.md
+      - Phase 6 ECG Validation: phase_06_ecg_validation.md
+      - Phase 7 Evaluation Evidence: phase_07_evaluation_evidence.md
+      - Phase 8 Multimodal Readiness: phase_08_multimodal_readiness.md
+      - Phase 9 Release Dossier: phase_09_release_dossier.md
+      - Master Execution Report: master_execution_report.md
+      - Specification Re-Audit: specification_reaudit.md
       - Pre-Publication Risk Register: prepublication_risk_register_2026.md
       - External Evidence Register: references_prepublication_review_2026.md
   - Quickstart: quickstart.md

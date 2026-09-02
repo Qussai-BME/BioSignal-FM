@@ -1,0 +1,10 @@
+include README.md
+include LICENSE
+include AUTHORS.md
+include NOTICE
+include CITATION.cff
+include RELEASE_NOTES_4_0_3.md
+recursive-include docs *.md
+recursive-include configs *.yaml *.yml *.json
+recursive-include scripts *.py
+recursive-include tests *.py

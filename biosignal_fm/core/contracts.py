@@ -9,7 +9,7 @@ pipeline.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timezone
 from enum import Enum
 from types import MappingProxyType
@@ -20,6 +20,7 @@ import numpy as np
 __all__ = [
     "DataOrigin",
     "SignalProvenance",
+    "SignalProcessingStep",
     "SignalEvent",
     "SignalMetadata",
     "Signal",
@@ -33,6 +34,24 @@ class DataOrigin(str, Enum):
     REAL = "real"
     SYNTHETIC = "synthetic"
     UNKNOWN = "unknown"
+
+
+@dataclass(frozen=True)
+class SignalProcessingStep:
+    """One explicit, versioned signal transformation recorded in provenance."""
+
+    name: str
+    version: str
+    config_hash: str
+    parameters: Mapping[str, Any] = field(default_factory=dict)
+    applied_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+    def __post_init__(self) -> None:
+        for field_name in ("name", "version", "config_hash"):
+            value = getattr(self, field_name)
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError(f"SignalProcessingStep.{field_name} must be a non-empty string")
+        object.__setattr__(self, "parameters", MappingProxyType(dict(self.parameters)))
 
 
 @dataclass(frozen=True)
@@ -54,9 +73,16 @@ class SignalProvenance:
     fallback_reason: str | None = None
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     details: Mapping[str, Any] = field(default_factory=dict)
+    processing_history: tuple[SignalProcessingStep, ...] = ()
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "details", MappingProxyType(dict(self.details)))
+        history = tuple(self.processing_history)
+        if not all(isinstance(step, SignalProcessingStep) for step in history):
+            raise TypeError(
+                "SignalProvenance.processing_history must contain SignalProcessingStep values"
+            )
+        object.__setattr__(self, "processing_history", history)
         if self.origin is DataOrigin.SYNTHETIC and not self.fallback_reason:
             # Synthetic data may be intentionally generated, not just used as a
             # fallback. The explicit reason remains required for auditability.
@@ -66,6 +92,12 @@ class SignalProvenance:
     def is_synthetic(self) -> bool:
         """Return whether this signal comes from synthetic generation."""
         return self.origin is DataOrigin.SYNTHETIC
+
+    def with_processing_step(self, step: SignalProcessingStep) -> SignalProvenance:
+        """Return provenance extended with one explicit transformation record."""
+        if not isinstance(step, SignalProcessingStep):
+            raise TypeError("step must be a SignalProcessingStep")
+        return replace(self, processing_history=(*self.processing_history, step))
 
 
 @dataclass(frozen=True)
@@ -105,6 +137,7 @@ class SignalMetadata:
     acquisition_system: str | None = None
     source_dataset: str | None = None
     window_id: str | None = None
+    preprocessing_status: str = "raw"
     provenance: SignalProvenance = field(default_factory=SignalProvenance)
     extra: Mapping[str, Any] = field(default_factory=dict)
 
@@ -120,7 +153,10 @@ class SignalMetadata:
             raise ValueError("SignalMetadata.channel_names must be unique")
         if isinstance(self.units, tuple) and len(self.units) not in (1, len(self.channel_names)):
             raise ValueError("SignalMetadata.units must contain one unit or one unit per channel")
+        if not isinstance(self.preprocessing_status, str) or not self.preprocessing_status.strip():
+            raise ValueError("SignalMetadata.preprocessing_status must be a non-empty string")
         object.__setattr__(self, "modality", normalized_modality)
+        object.__setattr__(self, "preprocessing_status", self.preprocessing_status.strip().lower())
         object.__setattr__(self, "extra", MappingProxyType(dict(self.extra)))
 
     @property
@@ -190,16 +226,60 @@ class Signal:
         data: np.ndarray,
         *,
         sampling_rate_hz: float | None = None,
+        timestamps_seconds: np.ndarray | None = None,
+        missing_mask: np.ndarray | None = None,
+        processing_step: SignalProcessingStep | None = None,
+        preprocessing_status: str | None = None,
         extra_metadata: Mapping[str, Any] | None = None,
     ) -> Signal:
-        """Return a new signal after a transformation while retaining provenance."""
+        """Return a transformed signal without silently losing scientific context.
+
+        A shape-changing transformation must provide replacement timestamps or a
+        replacement missingness mask when the source carried either. This keeps
+        resampling and windowing semantics explicit rather than allowing stale
+        metadata to survive a changed sample axis.
+        """
+        transformed = np.asarray(data)
+        same_sample_count = transformed.ndim == 2 and transformed.shape[1] == self.data.shape[1]
+        if (
+            self.timestamps_seconds is not None
+            and timestamps_seconds is None
+            and not same_sample_count
+        ):
+            raise ValueError(
+                "Shape-changing transformation requires replacement timestamps_seconds"
+            )
+        if (
+            self.missing_mask is not None
+            and missing_mask is None
+            and transformed.shape != self.data.shape
+        ):
+            raise ValueError("Shape-changing transformation requires replacement missing_mask")
+
+        resolved_timestamps = timestamps_seconds
+        if resolved_timestamps is None and same_sample_count:
+            resolved_timestamps = self.timestamps_seconds
+        resolved_missing_mask = missing_mask
+        if resolved_missing_mask is None and transformed.shape == self.data.shape:
+            resolved_missing_mask = self.missing_mask
+
         metadata = self.metadata
-        if sampling_rate_hz is not None or extra_metadata:
+        if (
+            sampling_rate_hz is not None
+            or extra_metadata
+            or processing_step is not None
+            or preprocessing_status is not None
+        ):
             merged_extra = dict(metadata.extra)
             merged_extra.update(extra_metadata or {})
+            provenance = metadata.provenance
+            if processing_step is not None:
+                provenance = provenance.with_processing_step(processing_step)
             metadata = SignalMetadata(
                 modality=metadata.modality,
-                sampling_rate_hz=sampling_rate_hz or metadata.sampling_rate_hz,
+                sampling_rate_hz=(
+                    sampling_rate_hz if sampling_rate_hz is not None else metadata.sampling_rate_hz
+                ),
                 channel_names=metadata.channel_names,
                 units=metadata.units,
                 subject_id=metadata.subject_id,
@@ -209,10 +289,17 @@ class Signal:
                 acquisition_system=metadata.acquisition_system,
                 source_dataset=metadata.source_dataset,
                 window_id=metadata.window_id,
-                provenance=metadata.provenance,
+                preprocessing_status=preprocessing_status or metadata.preprocessing_status,
+                provenance=provenance,
                 extra=merged_extra,
             )
-        return Signal(data=data, metadata=metadata, events=self.events)
+        return Signal(
+            data=data,
+            metadata=metadata,
+            timestamps_seconds=resolved_timestamps,
+            events=self.events,
+            missing_mask=resolved_missing_mask,
+        )
 
 
 @dataclass(frozen=True)

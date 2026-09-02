@@ -672,16 +672,11 @@ class TestNyquistValidation:
         assert out.shape == sig.shape
 
     def test_low_ge_high_raises(self) -> None:
-        """A bandpass with low >= high must raise."""
-        import numpy as np
-        from biosignal_fm.config import Modality, PreprocessingConfig
-        from biosignal_fm.preprocessing import ModalityFilterBank
+        """A bandpass with low >= high must fail before preprocessing executes."""
+        from biosignal_fm.config import PreprocessingConfig
 
-        cfg = PreprocessingConfig(emg_bandpass=(100.0, 100.0))
-        fb = ModalityFilterBank(cfg)
-        sig = np.random.randn(4, 4000).astype(np.float32)
-        with pytest.raises(ValueError, match="must be < high"):
-            fb.filter(sig, Modality.EMG, sampling_rate_hz=2000)
+        with pytest.raises(ValueError, match="emg_bandpass"):
+            PreprocessingConfig(emg_bandpass=(100.0, 100.0))
 
 
 # --------------------------------------------------------------------------- #

@@ -9,7 +9,7 @@ This loader supports:
 - Loading from raw WFDB-format records (requires ``wfdb`` package and manual
   download from https://physionet.org/content/mitdb/)
 - Subject-aware (record-aware) enumeration for LOSO
-- Automatic fallback to :class:`SyntheticBiosignalDataset`
+- Explicit opt-in synthetic fallback for development-only smoke paths
 
 References
 ----------
@@ -23,6 +23,7 @@ Database. IEEE Engineering in Medicine and Biology Magazine, 20(3), 45-50.
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -61,7 +62,7 @@ class MITBIHLoader:
     MODALITY = Modality.ECG
     NATIVE_SAMPLING_RATE_HZ = 360
     NATIVE_N_CHANNELS = 2
-    CHANNEL_NAMES = ("MLII", "V1")
+    CHANNEL_NAMES = ("lead_1", "lead_2")
     AAMI_LABELS = ("normal", "sveb", "veb", "fusion", "paced")
 
     def __init__(
@@ -71,6 +72,7 @@ class MITBIHLoader:
         n_records: int = 10,
         window_length_seconds: float = 2.0,
         target_sampling_rate_hz: int = 360,
+        allow_synthetic_fallback: bool = False,
     ) -> None:
         self.root_dir = Path(root_dir) if root_dir else None
         self.cache_dir = (
@@ -81,6 +83,12 @@ class MITBIHLoader:
         self.n_records = min(max(n_records, 1), 48)
         self.window_length_seconds = window_length_seconds
         self.target_sampling_rate_hz = target_sampling_rate_hz
+        self.allow_synthetic_fallback = allow_synthetic_fallback
+        if target_sampling_rate_hz != self.NATIVE_SAMPLING_RATE_HZ:
+            raise ValueError(
+                "MITBIHLoader does not resample raw data; use the explicit "
+                "PreprocessingPipeline after loading canonical signals"
+            )
 
         self._metadata = ModalityMetadata(
             modality=self.MODALITY,
@@ -130,7 +138,7 @@ class MITBIHLoader:
 
         # Check for .hea files BEFORE importing wfdb, so that a directory
         # with no data does not require the optional dependency.
-        hea_files = sorted(self.root_dir.glob("*.hea"))
+        hea_files = sorted(self.root_dir.rglob("*.hea"))
         if not hea_files:
             return []
 
@@ -161,8 +169,19 @@ class MITBIHLoader:
 
             # record.p_signal: (n_samples, n_leads)
             signal = np.asarray(record.p_signal, dtype=np.float32)
-            if signal.ndim != 2 or signal.shape[1] != self.NATIVE_N_CHANNELS:
+            if (
+                signal.ndim != 2
+                or signal.shape[1] != self.NATIVE_N_CHANNELS
+                or int(round(float(record.fs))) != self.NATIVE_SAMPLING_RATE_HZ
+            ):
                 continue
+            channel_names = tuple(str(name) for name in record.sig_name)
+            units = tuple(str(unit) for unit in record.units)
+            source_file_sha256 = {
+                suffix: hashlib.sha256(hea_path.with_suffix(suffix).read_bytes()).hexdigest()
+                for suffix in (".hea", ".dat", ".atr")
+                if hea_path.with_suffix(suffix).is_file()
+            }
 
             # Map annotation symbols to AAMI classes.
             # AAMI: N=0, S=1, V=2, F=3, Q=4
@@ -200,12 +219,19 @@ class MITBIHLoader:
                         signal=window.T,  # (n_channels, n_samples)
                         modality=Modality.ECG,
                         sampling_rate_hz=self.NATIVE_SAMPLING_RATE_HZ,
-                        subject_id=n_records_loaded,
+                        subject_id=int(record_name),
                         session_id=0,
                         label=label,
                         label_name=self.AAMI_LABELS[label],
                         metadata={
+                            "dataset_id": "physionet.mitdb.1.0.0",
+                            "dataset_version": "1.0.0",
+                            "source_uri": "https://www.physionet.org/content/mitdb/1.0.0/",
+                            "license_id": "ODC-BY-1.0",
                             "source_record": record_name,
+                            "source_file_sha256": source_file_sha256,
+                            "channel_names": channel_names,
+                            "units": units,
                             "r_peak_sample": int(r_peak),
                             "raw_symbol": sym,
                         },
@@ -215,16 +241,19 @@ class MITBIHLoader:
         return samples
 
     def _load(self) -> list[BiosignalSample]:
-        """Load samples, falling back to synthetic with a UserWarning."""
+        """Load real samples or enter an explicitly requested synthetic smoke path."""
         samples = self._load_raw()
         if not samples:
+            if not self.allow_synthetic_fallback:
+                raise FileNotFoundError(
+                    f"No real MIT-BIH windows found at {self.root_dir!r}. "
+                    "Set allow_synthetic_fallback=True only for a development smoke path."
+                )
             import warnings
 
             warnings.warn(
-                f"MITBIHLoader falling back to synthetic data. "
-                f"No real .dat/.hea files found at {self.root_dir!r}. "
-                f"Download MIT-BIH from https://physionet.org/content/mitdb/ "
-                f"and set root_dir to the extracted directory for real data.",
+                f"MITBIHLoader using explicit synthetic fallback. "
+                f"No real .dat/.hea files found at {self.root_dir!r}.",
                 UserWarning,
                 stacklevel=2,
             )

@@ -55,6 +55,7 @@ class FnirsLoader:
         n_subjects: int = 10,
         window_length_seconds: float = 10.0,
         target_sampling_rate_hz: int = 10,
+        allow_synthetic_fallback: bool = False,
     ) -> None:
         self.root_dir = Path(root_dir) if root_dir else None
         self.cache_dir = (
@@ -65,6 +66,12 @@ class FnirsLoader:
         self.n_subjects = max(n_subjects, 1)
         self.window_length_seconds = window_length_seconds
         self.target_sampling_rate_hz = target_sampling_rate_hz
+        self.allow_synthetic_fallback = allow_synthetic_fallback
+        if target_sampling_rate_hz != self.NATIVE_SAMPLING_RATE_HZ:
+            raise ValueError(
+                "FnirsLoader does not resample raw data; use the explicit "
+                "PreprocessingPipeline after loading canonical signals"
+            )
 
         self._metadata = ModalityMetadata(
             modality=self.MODALITY,
@@ -279,16 +286,19 @@ class FnirsLoader:
         return samples
 
     def _load(self) -> list[BiosignalSample]:
-        """Load samples, falling back to synthetic with a UserWarning."""
+        """Load real samples or enter an explicitly requested synthetic smoke path."""
         samples = self._load_raw()
         if not samples:
+            if not self.allow_synthetic_fallback:
+                raise FileNotFoundError(
+                    f"No real fNIRS windows found at {self.root_dir!r}. "
+                    "Set allow_synthetic_fallback=True only for a development smoke path."
+                )
             import warnings
 
             warnings.warn(
-                f"FnirsLoader falling back to synthetic data. "
-                f"No real .snirf or .csv files found at {self.root_dir!r}. "
-                f"Download a Brain-BIDS fNIRS dataset and set root_dir to "
-                f"the extracted directory for real data.",
+                f"FnirsLoader using explicit synthetic fallback. "
+                f"No real .snirf or .csv files found at {self.root_dir!r}.",
                 UserWarning,
                 stacklevel=2,
             )

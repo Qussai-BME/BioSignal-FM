@@ -1,0 +1,209 @@
+............................................sss......................... [ 20%]
+........................................................................ [ 40%]
+........................................................................ [ 61%]
+........................................................................ [ 81%]
+................................................................         [100%]
+=============================== warnings summary ===============================
+tests/integration/test_end_to_end.py: 6 warnings
+tests/unit/test_cli.py: 1 warning
+tests/unit/test_deployment.py: 17 warnings
+tests/unit/test_models.py: 4 warnings
+tests/unit/test_training_tracking.py: 5 warnings
+tests/unit/test_ui_execution.py: 5 warnings
+tests/unit/test_v2_1_coverage.py: 3 warnings
+tests/unit/test_v2_1_features.py: 6 warnings
+tests/unit/test_v2_improvements.py: 5 warnings
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/models/foundation.py:299: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+    self.encoder = nn.TransformerEncoder(
+
+tests/integration/test_end_to_end.py::TestEndToEnd::test_full_pipeline_smoke
+tests/integration/test_end_to_end.py::TestEndToEnd::test_eeg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_ecg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_run_manifest_records_all_artifacts
+tests/unit/test_deployment.py::TestOnnxExporter::test_export_and_verify
+tests/unit/test_ui_execution.py::TestLiveDemoButtons::test_deploy_live_benchmark
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/models/foundation.py:377: TracerWarning: Converting a tensor to a Python list might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+    for m in unique_mods.tolist():
+
+tests/integration/test_end_to_end.py::TestEndToEnd::test_full_pipeline_smoke
+tests/integration/test_end_to_end.py::TestEndToEnd::test_eeg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_ecg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_run_manifest_records_all_artifacts
+tests/unit/test_deployment.py::TestOnnxExporter::test_export_and_verify
+tests/unit/test_ui_execution.py::TestLiveDemoButtons::test_deploy_live_benchmark
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/models/foundation.py:384: TracerWarning: Converting a tensor to a Python list might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+    for i, orig_idx in enumerate(idxs.tolist()):
+
+tests/integration/test_end_to_end.py::TestEndToEnd::test_full_pipeline_smoke
+tests/integration/test_end_to_end.py::TestEndToEnd::test_eeg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_ecg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_run_manifest_records_all_artifacts
+tests/unit/test_deployment.py::TestOnnxExporter::test_export_and_verify
+tests/unit/test_ui_execution.py::TestLiveDemoButtons::test_deploy_live_benchmark
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/models/foundation.py:399: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+    if seq_len > self.pos_encoding.shape[1]:
+
+tests/integration/test_end_to_end.py::TestEndToEnd::test_full_pipeline_smoke
+tests/integration/test_end_to_end.py::TestEndToEnd::test_eeg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_ecg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_run_manifest_records_all_artifacts
+tests/unit/test_deployment.py::TestOnnxExporter::test_export_and_verify
+tests/unit/test_ui_execution.py::TestLiveDemoButtons::test_deploy_live_benchmark
+  /usr/local/lib/python3.12/dist-packages/torch/nn/functional.py:6838: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+    if embed_dim != embed_dim_to_check:
+
+tests/integration/test_end_to_end.py::TestEndToEnd::test_full_pipeline_smoke
+tests/integration/test_end_to_end.py::TestEndToEnd::test_eeg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_ecg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_run_manifest_records_all_artifacts
+tests/unit/test_deployment.py::TestOnnxExporter::test_export_and_verify
+tests/unit/test_ui_execution.py::TestLiveDemoButtons::test_deploy_live_benchmark
+  /usr/local/lib/python3.12/dist-packages/torch/nn/functional.py:6847: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+    if head_dim * num_heads != embed_dim:
+
+tests/integration/test_end_to_end.py::TestEndToEnd::test_full_pipeline_smoke
+tests/integration/test_end_to_end.py::TestEndToEnd::test_eeg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_ecg_loader_to_prediction_to_onnx_fallback
+tests/integration/test_end_to_end.py::TestEndToEnd::test_run_manifest_records_all_artifacts
+tests/unit/test_deployment.py::TestOnnxExporter::test_export_and_verify
+tests/unit/test_ui_execution.py::TestLiveDemoButtons::test_deploy_live_benchmark
+  /usr/local/lib/python3.12/dist-packages/torch/nn/functional.py:6858: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+    if key.shape != value.shape:
+
+tests/unit/test_data.py::TestRealLoaders::test_ninapro
+tests/unit/test_data.py::TestRealLoaders::test_get_session_ids
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/ninapro.py:306: UserWarning: NinaProDB5Loader using explicit synthetic fallback. No real .mat files found at None.
+    self._samples = self._load()
+
+tests/unit/test_data.py::TestRealLoaders::test_mitbih
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/mitbih.py:277: UserWarning: MITBIHLoader using explicit synthetic fallback. No real .dat/.hea files found at None.
+    self._samples = self._load()
+
+tests/unit/test_data.py::TestRealLoaders::test_eegmmid
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/eegmmid.py:329: UserWarning: EEGMMIDLoader using explicit synthetic fallback. No real .edf files found at None.
+    self._samples = self._load()
+
+tests/unit/test_data.py::TestRealLoaders::test_fnirs
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/fnirs.py:322: UserWarning: FnirsLoader using explicit synthetic fallback. No real .snirf or .csv files found at None.
+    self._samples = self._load()
+
+tests/unit/test_deployment.py::TestFastAPIApp::test_health_endpoint
+  /usr/local/lib/python3.12/dist-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/unit/test_v2_1_coverage.py::TestNinaProLoaderFileParsing::test_parses_subject_id_from_filename
+tests/unit/test_v2_1_coverage.py::TestNinaProLoaderFileParsing::test_parses_subject_id_from_filename
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/ninapro.py:273: UserWarning: Failed to load /tmp/pytest-of-root/pytest-18/test_parses_subject_id_from_fi0/S1_E1_A1.mat: Mat file appears to be truncated. Skipping.
+    samples = self._load_raw()
+
+tests/unit/test_v2_1_coverage.py::TestNinaProLoaderFileParsing::test_parses_subject_id_from_filename
+tests/unit/test_v2_1_coverage.py::TestNinaProLoaderFileParsing::test_parses_subject_id_from_filename
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/ninapro.py:273: UserWarning: Failed to load /tmp/pytest-of-root/pytest-18/test_parses_subject_id_from_fi0/S2_E1_A1.mat: Mat file appears to be truncated. Skipping.
+    samples = self._load_raw()
+
+tests/unit/test_v2_1_coverage.py::TestNinaProLoaderFileParsing::test_parses_subject_id_from_filename
+tests/unit/test_v2_1_coverage.py::TestNinaProLoaderFileParsing::test_parses_subject_id_from_filename
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/ninapro.py:273: UserWarning: Failed to load /tmp/pytest-of-root/pytest-18/test_parses_subject_id_from_fi0/S3_E1_A1.mat: Mat file appears to be truncated. Skipping.
+    samples = self._load_raw()
+
+tests/unit/test_v2_1_coverage.py::TestMITBIHLoaderFileParsing::test_skips_malformed_hea_files
+tests/unit/test_v2_1_coverage.py::TestMITBIHLoaderFileParsing::test_skips_malformed_hea_files
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/data/mitbih.py:245: UserWarning: Failed to load MIT-BIH record 100: invalid syntax in record line. Skipping.
+    samples = self._load_raw()
+
+tests/unit/test_v2_1_features.py::TestJEPAHead::test_jepa_head_forward
+tests/unit/test_v2_1_features.py::TestJEPAHead::test_jepa_end_to_end_with_foundation_model
+  /home/ubuntu/hmi_professionalized/biosignal-fm/biosignal_fm/models/jepa_head.py:199: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+    self.predictor = nn.TransformerEncoder(
+
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+  /usr/local/lib/python3.12/dist-packages/statsmodels/base/model.py:607: ConvergenceWarning: Maximum Likelihood optimization failed to converge. Check mle_retvals
+    warnings.warn("Maximum Likelihood optimization failed to "
+
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+  /usr/local/lib/python3.12/dist-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with lbfgs
+    warnings.warn(
+
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+  /usr/local/lib/python3.12/dist-packages/statsmodels/regression/mixed_linear_model.py:2200: ConvergenceWarning: Retrying MixedLM optimization with cg
+    warnings.warn(
+
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+  /usr/local/lib/python3.12/dist-packages/statsmodels/regression/mixed_linear_model.py:2206: ConvergenceWarning: MixedLM optimization failed, trying a different optimizer may help.
+    warnings.warn(msg, ConvergenceWarning)
+
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+  /usr/local/lib/python3.12/dist-packages/statsmodels/regression/mixed_linear_model.py:2218: ConvergenceWarning: Gradient optimization failed, |grad| = 1.608081
+    warnings.warn(msg, ConvergenceWarning)
+
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+  /usr/local/lib/python3.12/dist-packages/statsmodels/regression/mixed_linear_model.py:2237: ConvergenceWarning: The MLE may be on the boundary of the parameter space.
+    warnings.warn(msg, ConvergenceWarning)
+
+tests/unit/test_v2_improvements.py::TestMixedEffectsAnalyzer::test_basic_fit
+  /usr/local/lib/python3.12/dist-packages/statsmodels/regression/mixed_linear_model.py:2261: ConvergenceWarning: The Hessian matrix at the estimated parameter values is not positive definite.
+    warnings.warn(msg, ConvergenceWarning)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Name                                          Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------------------
+biosignal_fm/baselines/classical.py             218      9     38      9    93%   145-146, 182->187, 194->196, 231, 233->235, 267, 356, 390, 403, 461-462
+biosignal_fm/baselines/deep.py                  185      4     20      4    96%   145, 188, 296, 339
+biosignal_fm/cli/main.py                        241    134     48      3    43%   88-104, 119-201, 227-317, 373, 392-393, 422-441, 458, 469, 503-514, 520-528
+biosignal_fm/config.py                          273     23    110     31    86%   93, 100, 111, 162, 164, 169, 229, 232, 234, 238, 282, 287, 310, 312, 331, 341, 344, 346, 372, 381, 396, 402, 433->446, 443->436, 446->450, 450->452, 452->454, 454->459, 456->458, 459->461, 484
+biosignal_fm/core/contracts.py                  178     25     56     19    79%   53, 82, 89, 99, 113-116, 147, 149, 151, 153, 155, 157, 186, 192, 199, 201, 208, 217, 257, 267->296, 276->278, 314, 325, 329-330
+biosignal_fm/data/base.py                        52      6     14      5    80%   124->exit, 126->exit, 128->exit, 130->exit, 132->exit, 137-143
+biosignal_fm/data/eegmmid.py                    115     38     36      5    61%   146, 151, 212, 224, 230, 233-270, 298->324, 328->330, 336, 339, 342, 345-346
+biosignal_fm/data/fnirs.py                      155     69     58     10    50%   71, 143-218, 221->286, 224, 235-236, 239, 241, 247-254, 257, 259, 264-284, 291->317, 321->323, 329, 332, 335, 338-339
+biosignal_fm/data/mitbih.py                     105     29     28      4    68%   88, 147, 156, 160, 171-240, 246->272, 276->278, 284, 287, 290, 293-294
+biosignal_fm/data/ninapro.py                    114     33     34      4    66%   100, 169, 182-183, 184->189, 186, 201-244, 274->300, 313, 325-326
+biosignal_fm/data/synthetic.py                  129      7     38      3    94%   97->101, 125, 206, 253->256, 377-381
+biosignal_fm/deployment/onnx_export.py           73      4      8      2    93%   82, 191, 242, 247
+biosignal_fm/deployment/realtime.py              67     12     10      1    83%   99-108, 134-144, 196-199
+biosignal_fm/deployment/serving.py              198     23     26      3    88%   124-125, 127, 293-294, 296, 319-322, 334-335, 382, 394-397, 427-428, 432-433, 466-467
+biosignal_fm/evaluation/cross_validation.py      26      1      4      0    97%   103
+biosignal_fm/evaluation/metrics.py               76     11     30      9    79%   32, 34, 53, 55, 62, 79-85, 131, 146, 170->173
+biosignal_fm/evaluation/mixed_effects.py         56     16     10      2    64%   124, 152, 167-168, 211-225
+biosignal_fm/evaluation/statistics.py           171     15     46     11    88%   65, 90, 171, 219, 223, 323, 432, 489, 544, 546, 548, 565-569
+biosignal_fm/modalities/adapters.py              87     40     18      3    48%   40-41, 44-48, 101-127, 151-173, 192, 198-202, 221, 228, 235, 242
+biosignal_fm/modalities/preprocessing.py          6      0      0      0   100%
+biosignal_fm/modalities/registry.py              68      6      6      2    89%   60, 73, 81-83, 110
+biosignal_fm/models/distilled.py                 41      2     12      2    92%   111, 113
+biosignal_fm/models/foundation.py               138      5     26      5    94%   400, 412-417, 512, 517, 520->524
+biosignal_fm/models/jepa_head.py                 65      2     24      3    94%   114, 135, 235->242
+biosignal_fm/models/ssl_heads.py                 74      9     20      5    83%   71, 94, 108, 128-132, 228
+biosignal_fm/models/task_heads.py                26      0      0      0   100%
+biosignal_fm/preprocessing/filters.py            59      4     24      6    88%   85, 87, 104-105, 143->146, 160->164, 170->174
+biosignal_fm/preprocessing/normalizer.py         54     10     16      4    77%   88, 93, 128, 142-143, 147-150, 155
+biosignal_fm/preprocessing/patcher.py            73     10     34     10    81%   51, 53, 85, 124, 126, 128, 131, 160, 171, 178
+biosignal_fm/preprocessing/pipeline.py           82      7     26      8    86%   68->exit, 90, 145-146, 158, 163, 169, 179->185, 211, 265->258
+biosignal_fm/preprocessing/resampler.py          26      3     10      2    86%   43, 87-88
+biosignal_fm/reproducibility.py                 202     40     60     12    79%   75-76, 82-85, 161-162, 169-170, 187-189, 203-204, 284-291, 305-306, 369, 372, 379, 382, 398-400, 404-406, 524, 528-530, 537-539, 549, 553
+biosignal_fm/services/research.py                72      1      6      1    97%   47
+biosignal_fm/tracking/base.py                    10      0      8      4    78%   15->exit, 17->exit, 19->exit, 21->exit
+biosignal_fm/tracking/local_tracker.py           34      0      0      0   100%
+biosignal_fm/tracking/mlflow_tracker.py          42     13     10      3    62%   55-59, 71, 79-80, 86-90, 94
+biosignal_fm/training/finetuner.py              128      7     34      6    92%   68-76, 91, 231->234, 256-258, 263->253, 265->270, 279->286
+biosignal_fm/training/pretrainer.py             148     19     42     10    82%   105-110, 124, 146-151, 165-168, 248-252, 307->311, 312, 351, 353->361, 367->378, 376
+biosignal_fm/ui/app.py                           25      0      0      0   100%
+biosignal_fm/ui/pages/1_Overview.py              19      0      0      0   100%
+biosignal_fm/ui/pages/2_Pretrain.py              66      0      8      0   100%
+biosignal_fm/ui/pages/3_Finetune.py              81      2     12      1    97%   36-37
+biosignal_fm/ui/pages/4_Evaluate.py              43      2      4      0    96%   89-90
+biosignal_fm/ui/pages/5_Deploy.py                96      4     14      5    92%   118, 122->136, 125, 212-213, 225->229
+biosignal_fm/ui/theme.py                         24      0      4      0   100%
+-----------------------------------------------------------------------------------------
+TOTAL                                          4221    645   1032    217    81%
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+Required test coverage of 75% reached. Total coverage: 80.89%
+=========================== short test summary info ============================
+SKIPPED [1] tests/integration/test_real_ecg_mitbih.py:19: BIOSIGNAL_REAL_MITBIH_ROOT is not configured
+SKIPPED [1] tests/integration/test_real_eeg_eegmmid.py:19: BIOSIGNAL_REAL_EEGMMID_ROOT is not configured
+SKIPPED [1] tests/integration/test_real_emg_ninapro.py:20: BIOSIGNAL_REAL_NINAPRO_ROOT is not configured
+349 passed, 3 skipped, 113 warnings in 82.55s (0:01:22)

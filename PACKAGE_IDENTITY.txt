@@ -1,5 +1,7 @@
 Package: biosignal-fm
-Version: 4.0.1
-Git tag: v4.0.1 (run `git rev-parse v4.0.1` for the exact commit hash)
-Archive type: publication source bundle
-Checksum: see accompanying .sha256 file
+Version: 4.0.2
+Git tag: v4.0.2 (run `git rev-parse v4.0.2` for the exact audited commit hash)
+Archive type: audited research-software source bundle
+Checksum: see accompanying SHA256SUMS file
+Release controls: RELEASE_MANIFEST.md and docs/specification_reaudit.md
+Scientific boundary: research platform; no foundation-model, clinical, or benchmark-performance claim without separately documented evidence.

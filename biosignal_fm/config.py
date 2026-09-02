@@ -31,8 +31,10 @@ True
 
 from __future__ import annotations
 
+import math
 from dataclasses import asdict, dataclass, field, replace
 from enum import Enum
+from numbers import Real
 from pathlib import Path
 from typing import Any, Literal, cast
 
@@ -85,6 +87,35 @@ class Modality(str, Enum):
 MODALITIES: tuple[str, ...] = tuple(m.value for m in Modality)
 
 
+def _finite_number(name: str, value: object) -> float:
+    """Return a finite numeric configuration value or raise a clear error."""
+    if isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(float(value)):
+        raise ValueError(f"{name} must be a finite number")
+    return float(value)
+
+
+def _positive_int(name: str, value: object, *, allow_zero: bool = False) -> int:
+    """Validate an integer count without accepting booleans as integers."""
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ValueError(f"{name} must be an integer")
+    minimum = 0 if allow_zero else 1
+    if value < minimum:
+        comparison = "non-negative" if allow_zero else "positive"
+        raise ValueError(f"{name} must be {comparison}")
+    return value
+
+
+def _bandpass(name: str, value: object) -> tuple[float, float]:
+    """Validate a low/high passband with finite, ordered positive frequencies."""
+    if not isinstance(value, tuple) or len(value) != 2:
+        raise ValueError(f"{name} must be a two-value (low_hz, high_hz) tuple")
+    low = _finite_number(f"{name}[0]", value[0])
+    high = _finite_number(f"{name}[1]", value[1])
+    if low <= 0 or high <= low:
+        raise ValueError(f"{name} must satisfy 0 < low_hz < high_hz")
+    return low, high
+
+
 @dataclass(frozen=True)
 class PreprocessingConfig:
     """Modality-aware preprocessing parameters.
@@ -113,6 +144,31 @@ class PreprocessingConfig:
     filter_order: int = 4
     window_length_seconds: float = 2.0
     window_overlap_seconds: float = 0.5
+
+    def __post_init__(self) -> None:
+        _positive_int("target_sampling_rate_hz", self.target_sampling_rate_hz)
+        for name in (
+            "emg_bandpass",
+            "ecg_bandpass",
+            "eeg_bandpass",
+            "ecog_bandpass",
+            "fnirs_bandpass",
+        ):
+            _bandpass(name, getattr(self, name))
+        if (
+            self.notch_freq_hz is not None
+            and _finite_number("notch_freq_hz", self.notch_freq_hz) <= 0
+        ):
+            raise ValueError("notch_freq_hz must be positive when configured")
+        if _finite_number("notch_quality_factor", self.notch_quality_factor) <= 0:
+            raise ValueError("notch_quality_factor must be positive")
+        _positive_int("filter_order", self.filter_order)
+        window_length = _finite_number("window_length_seconds", self.window_length_seconds)
+        overlap = _finite_number("window_overlap_seconds", self.window_overlap_seconds)
+        if window_length <= 0:
+            raise ValueError("window_length_seconds must be positive")
+        if overlap < 0 or overlap >= window_length:
+            raise ValueError("window_overlap_seconds must satisfy 0 <= overlap < window_length")
 
     def bandpass_for(self, modality: Modality | str) -> tuple[float, float]:
         """Return the bandpass range for a given modality."""
@@ -149,6 +205,40 @@ class ModelConfig:
     contrastive_weight: float = 0.5
     reconstruction_weight: float = 1.0
 
+    def __post_init__(self) -> None:
+        for name in (
+            "d_model",
+            "n_heads",
+            "n_layers",
+            "d_ff",
+            "patch_length",
+            "patch_stride",
+            "n_modalities",
+            "max_sequence_length",
+            "mean_mask_span_length",
+        ):
+            _positive_int(name, getattr(self, name))
+        if self.d_model % self.n_heads != 0:
+            raise ValueError("d_model must be divisible by n_heads")
+        if self.patch_stride > self.patch_length:
+            raise ValueError("patch_stride must not exceed patch_length")
+        dropout = _finite_number("dropout", self.dropout)
+        if not 0 <= dropout < 1:
+            raise ValueError("dropout must satisfy 0 <= dropout < 1")
+        if _finite_number("layer_norm_eps", self.layer_norm_eps) <= 0:
+            raise ValueError("layer_norm_eps must be positive")
+        mask_ratio = _finite_number("mask_ratio", self.mask_ratio)
+        if not 0 <= mask_ratio <= 1:
+            raise ValueError("mask_ratio must satisfy 0 <= mask_ratio <= 1")
+        if _finite_number("contrastive_temperature", self.contrastive_temperature) <= 0:
+            raise ValueError("contrastive_temperature must be positive")
+        contrastive_weight = _finite_number("contrastive_weight", self.contrastive_weight)
+        reconstruction_weight = _finite_number("reconstruction_weight", self.reconstruction_weight)
+        if contrastive_weight < 0 or reconstruction_weight < 0:
+            raise ValueError("SSL loss weights must be non-negative")
+        if contrastive_weight == 0 and reconstruction_weight == 0:
+            raise ValueError("at least one SSL loss weight must be positive")
+
 
 @dataclass(frozen=True)
 class TrainingConfig:
@@ -173,6 +263,29 @@ class TrainingConfig:
     pin_memory: bool = False  # CPU-only default
     seed: int = 42
 
+    def __post_init__(self) -> None:
+        for name in (
+            "batch_size",
+            "eval_batch_size",
+            "max_steps",
+            "eval_every_steps",
+            "save_every_steps",
+        ):
+            _positive_int(name, getattr(self, name))
+        for name in ("warmup_steps", "num_workers"):
+            _positive_int(name, getattr(self, name), allow_zero=True)
+        for name in ("learning_rate", "gradient_clip_norm"):
+            if _finite_number(name, getattr(self, name)) <= 0:
+                raise ValueError(f"{name} must be positive")
+        for name in ("weight_decay", "lr_scheduler_min_lr"):
+            if _finite_number(name, getattr(self, name)) < 0:
+                raise ValueError(f"{name} must be non-negative")
+        ema_decay = _finite_number("ema_decay", self.ema_decay)
+        if not 0 <= ema_decay < 1:
+            raise ValueError("ema_decay must satisfy 0 <= ema_decay < 1")
+        if isinstance(self.seed, bool) or not isinstance(self.seed, int):
+            raise ValueError("seed must be an integer")
+
 
 @dataclass(frozen=True)
 class EvaluationConfig:
@@ -186,6 +299,17 @@ class EvaluationConfig:
     effect_size: Literal["cohens_d", "hedges_g"] = "hedges_g"
     power_target: float = 0.8
     random_state: int = 42
+
+    def __post_init__(self) -> None:
+        alpha = _finite_number("alpha", self.alpha)
+        if not 0 < alpha < 1:
+            raise ValueError("alpha must satisfy 0 < alpha < 1")
+        _positive_int("n_bootstrap", self.n_bootstrap)
+        power_target = _finite_number("power_target", self.power_target)
+        if not 0 < power_target <= 1:
+            raise ValueError("power_target must satisfy 0 < power_target <= 1")
+        if isinstance(self.random_state, bool) or not isinstance(self.random_state, int):
+            raise ValueError("random_state must be an integer")
 
 
 @dataclass(frozen=True)
@@ -201,6 +325,26 @@ class DeploymentConfig:
     onnx_numerical_atol: float = 1e-5
     model_registry_dir: str = "~/.cache/biosignal_fm/registry"
     max_request_size_mb: int = 50  # Enforce at the reverse proxy / ASGI server boundary.
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.host, str) or not self.host.strip():
+            raise ValueError("host must be a non-empty string")
+        if (
+            isinstance(self.port, bool)
+            or not isinstance(self.port, int)
+            or not 1 <= self.port <= 65535
+        ):
+            raise ValueError("port must be an integer in the range 1..65535")
+        if not self.cors_origins or any(
+            not isinstance(origin, str) or not origin.strip() for origin in self.cors_origins
+        ):
+            raise ValueError("cors_origins must contain one or more non-empty origins")
+        _positive_int("onnx_opset", self.onnx_opset)
+        if _finite_number("onnx_numerical_atol", self.onnx_numerical_atol) <= 0:
+            raise ValueError("onnx_numerical_atol must be positive")
+        if not isinstance(self.model_registry_dir, str) or not self.model_registry_dir.strip():
+            raise ValueError("model_registry_dir must be a non-empty string")
+        _positive_int("max_request_size_mb", self.max_request_size_mb)
 
 
 @dataclass(frozen=True)
@@ -222,9 +366,20 @@ class ExperimentConfig:
     deployment: DeploymentConfig = field(default_factory=DeploymentConfig)
 
     def __post_init__(self) -> None:
-        if not self.name:
+        if not isinstance(self.name, str) or not self.name.strip():
             raise ValueError("ExperimentConfig.name must not be empty")
-        # Normalize output_dir to absolute Path
+        if isinstance(self.seed, bool) or not isinstance(self.seed, int):
+            raise ValueError("ExperimentConfig.seed must be an integer")
+        for field_name, expected_type in (
+            ("preprocessing", PreprocessingConfig),
+            ("model", ModelConfig),
+            ("training", TrainingConfig),
+            ("evaluation", EvaluationConfig),
+            ("deployment", DeploymentConfig),
+        ):
+            if not isinstance(getattr(self, field_name), expected_type):
+                raise TypeError(f"ExperimentConfig.{field_name} must be a {expected_type.__name__}")
+        # Normalize output_dir to absolute Path.
         object.__setattr__(self, "output_dir", Path(self.output_dir).expanduser().resolve())
 
     def to_dict(self) -> dict[str, Any]:
@@ -270,7 +425,9 @@ class ExperimentConfig:
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> ExperimentConfig:
-        """Construct an ExperimentConfig from a plain dict."""
+        """Construct an ExperimentConfig from a plain mapping."""
+        if not isinstance(data, dict):
+            raise TypeError("Experiment configuration must be a mapping")
         data = dict(data)  # shallow copy
         # Reconstruct nested dataclasses
         if "preprocessing" in data and isinstance(data["preprocessing"], dict):

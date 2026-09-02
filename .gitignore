@@ -165,3 +165,7 @@ data/raw/
 data/processed/
 data/cache/
 *.log
+
+# Governed real-data validation workspaces (never commit raw biosignals or participant-level predictions)
+real_data/
+artifacts/real_data/

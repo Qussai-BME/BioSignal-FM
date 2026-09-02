@@ -118,3 +118,64 @@ class TestExperimentConfig:
         cfg2 = cfg.replace(seed=99)
         assert cfg.seed == 42  # original unchanged
         assert cfg2.seed == 99
+
+
+class TestConfigurationValidation:
+    @pytest.mark.parametrize(
+        ("kwargs", "message"),
+        [
+            ({"target_sampling_rate_hz": 0}, "target_sampling_rate_hz"),
+            ({"emg_bandpass": (40.0, 20.0)}, "emg_bandpass"),
+            ({"window_overlap_seconds": 2.0}, "window_overlap_seconds"),
+        ],
+    )
+    def test_preprocessing_rejects_invalid_scientific_settings(
+        self, kwargs: dict[str, object], message: str
+    ) -> None:
+        with pytest.raises(ValueError, match=message):
+            PreprocessingConfig(**kwargs)  # type: ignore[arg-type]
+
+    @pytest.mark.parametrize(
+        ("kwargs", "message"),
+        [
+            ({"d_model": 30, "n_heads": 8}, "divisible"),
+            ({"patch_length": 16, "patch_stride": 32}, "patch_stride"),
+            ({"dropout": 1.0}, "dropout"),
+            ({"contrastive_weight": 0.0, "reconstruction_weight": 0.0}, "SSL loss"),
+        ],
+    )
+    def test_model_rejects_invalid_architecture(
+        self, kwargs: dict[str, object], message: str
+    ) -> None:
+        with pytest.raises(ValueError, match=message):
+            ModelConfig(**kwargs)  # type: ignore[arg-type]
+
+    @pytest.mark.parametrize(
+        ("kwargs", "message"),
+        [
+            ({"batch_size": 0}, "batch_size"),
+            ({"learning_rate": 0.0}, "learning_rate"),
+            ({"ema_decay": 1.0}, "ema_decay"),
+        ],
+    )
+    def test_training_rejects_invalid_hyperparameters(
+        self, kwargs: dict[str, object], message: str
+    ) -> None:
+        with pytest.raises(ValueError, match=message):
+            TrainingConfig(**kwargs)  # type: ignore[arg-type]
+
+    def test_experiment_config_rejects_non_mapping_input(self) -> None:
+        with pytest.raises(TypeError, match="mapping"):
+            ExperimentConfig.from_dict([])  # type: ignore[arg-type]
+
+    def test_deployment_rejects_out_of_range_port(self) -> None:
+        from biosignal_fm.config import DeploymentConfig
+
+        with pytest.raises(ValueError, match="port"):
+            DeploymentConfig(port=0)
+
+    def test_evaluation_rejects_invalid_alpha(self) -> None:
+        from biosignal_fm.config import EvaluationConfig
+
+        with pytest.raises(ValueError, match="alpha"):
+            EvaluationConfig(alpha=1.0)

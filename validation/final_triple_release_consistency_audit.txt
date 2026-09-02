@@ -1,0 +1,27 @@
+=== biosignal-fm ===
+HEAD: 1348090f9abccc6c5fcee894449a25fbc6f6f88e
+CLEAN: yes
+pyproject: version = "4.0.3"
+source: >>> bsfm.__version__
+citation: version: "4.0.3"
+artifacts:
+biosignal_fm-4.0.3-py3-none-any.whl
+biosignal_fm-4.0.3.tar.gz
+=== myosim ===
+HEAD: e947ba9784c9e639498fd685ff38f2047f590928
+CLEAN: yes
+pyproject: version = "0.1.5"
+source: __all__ = ["__version__"]
+citation: version: "0.1.5"
+artifacts:
+myosim-0.1.5-py3-none-any.whl
+myosim-0.1.5.tar.gz
+=== human-motor-intelligence ===
+HEAD: 6e74f7cb417f9dff1eacd4f6e00969cd1608c7d0
+CLEAN: yes
+pyproject: version = "0.2.1"
+source: __version__ = "0.2.1"
+citation: version: "0.2.1"
+artifacts:
+human_motor_intelligence-0.2.1-py3-none-any.whl
+human_motor_intelligence-0.2.1.tar.gz

@@ -129,6 +129,7 @@ import json
 import numpy as np
 import websockets
 
+
 async def stream(model_id: str, api_key: str) -> None:
     uri = f"ws://127.0.0.1:8000/ws/predict/{model_id}"
     async with websockets.connect(uri) as websocket:
@@ -137,6 +138,7 @@ async def stream(model_id: str, api_key: str) -> None:
             window = np.random.randn(16, 400).astype(np.float32)
             await websocket.send(json.dumps({"signal": window.tolist()}))
             print(json.loads(await websocket.recv()))
+
 
 asyncio.run(stream("<registered-uuid>", "replace-with-a-strong-secret"))
 ```

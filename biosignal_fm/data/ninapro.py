@@ -1,17 +1,16 @@
 """NinaPro DB5 sEMG dataset loader.
 
-The NinaPro Database 5 (Atzori et al., 2014) is a publicly available sEMG
-dataset with 10 intact subjects performing 50 hand movements. Recordings
-use 16 channels at 2 kHz (Delsys Trigno wireless EMG).
+NinaPro DB5 contains recordings from 10 intact participants performing 52
+movements plus rest. Two Thalmic Myo armbands yield 16 sEMG channels sampled
+at 200 Hz. The loader preserves the source's corrected ``restimulus`` labels
+by default and records dataset and file provenance in every real sample.
 
 This loader supports:
 
-- Loading from raw NinaPro DB5 ``.mat`` files (requires manual download
-  from https://ninapro.hevs.ch/ with signed EULA)
-- Caching resampled NPZ files keyed by SHA-256 of the raw file
-- Subject-aware enumeration for LOSO cross-validation
-- Automatic fallback to :class:`SyntheticBiosignalDataset` when the raw
-  data is not available (useful for development, CI, and tutorials)
+- Loading from public NinaPro DB5 ``.mat`` files retrieved from the official
+  Zenodo record (version v1, CC BY-ND 4.0)
+- Subject-aware enumeration suitable for a caller-defined LOSO protocol
+- Explicit opt-in synthetic fallback for development-only paths
 
 References
 ----------
@@ -22,6 +21,7 @@ prostheses. Scientific Data, 1, 140053.
 
 from __future__ import annotations
 
+import hashlib
 from collections.abc import Iterator
 from pathlib import Path
 
@@ -63,15 +63,15 @@ class NinaProDB5Loader:
     Examples
     --------
     >>> from biosignal_fm.data import NinaProDB5Loader
-    >>> loader = NinaProDB5Loader(root_dir=None)  # falls back to synthetic
+    >>> loader = NinaProDB5Loader(root_dir="/path/to/extracted/db5")
     >>> len(loader) > 0
     True
-    >>> loader.get_subject_ids()  # 10 subjects
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    >>> loader.get_subject_ids()
+    [1, 2]
     """
 
     MODALITY = Modality.EMG
-    NATIVE_SAMPLING_RATE_HZ = 2000
+    NATIVE_SAMPLING_RATE_HZ = 200
     NATIVE_N_CHANNELS = 16
     CHANNEL_NAMES = tuple(f"emg_ch{i:02d}" for i in range(16))
 
@@ -82,7 +82,8 @@ class NinaProDB5Loader:
         n_subjects: int = 10,
         window_length_seconds: float = 2.0,
         window_overlap_seconds: float = 0.5,
-        target_sampling_rate_hz: int = 2000,
+        target_sampling_rate_hz: int = 200,
+        allow_synthetic_fallback: bool = False,
     ) -> None:
         self.root_dir = Path(root_dir) if root_dir else None
         self.cache_dir = (
@@ -94,13 +95,19 @@ class NinaProDB5Loader:
         self.window_length_seconds = window_length_seconds
         self.window_overlap_seconds = window_overlap_seconds
         self.target_sampling_rate_hz = target_sampling_rate_hz
+        self.allow_synthetic_fallback = allow_synthetic_fallback
+        if target_sampling_rate_hz != self.NATIVE_SAMPLING_RATE_HZ:
+            raise ValueError(
+                "NinaProDB5Loader does not resample raw data; use the explicit "
+                "PreprocessingPipeline after loading canonical signals"
+            )
 
         self._metadata = ModalityMetadata(
             modality=self.MODALITY,
             sampling_rate_hz=target_sampling_rate_hz,
             n_channels=self.NATIVE_N_CHANNELS,
             channel_names=self.CHANNEL_NAMES,
-            label_names=SYNTHETIC_LABEL_NAMES,
+            label_names=(),
         )
 
         self._samples: list[BiosignalSample] | None = None
@@ -119,32 +126,32 @@ class NinaProDB5Loader:
     def _load_raw(self) -> list[BiosignalSample]:
         """Load raw NinaPro DB5 .mat files from ``self.root_dir``.
 
-        NinaPro DB5 structure::
+            NinaPro DB5 structure::
 
-            <root_dir>/
-              S1_E1_A1.mat
-              S1_E2_A1.mat
-              S1_E3_A1.mat
-              S2_E1_A1.mat
-              ...
+                <root_dir>/
+                  S1_E1_A1.mat
+                  S1_E2_A1.mat
+                  S1_E3_A1.mat
+                  S2_E1_A1.mat
+                  ...
 
-        Each .mat file contains:
+            Each .mat file contains:
         - ``emg``: (n_samples, 16) float — raw sEMG at 200 Hz
         - ``glove``: (n_samples, 22) float — kinematics
-        - ``stimuli``: (n_samples,) int — movement label (0 = rest)
+        - ``stimulus`` and ``restimulus``: (n_samples,) int — source movement labels
 
-        Returns
-        -------
-        list[BiosignalSample]
-            Empty list if no .mat files are found. The caller is responsible
-            for falling back to synthetic data with a warning.
+            Returns
+            -------
+            list[BiosignalSample]
+                Empty list if no .mat files are found. The caller is responsible
+                for falling back to synthetic data with a warning.
 
-        Raises
-        ------
-        ImportError
-            If ``scipy`` is not installed (required for ``scipy.io.loadmat``).
-        FileNotFoundError
-            If ``self.root_dir`` is set but does not exist.
+            Raises
+            ------
+            ImportError
+                If ``scipy`` is not installed (required for ``scipy.io.loadmat``).
+            FileNotFoundError
+                If ``self.root_dir`` is set but does not exist.
         """
         if self.root_dir is None:
             return []
@@ -153,7 +160,7 @@ class NinaProDB5Loader:
 
         # Check for .mat files BEFORE importing scipy, so that a directory
         # with no data does not require the optional dependency.
-        mat_files = sorted(self.root_dir.glob("S*_E*_A*.mat"))
+        mat_files = sorted(self.root_dir.rglob("S*_E*_A*.mat"))
         if not mat_files:
             return []
 
@@ -165,7 +172,8 @@ class NinaProDB5Loader:
             ) from e
 
         samples: list[BiosignalSample] = []
-        # Limit to self.n_subjects (sorted by subject number).
+        # Limit distinct participants but retain every available exercise file
+        # for each selected participant.
         subject_ids_seen: set[int] = set()
         for mat_path in mat_files:
             # Parse subject number from filename: S1_E1_A1.mat → 1
@@ -173,11 +181,10 @@ class NinaProDB5Loader:
                 subj_id = int(mat_path.stem.split("_")[0].lstrip("S"))
             except (ValueError, IndexError):
                 continue
-            if subj_id in subject_ids_seen:
-                continue  # already loaded this subject from another exercise file
-            if len(subject_ids_seen) >= self.n_subjects:
-                break
-            subject_ids_seen.add(subj_id)
+            if subj_id not in subject_ids_seen:
+                if len(subject_ids_seen) >= self.n_subjects:
+                    continue
+                subject_ids_seen.add(subj_id)
 
             try:
                 mat = loadmat(mat_path)
@@ -191,19 +198,35 @@ class NinaProDB5Loader:
                 )
                 continue
 
+            source_file_sha256 = hashlib.sha256(mat_path.read_bytes()).hexdigest()
             emg = np.asarray(mat.get("emg", []), dtype=np.float32)
-            stimuli = np.asarray(mat.get("stimuli", [])).flatten().astype(int)
+            # ``restimulus`` is the source's a-posteriori corrected movement
+            # label. Fall back to the recorded stimulus only when necessary.
+            labels = (
+                np.asarray(mat.get("restimulus", mat.get("stimulus", []))).flatten().astype(int)
+            )
+            frequency = int(
+                np.asarray(mat.get("frequency", self.NATIVE_SAMPLING_RATE_HZ)).squeeze()
+            )
+            exercise = int(np.asarray(mat.get("exercise", 0)).squeeze())
 
-            if emg.size == 0 or stimuli.size == 0:
+            if emg.size == 0 or labels.size == 0:
                 continue
             if emg.ndim != 2 or emg.shape[1] != self.NATIVE_N_CHANNELS:
                 continue
 
-            # Window the signal: take self.window_length_seconds windows at
-            # the native sampling rate, one window per non-rest movement.
-            n_samples_per_window = int(self.NATIVE_SAMPLING_RATE_HZ * self.window_length_seconds)
+            # Window each contiguous labelled movement segment at the source
+            # sampling rate. Any later resampling is an explicit preprocessing step.
+            n_samples_per_window = int(frequency * self.window_length_seconds)
+            step_samples = int(
+                frequency * (self.window_length_seconds - self.window_overlap_seconds)
+            )
+            if n_samples_per_window <= 0 or step_samples <= 0:
+                raise ValueError(
+                    "window_length_seconds and window_overlap_seconds form an invalid window step"
+                )
             # Find contiguous non-rest segments.
-            non_rest = np.where(stimuli > 0)[0]
+            non_rest = np.where(labels > 0)[0]
             if len(non_rest) == 0:
                 continue
             # Group contiguous indices into segments.
@@ -212,30 +235,33 @@ class NinaProDB5Loader:
             segment_ends = np.concatenate([non_rest[breaks], [non_rest[-1]]])
 
             for seg_start, seg_end in zip(segment_starts, segment_ends, strict=False):
-                seg_len = seg_end - seg_start
-                if seg_len < n_samples_per_window:
-                    continue
-                # Take the first full window from this segment.
-                window = emg[seg_start : seg_start + n_samples_per_window]
-                label = int(stimuli[seg_start])
-                # NinaPro DB5 has 50+ movement labels; we map to first n_classes.
-                # This is a simplification — real benchmarks use the full label set.
-                label = label % len(SYNTHETIC_LABEL_NAMES)
-                samples.append(
-                    BiosignalSample(
-                        signal=window.T,  # (n_channels, n_samples)
-                        modality=Modality.EMG,
-                        sampling_rate_hz=self.NATIVE_SAMPLING_RATE_HZ,
-                        subject_id=subj_id,
-                        session_id=0,
-                        label=label,
-                        label_name=SYNTHETIC_LABEL_NAMES[label],
-                        metadata={
-                            "source_file": str(mat_path.name),
-                            "raw_label": int(stimuli[seg_start]),
-                        },
+                segment_stop = seg_end + 1
+                for window_start in range(
+                    seg_start, segment_stop - n_samples_per_window + 1, step_samples
+                ):
+                    window = emg[window_start : window_start + n_samples_per_window]
+                    label = int(labels[window_start])
+                    samples.append(
+                        BiosignalSample(
+                            signal=window.T,  # (n_channels, n_samples)
+                            modality=Modality.EMG,
+                            sampling_rate_hz=frequency,
+                            subject_id=subj_id,
+                            session_id=exercise,
+                            label=label,
+                            label_name=f"movement_{label}",
+                            metadata={
+                                "dataset_id": "zenodo.1000116",
+                                "dataset_version": "v1",
+                                "source_uri": "https://zenodo.org/records/1000116",
+                                "license_id": "CC-BY-ND-4.0",
+                                "source_file": mat_path.name,
+                                "source_file_sha256": source_file_sha256,
+                                "label_source": "restimulus" if "restimulus" in mat else "stimulus",
+                                "raw_label": label,
+                            },
+                        )
                     )
-                )
         return samples
 
     def _load(self) -> list[BiosignalSample]:
@@ -246,13 +272,16 @@ class NinaProDB5Loader:
         """
         samples = self._load_raw()
         if not samples:
+            if not self.allow_synthetic_fallback:
+                raise FileNotFoundError(
+                    f"No real NinaPro DB5 .mat files found at {self.root_dir!r}. "
+                    "Set allow_synthetic_fallback=True only for a development smoke path."
+                )
             import warnings
 
             warnings.warn(
-                f"NinaProDB5Loader falling back to synthetic data. "
-                f"No real .mat files found at {self.root_dir!r}. "
-                f"Download NinaPro DB5 from http://ninapro.hevs.ch/ and "
-                f"set root_dir to the extracted directory for real data.",
+                f"NinaProDB5Loader using explicit synthetic fallback. "
+                f"No real .mat files found at {self.root_dir!r}.",
                 UserWarning,
                 stacklevel=2,
             )

@@ -8,11 +8,14 @@ fit on training data before transform.
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass, field
 
 import numpy as np
 
 from ..config import Modality, PreprocessingConfig
+from ..core import Signal, SignalProcessingStep
 from .filters import ModalityFilterBank
 from .normalizer import ChannelWiseNormalizer, SubjectAwareNormalizer
 from .resampler import Resampler
@@ -141,6 +144,61 @@ class PreprocessingPipeline:
         """Convenience: fit then transform a list of signals."""
         self.fit(signals, source_sampling_rate_hz)
         return [self.transform(s, source_sampling_rate_hz) for s in signals]
+
+    def transform_signal(self, signal: Signal) -> Signal:
+        """Transform one canonical signal and append explicit preprocessing provenance.
+
+        The pipeline must be fitted on training data before use. A missing-data
+        mask is deliberately rejected because resampling a boolean mask needs a
+        study-specific policy; callers must define that policy rather than have
+        the framework silently interpolate it.
+        """
+        modality = Modality.from_str(signal.metadata.modality)
+        if modality is not self.modality:
+            raise ValueError(
+                f"Pipeline modality {self.modality.value!r} does not match signal modality "
+                f"{signal.metadata.modality!r}"
+            )
+        if signal.missing_mask is not None:
+            raise ValueError(
+                "transform_signal requires an explicit study-specific missing-mask resampling policy"
+            )
+        source_rate = signal.metadata.sampling_rate_hz
+        source_sampling_rate_hz = int(source_rate)
+        if source_rate != source_sampling_rate_hz:
+            raise ValueError(
+                "transform_signal requires an integral sampling rate because the configured "
+                "filter and resampler use integer rate factors"
+            )
+        transformed = self.transform(signal.data, source_sampling_rate_hz)
+        serialized = self.to_dict()
+        config_hash = hashlib.sha256(
+            json.dumps(serialized, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+        timestamps: np.ndarray | None = None
+        if signal.timestamps_seconds is not None:
+            timestamps = np.linspace(
+                signal.timestamps_seconds[0],
+                signal.timestamps_seconds[-1],
+                num=transformed.shape[1],
+            )
+        step = SignalProcessingStep(
+            name=f"{self.modality.value}_preprocessing",
+            version="v1",
+            config_hash=config_hash,
+            parameters={
+                "source_sampling_rate_hz": signal.metadata.sampling_rate_hz,
+                "target_sampling_rate_hz": self.config.target_sampling_rate_hz,
+            },
+        )
+        return signal.with_data(
+            transformed,
+            sampling_rate_hz=float(self.config.target_sampling_rate_hz),
+            timestamps_seconds=timestamps,
+            processing_step=step,
+            preprocessing_status="preprocessed",
+            extra_metadata={"preprocessing_pipeline_hash": config_hash},
+        )
 
     def to_dict(self) -> dict:
         """Serialize the fitted pipeline state to a dict.

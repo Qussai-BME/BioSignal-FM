@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from importlib.metadata import version
+
 import biosignal_fm
 import numpy as np
 from biosignal_fm.core import DataOrigin, Signal, SignalMetadata, SignalProvenance
@@ -22,7 +24,9 @@ def main() -> None:
             ),
         ),
     )
-    assert biosignal_fm.__version__ == "4.0.0"
+    installed_version = version("biosignal-fm")
+    assert biosignal_fm.__version__ == "4.0.2"
+    assert installed_version == biosignal_fm.__version__
     assert registry.identifiers() == ("emg", "eeg", "ecg", "ecog", "fnirs")
     assert signal.is_synthetic
     print("core-install-ok")

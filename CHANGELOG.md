@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.2] - 2026-08-26
+
+A specification re-audit and patch release that corrects verified release metadata, documentation, data-integrity, and licensing defects without asserting new scientific performance.
+
+### Fixed
+- Replaced the citation metadata’s unsupported foundation-model language, invalid CFF version, and placeholder DOI with an accurate research-platform citation record.
+- Removed a malformed live-demo link and unsupported DOI presentation from the README; refreshed its real-data and release-document navigation.
+- Required explicit development-only synthetic fallback for the optional fNIRS loader, matching EMG, EEG, and ECG behavior; added regression coverage.
+- Reconciled `NOTICE` dataset-license records with the governed source register for NinaPro DB5, EEGMMID, and MIT-BIH, and clarified that raw datasets are never redistributed.
+- Replaced stale release-manifest validation references with current audited evidence and preserved open scientific gates as limitations rather than claims.
+
+### Changed
+- Bumped the audited software package and clean-install verification version to `4.0.2`.
+
 ## [4.0.1] - 2026-08-25
 
 Publication-readiness corrections found during an independent line-by-line

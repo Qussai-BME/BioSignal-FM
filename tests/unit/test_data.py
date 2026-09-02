@@ -87,35 +87,34 @@ class TestMakeSyntheticSample:
 
 
 class TestRealLoaders:
-    """All real loaders should gracefully fall back to synthetic data when
-    the raw datasets are not present."""
+    """Real loaders require explicit synthetic development-mode opt-in."""
 
     def test_ninapro(self) -> None:
-        loader = NinaProDB5Loader(root_dir=None, n_subjects=3)
+        loader = NinaProDB5Loader(root_dir=None, n_subjects=3, allow_synthetic_fallback=True)
         assert len(loader) > 0
         assert loader.is_synthetic
         assert loader.metadata.modality == Modality.EMG
 
     def test_mitbih(self) -> None:
-        loader = MITBIHLoader(root_dir=None, n_records=3)
+        loader = MITBIHLoader(root_dir=None, n_records=3, allow_synthetic_fallback=True)
         assert len(loader) > 0
         assert loader.is_synthetic
         assert loader.metadata.modality == Modality.ECG
 
     def test_eegmmid(self) -> None:
-        loader = EEGMMIDLoader(root_dir=None, n_subjects=3)
+        loader = EEGMMIDLoader(root_dir=None, n_subjects=3, allow_synthetic_fallback=True)
         assert len(loader) > 0
         assert loader.is_synthetic
         assert loader.metadata.modality == Modality.EEG
 
     def test_fnirs(self) -> None:
-        loader = FnirsLoader(root_dir=None, n_subjects=3)
+        loader = FnirsLoader(root_dir=None, n_subjects=3, allow_synthetic_fallback=True)
         assert len(loader) > 0
         assert loader.is_synthetic
         assert loader.metadata.modality == Modality.FNIRS
 
     def test_get_session_ids(self) -> None:
-        loader = NinaProDB5Loader(root_dir=None, n_subjects=1)
+        loader = NinaProDB5Loader(root_dir=None, n_subjects=1, allow_synthetic_fallback=True)
         sessions = loader.get_session_ids(loader.get_subject_ids()[0])
         # Synthetic fallback produces 3 sessions per subject
         assert len(sessions) >= 1

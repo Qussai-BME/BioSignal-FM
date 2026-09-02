@@ -1,0 +1,1218 @@
+=== BUILD BioSignal-FM-4.0.3 ===
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - setuptools>=68
+  - wheel
+* Getting build dependencies for sdist...
+/tmp/build-env-wn3hab6r/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-wn3hab6r/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-wn3hab6r/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running egg_info
+writing biosignal_fm.egg-info/PKG-INFO
+writing dependency_links to biosignal_fm.egg-info/dependency_links.txt
+writing entry points to biosignal_fm.egg-info/entry_points.txt
+writing requirements to biosignal_fm.egg-info/requires.txt
+writing top-level names to biosignal_fm.egg-info/top_level.txt
+reading manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+warning: no files found matching '*.json' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE'
+adding license file 'AUTHORS.md'
+writing manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+* Building sdist...
+/tmp/build-env-wn3hab6r/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-wn3hab6r/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-wn3hab6r/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running sdist
+running egg_info
+writing biosignal_fm.egg-info/PKG-INFO
+writing dependency_links to biosignal_fm.egg-info/dependency_links.txt
+writing entry points to biosignal_fm.egg-info/entry_points.txt
+writing requirements to biosignal_fm.egg-info/requires.txt
+writing top-level names to biosignal_fm.egg-info/top_level.txt
+reading manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+warning: no files found matching '*.json' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE'
+adding license file 'AUTHORS.md'
+writing manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+running check
+creating biosignal_fm-4.0.3
+creating biosignal_fm-4.0.3/biosignal_fm
+creating biosignal_fm-4.0.3/biosignal_fm.egg-info
+creating biosignal_fm-4.0.3/biosignal_fm/baselines
+creating biosignal_fm-4.0.3/biosignal_fm/cli
+creating biosignal_fm-4.0.3/biosignal_fm/core
+creating biosignal_fm-4.0.3/biosignal_fm/data
+creating biosignal_fm-4.0.3/biosignal_fm/deployment
+creating biosignal_fm-4.0.3/biosignal_fm/evaluation
+creating biosignal_fm-4.0.3/biosignal_fm/modalities
+creating biosignal_fm-4.0.3/biosignal_fm/models
+creating biosignal_fm-4.0.3/biosignal_fm/preprocessing
+creating biosignal_fm-4.0.3/biosignal_fm/services
+creating biosignal_fm-4.0.3/biosignal_fm/tracking
+creating biosignal_fm-4.0.3/biosignal_fm/training
+creating biosignal_fm-4.0.3/biosignal_fm/ui
+creating biosignal_fm-4.0.3/biosignal_fm/ui/pages
+creating biosignal_fm-4.0.3/configs
+creating biosignal_fm-4.0.3/docs
+creating biosignal_fm-4.0.3/docs/compliance
+creating biosignal_fm-4.0.3/docs/research
+creating biosignal_fm-4.0.3/scripts
+creating biosignal_fm-4.0.3/tests
+creating biosignal_fm-4.0.3/tests/integration
+creating biosignal_fm-4.0.3/tests/unit
+copying files to biosignal_fm-4.0.3...
+copying AUTHORS.md -> biosignal_fm-4.0.3
+copying CITATION.cff -> biosignal_fm-4.0.3
+copying LICENSE -> biosignal_fm-4.0.3
+copying MANIFEST.in -> biosignal_fm-4.0.3
+copying NOTICE -> biosignal_fm-4.0.3
+copying README.md -> biosignal_fm-4.0.3
+copying RELEASE_NOTES_4_0_3.md -> biosignal_fm-4.0.3
+copying pyproject.toml -> biosignal_fm-4.0.3
+copying biosignal_fm/__init__.py -> biosignal_fm-4.0.3/biosignal_fm
+copying biosignal_fm/config.py -> biosignal_fm-4.0.3/biosignal_fm
+copying biosignal_fm/reproducibility.py -> biosignal_fm-4.0.3/biosignal_fm
+copying biosignal_fm.egg-info/PKG-INFO -> biosignal_fm-4.0.3/biosignal_fm.egg-info
+copying biosignal_fm.egg-info/SOURCES.txt -> biosignal_fm-4.0.3/biosignal_fm.egg-info
+copying biosignal_fm.egg-info/dependency_links.txt -> biosignal_fm-4.0.3/biosignal_fm.egg-info
+copying biosignal_fm.egg-info/entry_points.txt -> biosignal_fm-4.0.3/biosignal_fm.egg-info
+copying biosignal_fm.egg-info/requires.txt -> biosignal_fm-4.0.3/biosignal_fm.egg-info
+copying biosignal_fm.egg-info/top_level.txt -> biosignal_fm-4.0.3/biosignal_fm.egg-info
+copying biosignal_fm/baselines/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/baselines
+copying biosignal_fm/baselines/classical.py -> biosignal_fm-4.0.3/biosignal_fm/baselines
+copying biosignal_fm/baselines/deep.py -> biosignal_fm-4.0.3/biosignal_fm/baselines
+copying biosignal_fm/cli/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/cli
+copying biosignal_fm/cli/main.py -> biosignal_fm-4.0.3/biosignal_fm/cli
+copying biosignal_fm/core/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/core
+copying biosignal_fm/core/contracts.py -> biosignal_fm-4.0.3/biosignal_fm/core
+copying biosignal_fm/data/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/data
+copying biosignal_fm/data/base.py -> biosignal_fm-4.0.3/biosignal_fm/data
+copying biosignal_fm/data/eegmmid.py -> biosignal_fm-4.0.3/biosignal_fm/data
+copying biosignal_fm/data/fnirs.py -> biosignal_fm-4.0.3/biosignal_fm/data
+copying biosignal_fm/data/mitbih.py -> biosignal_fm-4.0.3/biosignal_fm/data
+copying biosignal_fm/data/ninapro.py -> biosignal_fm-4.0.3/biosignal_fm/data
+copying biosignal_fm/data/synthetic.py -> biosignal_fm-4.0.3/biosignal_fm/data
+copying biosignal_fm/deployment/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/deployment
+copying biosignal_fm/deployment/onnx_export.py -> biosignal_fm-4.0.3/biosignal_fm/deployment
+copying biosignal_fm/deployment/realtime.py -> biosignal_fm-4.0.3/biosignal_fm/deployment
+copying biosignal_fm/deployment/serving.py -> biosignal_fm-4.0.3/biosignal_fm/deployment
+copying biosignal_fm/evaluation/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/cross_validation.py -> biosignal_fm-4.0.3/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/metrics.py -> biosignal_fm-4.0.3/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/mixed_effects.py -> biosignal_fm-4.0.3/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/statistics.py -> biosignal_fm-4.0.3/biosignal_fm/evaluation
+copying biosignal_fm/modalities/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/modalities
+copying biosignal_fm/modalities/adapters.py -> biosignal_fm-4.0.3/biosignal_fm/modalities
+copying biosignal_fm/modalities/preprocessing.py -> biosignal_fm-4.0.3/biosignal_fm/modalities
+copying biosignal_fm/modalities/registry.py -> biosignal_fm-4.0.3/biosignal_fm/modalities
+copying biosignal_fm/models/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/models
+copying biosignal_fm/models/distilled.py -> biosignal_fm-4.0.3/biosignal_fm/models
+copying biosignal_fm/models/foundation.py -> biosignal_fm-4.0.3/biosignal_fm/models
+copying biosignal_fm/models/jepa_head.py -> biosignal_fm-4.0.3/biosignal_fm/models
+copying biosignal_fm/models/ssl_heads.py -> biosignal_fm-4.0.3/biosignal_fm/models
+copying biosignal_fm/models/task_heads.py -> biosignal_fm-4.0.3/biosignal_fm/models
+copying biosignal_fm/preprocessing/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/filters.py -> biosignal_fm-4.0.3/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/normalizer.py -> biosignal_fm-4.0.3/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/patcher.py -> biosignal_fm-4.0.3/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/pipeline.py -> biosignal_fm-4.0.3/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/resampler.py -> biosignal_fm-4.0.3/biosignal_fm/preprocessing
+copying biosignal_fm/services/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/services
+copying biosignal_fm/services/research.py -> biosignal_fm-4.0.3/biosignal_fm/services
+copying biosignal_fm/tracking/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/tracking
+copying biosignal_fm/tracking/base.py -> biosignal_fm-4.0.3/biosignal_fm/tracking
+copying biosignal_fm/tracking/local_tracker.py -> biosignal_fm-4.0.3/biosignal_fm/tracking
+copying biosignal_fm/tracking/mlflow_tracker.py -> biosignal_fm-4.0.3/biosignal_fm/tracking
+copying biosignal_fm/training/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/training
+copying biosignal_fm/training/finetuner.py -> biosignal_fm-4.0.3/biosignal_fm/training
+copying biosignal_fm/training/pretrainer.py -> biosignal_fm-4.0.3/biosignal_fm/training
+copying biosignal_fm/ui/__init__.py -> biosignal_fm-4.0.3/biosignal_fm/ui
+copying biosignal_fm/ui/app.py -> biosignal_fm-4.0.3/biosignal_fm/ui
+copying biosignal_fm/ui/theme.py -> biosignal_fm-4.0.3/biosignal_fm/ui
+copying biosignal_fm/ui/pages/1_Overview.py -> biosignal_fm-4.0.3/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/2_Pretrain.py -> biosignal_fm-4.0.3/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/3_Finetune.py -> biosignal_fm-4.0.3/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/4_Evaluate.py -> biosignal_fm-4.0.3/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/5_Deploy.py -> biosignal_fm-4.0.3/biosignal_fm/ui/pages
+copying configs/exp.yaml -> biosignal_fm-4.0.3/configs
+copying docs/api_reference.md -> biosignal_fm-4.0.3/docs
+copying docs/architecture.md -> biosignal_fm-4.0.3/docs
+copying docs/architecture_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/data_governance.md -> biosignal_fm-4.0.3/docs
+copying docs/data_source_notes_ecg.md -> biosignal_fm-4.0.3/docs
+copying docs/data_source_notes_eeg.md -> biosignal_fm-4.0.3/docs
+copying docs/data_source_notes_emg.md -> biosignal_fm-4.0.3/docs
+copying docs/data_source_register.md -> biosignal_fm-4.0.3/docs
+copying docs/dependency_license_inventory_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/deployment.md -> biosignal_fm-4.0.3/docs
+copying docs/encoders.md -> biosignal_fm-4.0.3/docs
+copying docs/evaluation.md -> biosignal_fm-4.0.3/docs
+copying docs/index.md -> biosignal_fm-4.0.3/docs
+copying docs/known_limitations_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/master_execution_report.md -> biosignal_fm-4.0.3/docs
+copying docs/master_specification.md -> biosignal_fm-4.0.3/docs
+copying docs/migration_audit_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/migration_notes_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/modality-registry.md -> biosignal_fm-4.0.3/docs
+copying docs/multimodal.md -> biosignal_fm-4.0.3/docs
+copying docs/phase_04_emg_validation.md -> biosignal_fm-4.0.3/docs
+copying docs/phase_05_eeg_validation.md -> biosignal_fm-4.0.3/docs
+copying docs/phase_06_ecg_validation.md -> biosignal_fm-4.0.3/docs
+copying docs/phase_07_evaluation_evidence.md -> biosignal_fm-4.0.3/docs
+copying docs/phase_08_multimodal_readiness.md -> biosignal_fm-4.0.3/docs
+copying docs/phase_09_release_dossier.md -> biosignal_fm-4.0.3/docs
+copying docs/preprocessing.md -> biosignal_fm-4.0.3/docs
+copying docs/prepublication_risk_register_2026.md -> biosignal_fm-4.0.3/docs
+copying docs/provenance.md -> biosignal_fm-4.0.3/docs
+copying docs/quickstart.md -> biosignal_fm-4.0.3/docs
+copying docs/references_prepublication_review_2026.md -> biosignal_fm-4.0.3/docs
+copying docs/reproducibility.md -> biosignal_fm-4.0.3/docs
+copying docs/research_chain.md -> biosignal_fm-4.0.3/docs
+copying docs/roadmap.md -> biosignal_fm-4.0.3/docs
+copying docs/roadmap_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/scientific_integrity_audit_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/security.md -> biosignal_fm-4.0.3/docs
+copying docs/signal-contract.md -> biosignal_fm-4.0.3/docs
+copying docs/specification_convergence_report.md -> biosignal_fm-4.0.3/docs
+copying docs/specification_reaudit.md -> biosignal_fm-4.0.3/docs
+copying docs/tasks.md -> biosignal_fm-4.0.3/docs
+copying docs/test_report_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/ui_visual_check_v4.md -> biosignal_fm-4.0.3/docs
+copying docs/compliance/eu_ai_act.md -> biosignal_fm-4.0.3/docs/compliance
+copying docs/compliance/fda_samd.md -> biosignal_fm-4.0.3/docs/compliance
+copying docs/compliance/gdpr.md -> biosignal_fm-4.0.3/docs/compliance
+copying docs/compliance/regulatory_appendix.md -> biosignal_fm-4.0.3/docs/compliance
+copying docs/research/paper_draft.md -> biosignal_fm-4.0.3/docs/research
+copying docs/research/preregistration.md -> biosignal_fm-4.0.3/docs/research
+copying scripts/generate_figures.py -> biosignal_fm-4.0.3/scripts
+copying scripts/inspect_eeg_edf.py -> biosignal_fm-4.0.3/scripts
+copying scripts/inspect_mitbih_record.py -> biosignal_fm-4.0.3/scripts
+copying scripts/inspect_ninapro_mat.py -> biosignal_fm-4.0.3/scripts
+copying scripts/make_sample_data.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_ablation_study.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_ablations.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_calibration_study.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_cross_modal_study.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_eegmmid_protocol_smoke.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_full_study.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_mitbih_protocol_smoke.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_ninapro_protocol_smoke.py -> biosignal_fm-4.0.3/scripts
+copying scripts/run_ssl_pretraining_study.py -> biosignal_fm-4.0.3/scripts
+copying scripts/verify_core_install.py -> biosignal_fm-4.0.3/scripts
+copying scripts/verify_real_study_bundle.py -> biosignal_fm-4.0.3/scripts
+copying tests/__init__.py -> biosignal_fm-4.0.3/tests
+copying tests/conftest.py -> biosignal_fm-4.0.3/tests
+copying tests/integration/__init__.py -> biosignal_fm-4.0.3/tests/integration
+copying tests/integration/test_audit_checklist.py -> biosignal_fm-4.0.3/tests/integration
+copying tests/integration/test_end_to_end.py -> biosignal_fm-4.0.3/tests/integration
+copying tests/integration/test_real_ecg_mitbih.py -> biosignal_fm-4.0.3/tests/integration
+copying tests/integration/test_real_eeg_eegmmid.py -> biosignal_fm-4.0.3/tests/integration
+copying tests/integration/test_real_emg_ninapro.py -> biosignal_fm-4.0.3/tests/integration
+copying tests/unit/__init__.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_baselines.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_cli.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_config.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_data.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_deep_baselines.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_deployment.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_evaluation.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_models.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_preprocessing.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_reproducibility.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_training_tracking.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_ui_execution.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_ui_theme.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_v2_1_coverage.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_v2_1_features.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_v2_1_loaders_and_ui.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_v2_improvements.py -> biosignal_fm-4.0.3/tests/unit
+copying tests/unit/test_v4_architecture.py -> biosignal_fm-4.0.3/tests/unit
+Writing biosignal_fm-4.0.3/setup.cfg
+Creating tar archive
+removing 'biosignal_fm-4.0.3' (and everything under it)
+* Building wheel from sdist
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - setuptools>=68
+  - wheel
+* Getting build dependencies for wheel...
+/tmp/build-env-tck5jxx7/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-tck5jxx7/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-tck5jxx7/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running egg_info
+writing biosignal_fm.egg-info/PKG-INFO
+writing dependency_links to biosignal_fm.egg-info/dependency_links.txt
+writing entry points to biosignal_fm.egg-info/entry_points.txt
+writing requirements to biosignal_fm.egg-info/requires.txt
+writing top-level names to biosignal_fm.egg-info/top_level.txt
+reading manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+warning: no files found matching '*.json' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE'
+adding license file 'AUTHORS.md'
+writing manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+* Building wheel...
+/tmp/build-env-tck5jxx7/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-tck5jxx7/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-tck5jxx7/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running bdist_wheel
+running build
+running build_py
+creating build/lib/biosignal_fm
+copying biosignal_fm/__init__.py -> build/lib/biosignal_fm
+copying biosignal_fm/config.py -> build/lib/biosignal_fm
+copying biosignal_fm/reproducibility.py -> build/lib/biosignal_fm
+creating build/lib/biosignal_fm/baselines
+copying biosignal_fm/baselines/__init__.py -> build/lib/biosignal_fm/baselines
+copying biosignal_fm/baselines/classical.py -> build/lib/biosignal_fm/baselines
+copying biosignal_fm/baselines/deep.py -> build/lib/biosignal_fm/baselines
+creating build/lib/biosignal_fm/cli
+copying biosignal_fm/cli/__init__.py -> build/lib/biosignal_fm/cli
+copying biosignal_fm/cli/main.py -> build/lib/biosignal_fm/cli
+creating build/lib/biosignal_fm/core
+copying biosignal_fm/core/__init__.py -> build/lib/biosignal_fm/core
+copying biosignal_fm/core/contracts.py -> build/lib/biosignal_fm/core
+creating build/lib/biosignal_fm/data
+copying biosignal_fm/data/__init__.py -> build/lib/biosignal_fm/data
+copying biosignal_fm/data/base.py -> build/lib/biosignal_fm/data
+copying biosignal_fm/data/eegmmid.py -> build/lib/biosignal_fm/data
+copying biosignal_fm/data/fnirs.py -> build/lib/biosignal_fm/data
+copying biosignal_fm/data/mitbih.py -> build/lib/biosignal_fm/data
+copying biosignal_fm/data/ninapro.py -> build/lib/biosignal_fm/data
+copying biosignal_fm/data/synthetic.py -> build/lib/biosignal_fm/data
+creating build/lib/biosignal_fm/deployment
+copying biosignal_fm/deployment/__init__.py -> build/lib/biosignal_fm/deployment
+copying biosignal_fm/deployment/onnx_export.py -> build/lib/biosignal_fm/deployment
+copying biosignal_fm/deployment/realtime.py -> build/lib/biosignal_fm/deployment
+copying biosignal_fm/deployment/serving.py -> build/lib/biosignal_fm/deployment
+creating build/lib/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/__init__.py -> build/lib/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/cross_validation.py -> build/lib/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/metrics.py -> build/lib/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/mixed_effects.py -> build/lib/biosignal_fm/evaluation
+copying biosignal_fm/evaluation/statistics.py -> build/lib/biosignal_fm/evaluation
+creating build/lib/biosignal_fm/modalities
+copying biosignal_fm/modalities/__init__.py -> build/lib/biosignal_fm/modalities
+copying biosignal_fm/modalities/adapters.py -> build/lib/biosignal_fm/modalities
+copying biosignal_fm/modalities/preprocessing.py -> build/lib/biosignal_fm/modalities
+copying biosignal_fm/modalities/registry.py -> build/lib/biosignal_fm/modalities
+creating build/lib/biosignal_fm/models
+copying biosignal_fm/models/__init__.py -> build/lib/biosignal_fm/models
+copying biosignal_fm/models/distilled.py -> build/lib/biosignal_fm/models
+copying biosignal_fm/models/foundation.py -> build/lib/biosignal_fm/models
+copying biosignal_fm/models/jepa_head.py -> build/lib/biosignal_fm/models
+copying biosignal_fm/models/ssl_heads.py -> build/lib/biosignal_fm/models
+copying biosignal_fm/models/task_heads.py -> build/lib/biosignal_fm/models
+creating build/lib/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/__init__.py -> build/lib/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/filters.py -> build/lib/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/normalizer.py -> build/lib/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/patcher.py -> build/lib/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/pipeline.py -> build/lib/biosignal_fm/preprocessing
+copying biosignal_fm/preprocessing/resampler.py -> build/lib/biosignal_fm/preprocessing
+creating build/lib/biosignal_fm/services
+copying biosignal_fm/services/__init__.py -> build/lib/biosignal_fm/services
+copying biosignal_fm/services/research.py -> build/lib/biosignal_fm/services
+creating build/lib/biosignal_fm/tracking
+copying biosignal_fm/tracking/__init__.py -> build/lib/biosignal_fm/tracking
+copying biosignal_fm/tracking/base.py -> build/lib/biosignal_fm/tracking
+copying biosignal_fm/tracking/local_tracker.py -> build/lib/biosignal_fm/tracking
+copying biosignal_fm/tracking/mlflow_tracker.py -> build/lib/biosignal_fm/tracking
+creating build/lib/biosignal_fm/training
+copying biosignal_fm/training/__init__.py -> build/lib/biosignal_fm/training
+copying biosignal_fm/training/finetuner.py -> build/lib/biosignal_fm/training
+copying biosignal_fm/training/pretrainer.py -> build/lib/biosignal_fm/training
+creating build/lib/biosignal_fm/ui
+copying biosignal_fm/ui/__init__.py -> build/lib/biosignal_fm/ui
+copying biosignal_fm/ui/app.py -> build/lib/biosignal_fm/ui
+copying biosignal_fm/ui/theme.py -> build/lib/biosignal_fm/ui
+creating build/lib/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/1_Overview.py -> build/lib/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/2_Pretrain.py -> build/lib/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/3_Finetune.py -> build/lib/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/4_Evaluate.py -> build/lib/biosignal_fm/ui/pages
+copying biosignal_fm/ui/pages/5_Deploy.py -> build/lib/biosignal_fm/ui/pages
+running egg_info
+writing biosignal_fm.egg-info/PKG-INFO
+writing dependency_links to biosignal_fm.egg-info/dependency_links.txt
+writing entry points to biosignal_fm.egg-info/entry_points.txt
+writing requirements to biosignal_fm.egg-info/requires.txt
+writing top-level names to biosignal_fm.egg-info/top_level.txt
+reading manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+warning: no files found matching '*.json' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE'
+adding license file 'AUTHORS.md'
+writing manifest file 'biosignal_fm.egg-info/SOURCES.txt'
+installing to build/bdist.linux-x86_64/wheel
+running install
+running install_lib
+creating build/bdist.linux-x86_64/wheel
+creating build/bdist.linux-x86_64/wheel/biosignal_fm
+copying build/lib/biosignal_fm/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm
+copying build/lib/biosignal_fm/config.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm
+copying build/lib/biosignal_fm/reproducibility.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/baselines
+copying build/lib/biosignal_fm/baselines/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/baselines
+copying build/lib/biosignal_fm/baselines/classical.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/baselines
+copying build/lib/biosignal_fm/baselines/deep.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/baselines
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/cli
+copying build/lib/biosignal_fm/cli/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/cli
+copying build/lib/biosignal_fm/cli/main.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/cli
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/core
+copying build/lib/biosignal_fm/core/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/core
+copying build/lib/biosignal_fm/core/contracts.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/core
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/data
+copying build/lib/biosignal_fm/data/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/data
+copying build/lib/biosignal_fm/data/base.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/data
+copying build/lib/biosignal_fm/data/eegmmid.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/data
+copying build/lib/biosignal_fm/data/fnirs.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/data
+copying build/lib/biosignal_fm/data/mitbih.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/data
+copying build/lib/biosignal_fm/data/ninapro.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/data
+copying build/lib/biosignal_fm/data/synthetic.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/data
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/deployment
+copying build/lib/biosignal_fm/deployment/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/deployment
+copying build/lib/biosignal_fm/deployment/onnx_export.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/deployment
+copying build/lib/biosignal_fm/deployment/realtime.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/deployment
+copying build/lib/biosignal_fm/deployment/serving.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/deployment
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/evaluation
+copying build/lib/biosignal_fm/evaluation/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/evaluation
+copying build/lib/biosignal_fm/evaluation/cross_validation.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/evaluation
+copying build/lib/biosignal_fm/evaluation/metrics.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/evaluation
+copying build/lib/biosignal_fm/evaluation/mixed_effects.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/evaluation
+copying build/lib/biosignal_fm/evaluation/statistics.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/evaluation
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/modalities
+copying build/lib/biosignal_fm/modalities/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/modalities
+copying build/lib/biosignal_fm/modalities/adapters.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/modalities
+copying build/lib/biosignal_fm/modalities/preprocessing.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/modalities
+copying build/lib/biosignal_fm/modalities/registry.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/modalities
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/models
+copying build/lib/biosignal_fm/models/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/models
+copying build/lib/biosignal_fm/models/distilled.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/models
+copying build/lib/biosignal_fm/models/foundation.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/models
+copying build/lib/biosignal_fm/models/jepa_head.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/models
+copying build/lib/biosignal_fm/models/ssl_heads.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/models
+copying build/lib/biosignal_fm/models/task_heads.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/models
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/preprocessing
+copying build/lib/biosignal_fm/preprocessing/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/preprocessing
+copying build/lib/biosignal_fm/preprocessing/filters.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/preprocessing
+copying build/lib/biosignal_fm/preprocessing/normalizer.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/preprocessing
+copying build/lib/biosignal_fm/preprocessing/patcher.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/preprocessing
+copying build/lib/biosignal_fm/preprocessing/pipeline.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/preprocessing
+copying build/lib/biosignal_fm/preprocessing/resampler.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/preprocessing
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/services
+copying build/lib/biosignal_fm/services/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/services
+copying build/lib/biosignal_fm/services/research.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/services
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/tracking
+copying build/lib/biosignal_fm/tracking/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/tracking
+copying build/lib/biosignal_fm/tracking/base.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/tracking
+copying build/lib/biosignal_fm/tracking/local_tracker.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/tracking
+copying build/lib/biosignal_fm/tracking/mlflow_tracker.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/tracking
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/training
+copying build/lib/biosignal_fm/training/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/training
+copying build/lib/biosignal_fm/training/finetuner.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/training
+copying build/lib/biosignal_fm/training/pretrainer.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/training
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/ui
+copying build/lib/biosignal_fm/ui/__init__.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui
+copying build/lib/biosignal_fm/ui/app.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui
+copying build/lib/biosignal_fm/ui/theme.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui
+creating build/bdist.linux-x86_64/wheel/biosignal_fm/ui/pages
+copying build/lib/biosignal_fm/ui/pages/1_Overview.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui/pages
+copying build/lib/biosignal_fm/ui/pages/2_Pretrain.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui/pages
+copying build/lib/biosignal_fm/ui/pages/3_Finetune.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui/pages
+copying build/lib/biosignal_fm/ui/pages/4_Evaluate.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui/pages
+copying build/lib/biosignal_fm/ui/pages/5_Deploy.py -> build/bdist.linux-x86_64/wheel/./biosignal_fm/ui/pages
+running install_egg_info
+Copying biosignal_fm.egg-info to build/bdist.linux-x86_64/wheel/./biosignal_fm-4.0.3-py3.12.egg-info
+running install_scripts
+creating build/bdist.linux-x86_64/wheel/biosignal_fm-4.0.3.dist-info/WHEEL
+creating '/home/ubuntu/hmi_professionalized/final_release_build_artifacts/BioSignal-FM-4.0.3/.tmp-7c_zoz3g/biosignal_fm-4.0.3-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it
+adding 'biosignal_fm/__init__.py'
+adding 'biosignal_fm/config.py'
+adding 'biosignal_fm/reproducibility.py'
+adding 'biosignal_fm/baselines/__init__.py'
+adding 'biosignal_fm/baselines/classical.py'
+adding 'biosignal_fm/baselines/deep.py'
+adding 'biosignal_fm/cli/__init__.py'
+adding 'biosignal_fm/cli/main.py'
+adding 'biosignal_fm/core/__init__.py'
+adding 'biosignal_fm/core/contracts.py'
+adding 'biosignal_fm/data/__init__.py'
+adding 'biosignal_fm/data/base.py'
+adding 'biosignal_fm/data/eegmmid.py'
+adding 'biosignal_fm/data/fnirs.py'
+adding 'biosignal_fm/data/mitbih.py'
+adding 'biosignal_fm/data/ninapro.py'
+adding 'biosignal_fm/data/synthetic.py'
+adding 'biosignal_fm/deployment/__init__.py'
+adding 'biosignal_fm/deployment/onnx_export.py'
+adding 'biosignal_fm/deployment/realtime.py'
+adding 'biosignal_fm/deployment/serving.py'
+adding 'biosignal_fm/evaluation/__init__.py'
+adding 'biosignal_fm/evaluation/cross_validation.py'
+adding 'biosignal_fm/evaluation/metrics.py'
+adding 'biosignal_fm/evaluation/mixed_effects.py'
+adding 'biosignal_fm/evaluation/statistics.py'
+adding 'biosignal_fm/modalities/__init__.py'
+adding 'biosignal_fm/modalities/adapters.py'
+adding 'biosignal_fm/modalities/preprocessing.py'
+adding 'biosignal_fm/modalities/registry.py'
+adding 'biosignal_fm/models/__init__.py'
+adding 'biosignal_fm/models/distilled.py'
+adding 'biosignal_fm/models/foundation.py'
+adding 'biosignal_fm/models/jepa_head.py'
+adding 'biosignal_fm/models/ssl_heads.py'
+adding 'biosignal_fm/models/task_heads.py'
+adding 'biosignal_fm/preprocessing/__init__.py'
+adding 'biosignal_fm/preprocessing/filters.py'
+adding 'biosignal_fm/preprocessing/normalizer.py'
+adding 'biosignal_fm/preprocessing/patcher.py'
+adding 'biosignal_fm/preprocessing/pipeline.py'
+adding 'biosignal_fm/preprocessing/resampler.py'
+adding 'biosignal_fm/services/__init__.py'
+adding 'biosignal_fm/services/research.py'
+adding 'biosignal_fm/tracking/__init__.py'
+adding 'biosignal_fm/tracking/base.py'
+adding 'biosignal_fm/tracking/local_tracker.py'
+adding 'biosignal_fm/tracking/mlflow_tracker.py'
+adding 'biosignal_fm/training/__init__.py'
+adding 'biosignal_fm/training/finetuner.py'
+adding 'biosignal_fm/training/pretrainer.py'
+adding 'biosignal_fm/ui/__init__.py'
+adding 'biosignal_fm/ui/app.py'
+adding 'biosignal_fm/ui/theme.py'
+adding 'biosignal_fm/ui/pages/1_Overview.py'
+adding 'biosignal_fm/ui/pages/2_Pretrain.py'
+adding 'biosignal_fm/ui/pages/3_Finetune.py'
+adding 'biosignal_fm/ui/pages/4_Evaluate.py'
+adding 'biosignal_fm/ui/pages/5_Deploy.py'
+adding 'biosignal_fm-4.0.3.dist-info/licenses/AUTHORS.md'
+adding 'biosignal_fm-4.0.3.dist-info/licenses/LICENSE'
+adding 'biosignal_fm-4.0.3.dist-info/licenses/NOTICE'
+adding 'biosignal_fm-4.0.3.dist-info/METADATA'
+adding 'biosignal_fm-4.0.3.dist-info/WHEEL'
+adding 'biosignal_fm-4.0.3.dist-info/entry_points.txt'
+adding 'biosignal_fm-4.0.3.dist-info/top_level.txt'
+adding 'biosignal_fm-4.0.3.dist-info/RECORD'
+removing build/bdist.linux-x86_64/wheel
+Successfully built biosignal_fm-4.0.3.tar.gz and biosignal_fm-4.0.3-py3-none-any.whl
+Checking 
+/home/ubuntu/hmi_professionalized/final_release_build_artifacts/BioSignal-FM-4.0
+.3/biosignal_fm-4.0.3-py3-none-any.whl: [32mPASSED[0m
+Checking 
+/home/ubuntu/hmi_professionalized/final_release_build_artifacts/BioSignal-FM-4.0
+.3/biosignal_fm-4.0.3.tar.gz: [32mPASSED[0m
+9be606ff0c81b980333d4586915654b78e7ad02e9e0023c04b2c3d1901e2edb0  /home/ubuntu/hmi_professionalized/final_release_build_artifacts/BioSignal-FM-4.0.3/biosignal_fm-4.0.3-py3-none-any.whl
+4d7f2f4b6bc070f7e595beeba2d6e9578384732cc0553ddc9673690b22d93090  /home/ubuntu/hmi_professionalized/final_release_build_artifacts/BioSignal-FM-4.0.3/biosignal_fm-4.0.3.tar.gz
+=== BUILD MyoSim-0.1.5 ===
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatchling>=1.25
+* Getting build dependencies for sdist...
+* Building sdist...
+* Building wheel from sdist
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - hatchling>=1.25
+* Getting build dependencies for wheel...
+* Building wheel...
+Successfully built myosim-0.1.5.tar.gz and myosim-0.1.5-py3-none-any.whl
+Checking 
+/home/ubuntu/hmi_professionalized/final_release_build_artifacts/MyoSim-0.1.5/myo
+sim-0.1.5-py3-none-any.whl: [32mPASSED[0m
+Checking 
+/home/ubuntu/hmi_professionalized/final_release_build_artifacts/MyoSim-0.1.5/myo
+sim-0.1.5.tar.gz: [32mPASSED[0m
+e19efefb76853b0268f566482f36c73bdacbfc1ca0dbe123d243428a951f5b48  /home/ubuntu/hmi_professionalized/final_release_build_artifacts/MyoSim-0.1.5/myosim-0.1.5-py3-none-any.whl
+8fa58222c3f1338ac6dfd11ab68f8a00d32a13b9e7705ac96fc571b3141c400c  /home/ubuntu/hmi_professionalized/final_release_build_artifacts/MyoSim-0.1.5/myosim-0.1.5.tar.gz
+=== BUILD Human-Motor-Intelligence-0.2.1 ===
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - setuptools>=68
+* Getting build dependencies for sdist...
+/tmp/build-env-qk75cjqu/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-qk75cjqu/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-qk75cjqu/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running egg_info
+writing src/human_motor_intelligence.egg-info/PKG-INFO
+writing dependency_links to src/human_motor_intelligence.egg-info/dependency_links.txt
+writing entry points to src/human_motor_intelligence.egg-info/entry_points.txt
+writing requirements to src/human_motor_intelligence.egg-info/requires.txt
+writing top-level names to src/human_motor_intelligence.egg-info/top_level.txt
+reading manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE.md'
+writing manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+* Building sdist...
+/tmp/build-env-qk75cjqu/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-qk75cjqu/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-qk75cjqu/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running sdist
+running egg_info
+writing src/human_motor_intelligence.egg-info/PKG-INFO
+writing dependency_links to src/human_motor_intelligence.egg-info/dependency_links.txt
+writing entry points to src/human_motor_intelligence.egg-info/entry_points.txt
+writing requirements to src/human_motor_intelligence.egg-info/requires.txt
+writing top-level names to src/human_motor_intelligence.egg-info/top_level.txt
+reading manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE.md'
+writing manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+running check
+creating human_motor_intelligence-0.2.1
+creating human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+creating human_motor_intelligence-0.2.1/configs/eeg
+creating human_motor_intelligence-0.2.1/configs/experiments
+creating human_motor_intelligence-0.2.1/configs/fusion
+creating human_motor_intelligence-0.2.1/contracts
+creating human_motor_intelligence-0.2.1/docs
+creating human_motor_intelligence-0.2.1/docs/spec
+creating human_motor_intelligence-0.2.1/docs/spec/reference
+creating human_motor_intelligence-0.2.1/papers/P3
+creating human_motor_intelligence-0.2.1/papers/P4
+creating human_motor_intelligence-0.2.1/papers/P5
+creating human_motor_intelligence-0.2.1/papers/P6
+creating human_motor_intelligence-0.2.1/scripts
+creating human_motor_intelligence-0.2.1/scripts/release
+creating human_motor_intelligence-0.2.1/specifications
+creating human_motor_intelligence-0.2.1/src/human_motor_intelligence.egg-info
+creating human_motor_intelligence-0.2.1/src/research_core
+creating human_motor_intelligence-0.2.1/src/research_core/adapters
+creating human_motor_intelligence-0.2.1/src/research_core/benchmarks
+creating human_motor_intelligence-0.2.1/src/research_core/cli
+creating human_motor_intelligence-0.2.1/src/research_core/contracts
+creating human_motor_intelligence-0.2.1/src/research_core/datasets
+creating human_motor_intelligence-0.2.1/src/research_core/experiments
+creating human_motor_intelligence-0.2.1/src/research_core/protocols
+creating human_motor_intelligence-0.2.1/src/research_core/provenance
+creating human_motor_intelligence-0.2.1/src/research_core/registry
+creating human_motor_intelligence-0.2.1/src/research_core/reporting
+creating human_motor_intelligence-0.2.1/tests
+copying files to human_motor_intelligence-0.2.1...
+copying CITATION.cff -> human_motor_intelligence-0.2.1
+copying CLAIMS_AND_EVIDENCE_REGISTER.md -> human_motor_intelligence-0.2.1
+copying CONTRACTS.md -> human_motor_intelligence-0.2.1
+copying EVIDENCE_INTAKE_GATE.md -> human_motor_intelligence-0.2.1
+copying EVIDENCE_REGISTRY.yaml -> human_motor_intelligence-0.2.1
+copying FINAL_EVIDENCE_MATRIX.md -> human_motor_intelligence-0.2.1
+copying HMI_VERSION_MATRIX.yaml -> human_motor_intelligence-0.2.1
+copying INTEGRATION_CLOSURE_REPORT.md -> human_motor_intelligence-0.2.1
+copying INTEGRATION_GUIDE.md -> human_motor_intelligence-0.2.1
+copying INTEGRATION_TEST_MATRIX.yaml -> human_motor_intelligence-0.2.1
+copying LICENSE -> human_motor_intelligence-0.2.1
+copying MANIFEST.in -> human_motor_intelligence-0.2.1
+copying NOTICE.md -> human_motor_intelligence-0.2.1
+copying P3_CLOSURE_REPORT.md -> human_motor_intelligence-0.2.1
+copying P4_INTAKE_REPORT.md -> human_motor_intelligence-0.2.1
+copying P5_INTAKE_REPORT.md -> human_motor_intelligence-0.2.1
+copying P6_READINESS_REPORT.md -> human_motor_intelligence-0.2.1
+copying PROTOCOL_REGISTRY.yaml -> human_motor_intelligence-0.2.1
+copying README.md -> human_motor_intelligence-0.2.1
+copying RELEASE_AND_SPECIFICATION_LEDGER.md -> human_motor_intelligence-0.2.1
+copying RELEASE_CHANGELOG.md -> human_motor_intelligence-0.2.1
+copying RELEASE_MANIFEST.yaml -> human_motor_intelligence-0.2.1
+copying REPRODUCIBILITY.md -> human_motor_intelligence-0.2.1
+copying pyproject.toml -> human_motor_intelligence-0.2.1
+copying P6_START_PACKAGE_TEMPLATE/README.md -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/config.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/dataset_manifest.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/decoder_manifest.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/metrics.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/model_manifest.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/myosim_manifest.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/protocol.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying P6_START_PACKAGE_TEMPLATE/provenance.yaml -> human_motor_intelligence-0.2.1/P6_START_PACKAGE_TEMPLATE
+copying configs/eeg/bci_iv_2a_loso.yaml -> human_motor_intelligence-0.2.1/configs/eeg
+copying configs/experiments/p6_baseline_recovery_r2.yaml -> human_motor_intelligence-0.2.1/configs/experiments
+copying configs/experiments/p6_initial_state_repeats_recovery_r2.yaml -> human_motor_intelligence-0.2.1/configs/experiments
+copying configs/experiments/v2_external_validation_recovery_r1.json -> human_motor_intelligence-0.2.1/configs/experiments
+copying configs/experiments/v2_p5_jeong_recovery_r2.json -> human_motor_intelligence-0.2.1/configs/experiments
+copying configs/fusion/emg_eeg_fusion.yaml -> human_motor_intelligence-0.2.1/configs/fusion
+copying contracts/hmi-myosim-intent-record-v1.schema.json -> human_motor_intelligence-0.2.1/contracts
+copying contracts/intent_record.schema.json -> human_motor_intelligence-0.2.1/contracts
+copying docs/DATASET_SOURCE_NOTES.md -> human_motor_intelligence-0.2.1/docs
+copying docs/HMI_MYOSIM_INTERCHANGE_PROFILE_V1.md -> human_motor_intelligence-0.2.1/docs
+copying docs/RESEARCH_SHOWCASE_QUICKSTART_R3.md -> human_motor_intelligence-0.2.1/docs
+copying docs/spec/HUMAN_MOTOR_CANONICAL_SPEC.md -> human_motor_intelligence-0.2.1/docs/spec
+copying docs/spec/SPECIFICATION_AUTHORITY_INDEX.md -> human_motor_intelligence-0.2.1/docs/spec
+copying docs/spec/SPEC_SHA256.txt -> human_motor_intelligence-0.2.1/docs/spec
+copying docs/spec/reference/HMI_FINAL_CLOSURE_READINESS_SPEC_1.0.md -> human_motor_intelligence-0.2.1/docs/spec/reference
+copying papers/P3/paper_manifest.yaml -> human_motor_intelligence-0.2.1/papers/P3
+copying papers/P4/paper_manifest.yaml -> human_motor_intelligence-0.2.1/papers/P4
+copying papers/P5/paper_manifest.yaml -> human_motor_intelligence-0.2.1/papers/P5
+copying papers/P6/paper_manifest.yaml -> human_motor_intelligence-0.2.1/papers/P6
+copying scripts/analyze_gigadb_demographics.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/analyze_p5_r2_subject_level_statistics.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/analyze_p6_initial_state_repeats_r2.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/analyze_subject_level_statistics.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/audit_jeong_event_inventory.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/extract_docx_text.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/finalize_integrated_demo.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/generate_intent_replay.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/generate_q1_appendices_r3.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/generate_q1_word_manuscripts_r3.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/generate_verified_artifact_manifest_r3.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/plot_p4_external_validation.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/plot_p5_r2_external_validation.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/plot_p6_initial_state_repeats_r2.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/run_p6_initial_state_repeats_r2.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/run_v2_external_validation.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/run_v2_p5_jeong_r2.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/seed_registry.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/validate_all_specs_release_r3.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/validate_r3_interim_release.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/verify_integrated_demo.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/verify_manifest.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/verify_phase2_registry_workflow.py -> human_motor_intelligence-0.2.1/scripts
+copying scripts/release/verify_closure_gates.py -> human_motor_intelligence-0.2.1/scripts/release
+copying scripts/release/verify_release_hygiene.py -> human_motor_intelligence-0.2.1/scripts/release
+copying scripts/release/verify_version_matrix.py -> human_motor_intelligence-0.2.1/scripts/release
+copying specifications/MASTER_END_TO_END_RESEARCH_BENCHMARK_INTEGRATION_PRODUCT_SPEC_2026-08-26.md -> human_motor_intelligence-0.2.1/specifications
+copying specifications/MASTER_SPEC_ORIGINAL.md -> human_motor_intelligence-0.2.1/specifications
+copying specifications/README.md -> human_motor_intelligence-0.2.1/specifications
+copying specifications/V1_VALIDATION_AND_COMPLETION_SPEC_ORIGINAL.md -> human_motor_intelligence-0.2.1/specifications
+copying specifications/V2_R3_Q1_INTEGRATION_SPEC_ORIGINAL.md -> human_motor_intelligence-0.2.1/specifications
+copying src/human_motor_intelligence.egg-info/PKG-INFO -> human_motor_intelligence-0.2.1/src/human_motor_intelligence.egg-info
+copying src/human_motor_intelligence.egg-info/SOURCES.txt -> human_motor_intelligence-0.2.1/src/human_motor_intelligence.egg-info
+copying src/human_motor_intelligence.egg-info/dependency_links.txt -> human_motor_intelligence-0.2.1/src/human_motor_intelligence.egg-info
+copying src/human_motor_intelligence.egg-info/entry_points.txt -> human_motor_intelligence-0.2.1/src/human_motor_intelligence.egg-info
+copying src/human_motor_intelligence.egg-info/requires.txt -> human_motor_intelligence-0.2.1/src/human_motor_intelligence.egg-info
+copying src/human_motor_intelligence.egg-info/top_level.txt -> human_motor_intelligence-0.2.1/src/human_motor_intelligence.egg-info
+copying src/research_core/__init__.py -> human_motor_intelligence-0.2.1/src/research_core
+copying src/research_core/adapters/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/adapters
+copying src/research_core/adapters/biosignal_fm.py -> human_motor_intelligence-0.2.1/src/research_core/adapters
+copying src/research_core/adapters/common.py -> human_motor_intelligence-0.2.1/src/research_core/adapters
+copying src/research_core/adapters/eeg.py -> human_motor_intelligence-0.2.1/src/research_core/adapters
+copying src/research_core/adapters/myoadapt.py -> human_motor_intelligence-0.2.1/src/research_core/adapters
+copying src/research_core/adapters/myocontrol.py -> human_motor_intelligence-0.2.1/src/research_core/adapters
+copying src/research_core/adapters/myosim.py -> human_motor_intelligence-0.2.1/src/research_core/adapters
+copying src/research_core/benchmarks/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/benchmarks
+copying src/research_core/benchmarks/engine.py -> human_motor_intelligence-0.2.1/src/research_core/benchmarks
+copying src/research_core/cli/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/cli
+copying src/research_core/cli/main.py -> human_motor_intelligence-0.2.1/src/research_core/cli
+copying src/research_core/contracts/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/contracts
+copying src/research_core/contracts/base.py -> human_motor_intelligence-0.2.1/src/research_core/contracts
+copying src/research_core/contracts/models.py -> human_motor_intelligence-0.2.1/src/research_core/contracts
+copying src/research_core/contracts/versioning.py -> human_motor_intelligence-0.2.1/src/research_core/contracts
+copying src/research_core/datasets/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/datasets
+copying src/research_core/datasets/validation.py -> human_motor_intelligence-0.2.1/src/research_core/datasets
+copying src/research_core/experiments/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/experiments
+copying src/research_core/experiments/v2_external.py -> human_motor_intelligence-0.2.1/src/research_core/experiments
+copying src/research_core/experiments/v2_p5_jeong_r2.py -> human_motor_intelligence-0.2.1/src/research_core/experiments
+copying src/research_core/protocols/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/protocols
+copying src/research_core/protocols/eeg.py -> human_motor_intelligence-0.2.1/src/research_core/protocols
+copying src/research_core/protocols/fusion.py -> human_motor_intelligence-0.2.1/src/research_core/protocols
+copying src/research_core/provenance/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/provenance
+copying src/research_core/provenance/manifest.py -> human_motor_intelligence-0.2.1/src/research_core/provenance
+copying src/research_core/registry/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/registry
+copying src/research_core/registry/catalog.py -> human_motor_intelligence-0.2.1/src/research_core/registry
+copying src/research_core/registry/models.py -> human_motor_intelligence-0.2.1/src/research_core/registry
+copying src/research_core/registry/store.py -> human_motor_intelligence-0.2.1/src/research_core/registry
+copying src/research_core/reporting/__init__.py -> human_motor_intelligence-0.2.1/src/research_core/reporting
+copying src/research_core/reporting/assets.py -> human_motor_intelligence-0.2.1/src/research_core/reporting
+copying tests/test_adapters.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_benchmarks_and_provenance.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_catalog.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_cli.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_contracts.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_eeg_fusion.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_eeg_specs.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_interchange_profile_closure.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_myosim_adapter.py -> human_motor_intelligence-0.2.1/tests
+copying tests/test_registry.py -> human_motor_intelligence-0.2.1/tests
+Writing human_motor_intelligence-0.2.1/setup.cfg
+Creating tar archive
+removing 'human_motor_intelligence-0.2.1' (and everything under it)
+* Building wheel from sdist
+* Creating isolated environment: venv+pip...
+* Installing packages in isolated environment:
+  - setuptools>=68
+* Getting build dependencies for wheel...
+/tmp/build-env-7rwblcir/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-7rwblcir/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-7rwblcir/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running egg_info
+writing src/human_motor_intelligence.egg-info/PKG-INFO
+writing dependency_links to src/human_motor_intelligence.egg-info/dependency_links.txt
+writing entry points to src/human_motor_intelligence.egg-info/entry_points.txt
+writing requirements to src/human_motor_intelligence.egg-info/requires.txt
+writing top-level names to src/human_motor_intelligence.egg-info/top_level.txt
+reading manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE.md'
+writing manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+* Building wheel...
+/tmp/build-env-7rwblcir/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:82: SetuptoolsDeprecationWarning: `project.license` as a TOML table is deprecated
+!!
+
+        ********************************************************************************
+        Please use a simple string containing a SPDX expression for `project.license`. You can also use `project.license-files`. (Both options available on setuptools>=77.0.0).
+
+        By 2027-Feb-18, you need to update your project and remove deprecated calls
+        or your builds will no longer be supported.
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  corresp(dist, value, root_dir)
+/tmp/build-env-7rwblcir/lib/python3.12/site-packages/setuptools/config/_apply_pyprojecttoml.py:61: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  dist._finalize_license_expression()
+/tmp/build-env-7rwblcir/lib/python3.12/site-packages/setuptools/dist.py:765: SetuptoolsDeprecationWarning: License classifiers are deprecated.
+!!
+
+        ********************************************************************************
+        Please consider removing the following classifiers in favor of a SPDX license expression:
+
+        License :: OSI Approved :: Apache Software License
+
+        See https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license for details.
+        ********************************************************************************
+
+!!
+  self._finalize_license_expression()
+running bdist_wheel
+running build
+running build_py
+creating build/lib/research_core
+copying src/research_core/__init__.py -> build/lib/research_core
+creating build/lib/research_core/adapters
+copying src/research_core/adapters/__init__.py -> build/lib/research_core/adapters
+copying src/research_core/adapters/biosignal_fm.py -> build/lib/research_core/adapters
+copying src/research_core/adapters/common.py -> build/lib/research_core/adapters
+copying src/research_core/adapters/eeg.py -> build/lib/research_core/adapters
+copying src/research_core/adapters/myoadapt.py -> build/lib/research_core/adapters
+copying src/research_core/adapters/myocontrol.py -> build/lib/research_core/adapters
+copying src/research_core/adapters/myosim.py -> build/lib/research_core/adapters
+creating build/lib/research_core/benchmarks
+copying src/research_core/benchmarks/__init__.py -> build/lib/research_core/benchmarks
+copying src/research_core/benchmarks/engine.py -> build/lib/research_core/benchmarks
+creating build/lib/research_core/cli
+copying src/research_core/cli/__init__.py -> build/lib/research_core/cli
+copying src/research_core/cli/main.py -> build/lib/research_core/cli
+creating build/lib/research_core/contracts
+copying src/research_core/contracts/__init__.py -> build/lib/research_core/contracts
+copying src/research_core/contracts/base.py -> build/lib/research_core/contracts
+copying src/research_core/contracts/models.py -> build/lib/research_core/contracts
+copying src/research_core/contracts/versioning.py -> build/lib/research_core/contracts
+creating build/lib/research_core/datasets
+copying src/research_core/datasets/__init__.py -> build/lib/research_core/datasets
+copying src/research_core/datasets/validation.py -> build/lib/research_core/datasets
+creating build/lib/research_core/experiments
+copying src/research_core/experiments/__init__.py -> build/lib/research_core/experiments
+copying src/research_core/experiments/v2_external.py -> build/lib/research_core/experiments
+copying src/research_core/experiments/v2_p5_jeong_r2.py -> build/lib/research_core/experiments
+creating build/lib/research_core/protocols
+copying src/research_core/protocols/__init__.py -> build/lib/research_core/protocols
+copying src/research_core/protocols/eeg.py -> build/lib/research_core/protocols
+copying src/research_core/protocols/fusion.py -> build/lib/research_core/protocols
+creating build/lib/research_core/provenance
+copying src/research_core/provenance/__init__.py -> build/lib/research_core/provenance
+copying src/research_core/provenance/manifest.py -> build/lib/research_core/provenance
+creating build/lib/research_core/registry
+copying src/research_core/registry/__init__.py -> build/lib/research_core/registry
+copying src/research_core/registry/catalog.py -> build/lib/research_core/registry
+copying src/research_core/registry/models.py -> build/lib/research_core/registry
+copying src/research_core/registry/store.py -> build/lib/research_core/registry
+creating build/lib/research_core/reporting
+copying src/research_core/reporting/__init__.py -> build/lib/research_core/reporting
+copying src/research_core/reporting/assets.py -> build/lib/research_core/reporting
+running egg_info
+writing src/human_motor_intelligence.egg-info/PKG-INFO
+writing dependency_links to src/human_motor_intelligence.egg-info/dependency_links.txt
+writing entry points to src/human_motor_intelligence.egg-info/entry_points.txt
+writing requirements to src/human_motor_intelligence.egg-info/requires.txt
+writing top-level names to src/human_motor_intelligence.egg-info/top_level.txt
+reading manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*.yml' under directory 'configs'
+adding license file 'LICENSE'
+adding license file 'NOTICE.md'
+writing manifest file 'src/human_motor_intelligence.egg-info/SOURCES.txt'
+installing to build/bdist.linux-x86_64/wheel
+running install
+running install_lib
+creating build/bdist.linux-x86_64/wheel
+creating build/bdist.linux-x86_64/wheel/research_core
+copying build/lib/research_core/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core
+creating build/bdist.linux-x86_64/wheel/research_core/adapters
+copying build/lib/research_core/adapters/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/adapters
+copying build/lib/research_core/adapters/biosignal_fm.py -> build/bdist.linux-x86_64/wheel/./research_core/adapters
+copying build/lib/research_core/adapters/common.py -> build/bdist.linux-x86_64/wheel/./research_core/adapters
+copying build/lib/research_core/adapters/eeg.py -> build/bdist.linux-x86_64/wheel/./research_core/adapters
+copying build/lib/research_core/adapters/myoadapt.py -> build/bdist.linux-x86_64/wheel/./research_core/adapters
+copying build/lib/research_core/adapters/myocontrol.py -> build/bdist.linux-x86_64/wheel/./research_core/adapters
+copying build/lib/research_core/adapters/myosim.py -> build/bdist.linux-x86_64/wheel/./research_core/adapters
+creating build/bdist.linux-x86_64/wheel/research_core/benchmarks
+copying build/lib/research_core/benchmarks/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/benchmarks
+copying build/lib/research_core/benchmarks/engine.py -> build/bdist.linux-x86_64/wheel/./research_core/benchmarks
+creating build/bdist.linux-x86_64/wheel/research_core/cli
+copying build/lib/research_core/cli/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/cli
+copying build/lib/research_core/cli/main.py -> build/bdist.linux-x86_64/wheel/./research_core/cli
+creating build/bdist.linux-x86_64/wheel/research_core/contracts
+copying build/lib/research_core/contracts/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/contracts
+copying build/lib/research_core/contracts/base.py -> build/bdist.linux-x86_64/wheel/./research_core/contracts
+copying build/lib/research_core/contracts/models.py -> build/bdist.linux-x86_64/wheel/./research_core/contracts
+copying build/lib/research_core/contracts/versioning.py -> build/bdist.linux-x86_64/wheel/./research_core/contracts
+creating build/bdist.linux-x86_64/wheel/research_core/datasets
+copying build/lib/research_core/datasets/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/datasets
+copying build/lib/research_core/datasets/validation.py -> build/bdist.linux-x86_64/wheel/./research_core/datasets
+creating build/bdist.linux-x86_64/wheel/research_core/experiments
+copying build/lib/research_core/experiments/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/experiments
+copying build/lib/research_core/experiments/v2_external.py -> build/bdist.linux-x86_64/wheel/./research_core/experiments
+copying build/lib/research_core/experiments/v2_p5_jeong_r2.py -> build/bdist.linux-x86_64/wheel/./research_core/experiments
+creating build/bdist.linux-x86_64/wheel/research_core/protocols
+copying build/lib/research_core/protocols/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/protocols
+copying build/lib/research_core/protocols/eeg.py -> build/bdist.linux-x86_64/wheel/./research_core/protocols
+copying build/lib/research_core/protocols/fusion.py -> build/bdist.linux-x86_64/wheel/./research_core/protocols
+creating build/bdist.linux-x86_64/wheel/research_core/provenance
+copying build/lib/research_core/provenance/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/provenance
+copying build/lib/research_core/provenance/manifest.py -> build/bdist.linux-x86_64/wheel/./research_core/provenance
+creating build/bdist.linux-x86_64/wheel/research_core/registry
+copying build/lib/research_core/registry/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/registry
+copying build/lib/research_core/registry/catalog.py -> build/bdist.linux-x86_64/wheel/./research_core/registry
+copying build/lib/research_core/registry/models.py -> build/bdist.linux-x86_64/wheel/./research_core/registry
+copying build/lib/research_core/registry/store.py -> build/bdist.linux-x86_64/wheel/./research_core/registry
+creating build/bdist.linux-x86_64/wheel/research_core/reporting
+copying build/lib/research_core/reporting/__init__.py -> build/bdist.linux-x86_64/wheel/./research_core/reporting
+copying build/lib/research_core/reporting/assets.py -> build/bdist.linux-x86_64/wheel/./research_core/reporting
+running install_egg_info
+Copying src/human_motor_intelligence.egg-info to build/bdist.linux-x86_64/wheel/./human_motor_intelligence-0.2.1-py3.12.egg-info
+running install_scripts
+creating build/bdist.linux-x86_64/wheel/human_motor_intelligence-0.2.1.dist-info/WHEEL
+creating '/home/ubuntu/hmi_professionalized/final_release_build_artifacts/Human-Motor-Intelligence-0.2.1/.tmp-5kexbgqi/human_motor_intelligence-0.2.1-py3-none-any.whl' and adding 'build/bdist.linux-x86_64/wheel' to it
+adding 'human_motor_intelligence-0.2.1.dist-info/licenses/LICENSE'
+adding 'human_motor_intelligence-0.2.1.dist-info/licenses/NOTICE.md'
+adding 'research_core/__init__.py'
+adding 'research_core/adapters/__init__.py'
+adding 'research_core/adapters/biosignal_fm.py'
+adding 'research_core/adapters/common.py'
+adding 'research_core/adapters/eeg.py'
+adding 'research_core/adapters/myoadapt.py'
+adding 'research_core/adapters/myocontrol.py'
+adding 'research_core/adapters/myosim.py'
+adding 'research_core/benchmarks/__init__.py'
+adding 'research_core/benchmarks/engine.py'
+adding 'research_core/cli/__init__.py'
+adding 'research_core/cli/main.py'
+adding 'research_core/contracts/__init__.py'
+adding 'research_core/contracts/base.py'
+adding 'research_core/contracts/models.py'
+adding 'research_core/contracts/versioning.py'
+adding 'research_core/datasets/__init__.py'
+adding 'research_core/datasets/validation.py'
+adding 'research_core/experiments/__init__.py'
+adding 'research_core/experiments/v2_external.py'
+adding 'research_core/experiments/v2_p5_jeong_r2.py'
+adding 'research_core/protocols/__init__.py'
+adding 'research_core/protocols/eeg.py'
+adding 'research_core/protocols/fusion.py'
+adding 'research_core/provenance/__init__.py'
+adding 'research_core/provenance/manifest.py'
+adding 'research_core/registry/__init__.py'
+adding 'research_core/registry/catalog.py'
+adding 'research_core/registry/models.py'
+adding 'research_core/registry/store.py'
+adding 'research_core/reporting/__init__.py'
+adding 'research_core/reporting/assets.py'
+adding 'human_motor_intelligence-0.2.1.dist-info/METADATA'
+adding 'human_motor_intelligence-0.2.1.dist-info/WHEEL'
+adding 'human_motor_intelligence-0.2.1.dist-info/entry_points.txt'
+adding 'human_motor_intelligence-0.2.1.dist-info/top_level.txt'
+adding 'human_motor_intelligence-0.2.1.dist-info/RECORD'
+removing build/bdist.linux-x86_64/wheel
+Successfully built human_motor_intelligence-0.2.1.tar.gz and human_motor_intelligence-0.2.1-py3-none-any.whl
+Checking 
+/home/ubuntu/hmi_professionalized/final_release_build_artifacts/Human-Motor-Inte
+lligence-0.2.1/human_motor_intelligence-0.2.1-py3-none-any.whl: [32mPASSED[0m
+Checking 
+/home/ubuntu/hmi_professionalized/final_release_build_artifacts/Human-Motor-Inte
+lligence-0.2.1/human_motor_intelligence-0.2.1.tar.gz: [32mPASSED[0m
+5c24ef93490ae257cbfc557defd79b04338cb7127192462aa845157419141d00  /home/ubuntu/hmi_professionalized/final_release_build_artifacts/Human-Motor-Intelligence-0.2.1/human_motor_intelligence-0.2.1-py3-none-any.whl
+382be251970fb929e453c26307bb4c0f621e11da71e99565810e16328390a44e  /home/ubuntu/hmi_professionalized/final_release_build_artifacts/Human-Motor-Intelligence-0.2.1/human_motor_intelligence-0.2.1.tar.gz

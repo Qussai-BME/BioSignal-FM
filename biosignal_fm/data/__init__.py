@@ -11,12 +11,13 @@ Loaders are designed to:
 - **Be subject-aware.** Each loader exposes :meth:`get_subject_ids` and
   :meth:`get_session_ids` for LOSO/LODO cross-validation.
 - **Lazy-load.** Data is only loaded into memory when accessed.
-- **Work without the raw datasets installed.** A synthetic generator is
-  provided for development, testing, and CI.
+- **Keep scientific modes explicit.** Synthetic data is available only through
+  a deliberate development/test/CI fallback option; real-data loaders do not
+  silently substitute synthetic evidence.
 
 Datasets
 --------
-- :class:`NinaProDB5Loader` — NinaPro DB5 sEMG (10 subjects, 16 channels, 2 kHz)
+- :class:`NinaProDB5Loader` — NinaPro DB5 sEMG (10 subjects, 16 channels, 200 Hz)
 - :class:`MITBIHLoader` — PhysioNet MIT-BIH Arrhythmia (48 records, 2 leads, 360 Hz)
 - :class:`EEGMMIDLoader` — PhysioNet EEG Motor Movement/Imagery (109 subjects, 64 ch, 160 Hz)
 - :class:`FnirsLoader` — Brain-BIDS fNIRS (8-32 channels, 10 Hz)

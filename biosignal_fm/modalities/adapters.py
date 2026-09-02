@@ -56,16 +56,22 @@ class ArraySignalAdapter:
         raw_metadata = dict(sample.metadata)
         synthetic = bool(raw_metadata.pop("synthetic", False))
         generator = raw_metadata.pop("generator", None)
-        source_dataset = raw_metadata.pop("source_dataset", None) or raw_metadata.pop(
-            "dataset", None
+        source_dataset = (
+            raw_metadata.pop("source_dataset", None)
+            or raw_metadata.pop("dataset_id", None)
+            or raw_metadata.pop("dataset", None)
         )
         dataset_version = raw_metadata.pop("dataset_version", None)
+        source_uri = raw_metadata.pop("source_uri", None)
+        license_id = raw_metadata.pop("license_id", None)
         fallback_reason = raw_metadata.pop("fallback_reason", None) or generator
         benchmark_eligible = raw_metadata.pop("benchmark_eligible", not synthetic)
         provenance = SignalProvenance(
             origin=DataOrigin.SYNTHETIC if synthetic else DataOrigin.REAL,
             source_dataset=source_dataset,
             dataset_version=dataset_version,
+            source_uri=source_uri,
+            license_id=license_id,
             adapter_name=self.adapter_name,
             fallback_reason=fallback_reason if synthetic else None,
             details={"benchmark_eligible": benchmark_eligible, **raw_metadata},

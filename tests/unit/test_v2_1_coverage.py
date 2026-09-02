@@ -25,12 +25,17 @@ class TestNinaProLoaderFileParsing:
         from biosignal_fm.data.ninapro import NinaProDB5Loader
 
         loader = NinaProDB5Loader(root_dir=tmp_path, n_subjects=3)
-        # The malformed .mat files should produce a warning (not crash), and
-        # the loader should fall back to synthetic because no real samples loaded.
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
-            samples = loader.samples
+        # Malformed source files do not silently become synthetic evidence.
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
+
+        demo_loader = NinaProDB5Loader(
+            root_dir=tmp_path, n_subjects=3, allow_synthetic_fallback=True
+        )
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
         assert len(samples) > 0
-        assert loader.is_synthetic
+        assert demo_loader.is_synthetic
 
 
 class TestMITBIHLoaderFileParsing:
@@ -49,17 +54,14 @@ class TestMITBIHLoaderFileParsing:
         from biosignal_fm.data.mitbih import MITBIHLoader
 
         loader = MITBIHLoader(root_dir=tmp_path, n_records=1)
-        # Either:
-        # (a) wfdb not installed → ImportError raised on .samples access
-        # (b) wfdb installed but parse fails → UserWarning + synthetic fallback
-        # (c) wfdb installed and somehow parses → real samples (unlikely here)
-        try:
-            samples = loader.samples
-            # If we got here, either (b) or (c). Verify samples exist.
-            assert len(samples) > 0
-        except ImportError as e:
-            # Path (a): wfdb is required but not installed.
-            assert "wfdb" in str(e)
+        # Invalid real files do not silently become synthetic evidence.
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
+
+        demo_loader = MITBIHLoader(root_dir=tmp_path, n_records=1, allow_synthetic_fallback=True)
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
+        assert len(samples) > 0
 
 
 class TestEEGMMIDLoaderFileParsing:
@@ -76,12 +78,13 @@ class TestEEGMMIDLoaderFileParsing:
         from biosignal_fm.data.eegmmid import EEGMMIDLoader
 
         loader = EEGMMIDLoader(root_dir=tmp_path, n_subjects=1)
-        try:
-            samples = loader.samples
-            # If mne is installed but parsing fails, synthetic fallback.
-            assert len(samples) > 0
-        except ImportError as e:
-            assert "mne" in str(e)
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
+
+        demo_loader = EEGMMIDLoader(root_dir=tmp_path, n_subjects=1, allow_synthetic_fallback=True)
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
+        assert len(samples) > 0
 
 
 class TestFnirsLoaderFileParsing:
@@ -90,8 +93,8 @@ class TestFnirsLoaderFileParsing:
     def test_handles_csv_fallback(self, tmp_path: Path) -> None:
         """If no .snirf files but .csv files exist, the csv path is used.
 
-        We don't have pandas installed necessarily, but the loader should
-        attempt the csv path and fall back to synthetic if it fails.
+        The malformed/truncated fixture must not silently become synthetic
+        evidence; development fallback is separately and explicitly tested.
         """
         # Create a sub-01/ses-01/nirs/ structure with a fake csv.
         nirs_dir = tmp_path / "sub-01" / "ses-01" / "nirs"
@@ -101,9 +104,12 @@ class TestFnirsLoaderFileParsing:
         from biosignal_fm.data.fnirs import FnirsLoader
 
         loader = FnirsLoader(root_dir=tmp_path, n_subjects=1)
-        # Either pandas parses it (real samples) or it fails (synthetic fallback).
-        # Either way, no crash.
-        samples = loader.samples
+        with pytest.raises(FileNotFoundError, match="allow_synthetic_fallback=True"):
+            _ = loader.samples
+
+        demo_loader = FnirsLoader(root_dir=tmp_path, n_subjects=1, allow_synthetic_fallback=True)
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
+            samples = demo_loader.samples
         assert len(samples) > 0
 
 

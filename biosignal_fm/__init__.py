@@ -28,14 +28,14 @@ Example
 -------
 >>> import biosignal_fm as bsfm
 >>> bsfm.__version__
-'4.0.1'
+'4.0.3'
 >>> from biosignal_fm.reproducibility import set_global_seed
 >>> set_global_seed(42)
 """
 
 from __future__ import annotations
 
-__version__ = "4.0.1"
+__version__ = "4.0.3"
 __author__ = "Qussai Adlbi"
 __email__ = "qussai.adlbi@proton.me"
 __license__ = "Apache-2.0"

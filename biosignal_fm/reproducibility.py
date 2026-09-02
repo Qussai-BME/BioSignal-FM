@@ -234,6 +234,7 @@ class RunManifest:
     env_fingerprint: dict[str, Any]
     config: dict[str, Any]
     config_hash: str
+    model_id: str | None = None
     output_hashes: dict[str, str] = field(default_factory=dict)
     metrics: dict[str, float] = field(default_factory=dict)
     seed: int = 42
@@ -251,6 +252,7 @@ class RunManifest:
         notes: str = "",
         dataset_provenance: dict[str, Any] | None = None,
         protocol: dict[str, Any] | None = None,
+        model_id: str | None = None,
     ) -> RunManifest:
         """Create a new RunManifest with auto-populated metadata.
 
@@ -317,6 +319,7 @@ class RunManifest:
             env_fingerprint=env_fingerprint(),
             config=config_dict,
             config_hash=config_hash,
+            model_id=model_id,
             seed=seed,
             notes=notes,
             dataset_provenance=dict(dataset_provenance or {}),
@@ -327,6 +330,68 @@ class RunManifest:
                 "python_executable": sys.executable,
             },
         )
+
+    @property
+    def experiment_id(self) -> str:
+        """Return a deterministic identifier for the scientific experiment definition.
+
+        Unlike ``run_id``, this identifier excludes the execution timestamp and
+        random UUID. Equivalent code, environment, configuration, data/protocol
+        metadata, model identifier, and seed therefore resolve to the same
+        experiment identity across reruns.
+        """
+        identity = {
+            "config_hash": self.config_hash,
+            "dataset_provenance": self.dataset_provenance,
+            "environment": self.env_fingerprint,
+            "git_head": self.git_head,
+            "model_id": self.model_id,
+            "protocol": self.protocol,
+            "seed": self.seed,
+        }
+        payload = json.dumps(identity, sort_keys=True, cls=NumpyAwareJSONEncoder)
+        return f"exp_{hashlib.sha256(payload.encode('utf-8')).hexdigest()}"
+
+    @property
+    def research_readiness_issues(self) -> tuple[str, ...]:
+        """List absent fields required for a reproducible real-data result.
+
+        A manifest may remain useful for a local smoke test while being
+        deliberately ineligible for a benchmark or scientific claim. This
+        property makes that distinction machine-checkable rather than implicit.
+        """
+        issues: list[str] = []
+        provenance = self.dataset_provenance
+        if not provenance:
+            issues.append("dataset_provenance")
+        else:
+            if not (provenance.get("dataset_id") or provenance.get("source_dataset")):
+                issues.append("dataset_provenance.dataset_id")
+            for field_name in ("dataset_version", "license_id", "origin"):
+                if not provenance.get(field_name):
+                    issues.append(f"dataset_provenance.{field_name}")
+        if not self.model_id:
+            issues.append("model_id")
+        if not self.protocol:
+            issues.append("protocol")
+        else:
+            if not (self.protocol.get("protocol_id") or self.protocol.get("name")):
+                issues.append("protocol.protocol_id")
+            for field_name in ("split", "metrics", "unit_of_analysis"):
+                if not self.protocol.get(field_name):
+                    issues.append(f"protocol.{field_name}")
+        if "preprocessing" not in self.config and not self.protocol.get("preprocessing_version"):
+            issues.append("preprocessing_version")
+        return tuple(issues)
+
+    def validate_research_readiness(self) -> None:
+        """Raise when a manifest is insufficient for a real-data research claim."""
+        if self.research_readiness_issues:
+            missing = ", ".join(self.research_readiness_issues)
+            raise ValueError(
+                "RunManifest is not complete for a reproducible real-data result. "
+                f"Missing: {missing}"
+            )
 
     def record_dataset_provenance(self, provenance: dict[str, Any]) -> None:
         """Record dataset provenance without silently merging contradictory values."""
@@ -376,6 +441,8 @@ class RunManifest:
             "env_fingerprint": self.env_fingerprint,
             "config": self.config,
             "config_hash": self.config_hash,
+            "model_id": self.model_id,
+            "experiment_id": self.experiment_id,
             "output_hashes": self.output_hashes,
             "metrics": self.metrics,
             "seed": self.seed,
@@ -429,6 +496,9 @@ class RunManifest:
         path = Path(path).expanduser().resolve()
         with path.open("r", encoding="utf-8") as fh:
             data = json.load(fh)
+        # ``experiment_id`` is derived from the canonical manifest fields; it
+        # is serialized for readers but never trusted as an input value.
+        data.pop("experiment_id", None)
         return cls(**data)
 
 

@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import math
 import time
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -273,6 +273,9 @@ class SSLPretrainer:
         n_steps: int | None = None,
         output_dir: Path | str | None = None,
         run_name: str = "ssl_pretrain",
+        dataset_provenance: dict[str, Any] | None = None,
+        protocol: dict[str, Any] | None = None,
+        model_id: str | None = None,
     ) -> dict[str, Any]:
         """Run full SSL pretraining.
 
@@ -286,6 +289,13 @@ class SSLPretrainer:
             Directory to save checkpoints and manifest. If None, no saving.
         run_name : str
             Name for the RunManifest.
+        dataset_provenance : dict, optional
+            Dataset identity, version, license, origin, and adapter evidence.
+            Omit only for an explicitly non-claiming development smoke run.
+        protocol : dict, optional
+            Split, metrics, unit-of-analysis, and preprocessing protocol.
+        model_id : str, optional
+            Stable model identifier. Defaults to the concrete model class name.
 
         Returns
         -------
@@ -316,8 +326,11 @@ class SSLPretrainer:
 
         manifest = RunManifest.create(
             name=run_name,
-            config=self.model_config.to_dict() if hasattr(self.model_config, "to_dict") else None,
+            config={"model": asdict(self.model_config), "training": asdict(self.config)},
             seed=self.config.seed,
+            dataset_provenance=dataset_provenance,
+            protocol=protocol,
+            model_id=model_id or type(self.model).__name__,
         )
 
         data_iter = iter(dataloader)

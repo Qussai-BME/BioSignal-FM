@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Literal
 
@@ -206,8 +206,20 @@ class FineTuner:
         n_steps: int | None = None,
         output_dir: Path | str | None = None,
         run_name: str = "finetune",
+        dataset_provenance: dict[str, Any] | None = None,
+        protocol: dict[str, Any] | None = None,
+        model_id: str | None = None,
     ) -> dict[str, Any]:
         """Run fine-tuning.
+
+        Parameters
+        ----------
+        dataset_provenance : dict, optional
+            Dataset identity, version, license, origin, and adapter evidence.
+        protocol : dict, optional
+            Split, metrics, unit-of-analysis, and preprocessing protocol.
+        model_id : str, optional
+            Stable model identifier. Defaults to the concrete model class name.
 
         Returns
         -------
@@ -219,7 +231,21 @@ class FineTuner:
         if output_dir:
             output_dir.mkdir(parents=True, exist_ok=True)
 
-        manifest = RunManifest.create(name=run_name, seed=self.config.seed)
+        manifest = RunManifest.create(
+            name=run_name,
+            config={
+                "training": asdict(self.config),
+                "finetuning": {
+                    "strategy": self.strategy,
+                    "n_unfrozen_layers": self.n_unfrozen_layers,
+                    "task_head": type(self.task_head).__name__,
+                },
+            },
+            seed=self.config.seed,
+            dataset_provenance=dataset_provenance,
+            protocol=protocol,
+            model_id=model_id or type(self.model).__name__,
+        )
 
         data_iter = iter(train_loader)
         last_train: dict[str, float] = {}

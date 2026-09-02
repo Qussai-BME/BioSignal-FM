@@ -132,9 +132,10 @@ class TestEndToEnd:
             n_subjects=1,
             window_length_seconds=1.0,
             target_sampling_rate_hz=160,
+            allow_synthetic_fallback=True,
         )
 
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
             sample = loader.samples[0]
         assert loader.is_synthetic is True
         assert sample.metadata["synthetic"] is True
@@ -191,9 +192,10 @@ class TestEndToEnd:
             n_records=1,
             window_length_seconds=1.0,
             target_sampling_rate_hz=360,
+            allow_synthetic_fallback=True,
         )
 
-        with pytest.warns(UserWarning, match="falling back to synthetic"):
+        with pytest.warns(UserWarning, match="explicit synthetic fallback"):
             sample = loader.samples[0]
         assert loader.is_synthetic is True
         assert sample.metadata["synthetic"] is True

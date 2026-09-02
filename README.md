@@ -1,9 +1,5 @@
 # BioSignal-FM V4
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22095717.svg)](https://doi.org/10.5281/zenodo.22095717)
-
-🚀 **[Live Interactive Demo](https://biosignal-fm-qussai-bme.streamlit.app/)
-
 > **BioSignal-FM is a modular, research-only platform for reproducible multimodal biosignal workflows.** It provides signal contracts, modality-aware preprocessing, representation-learning components, protocol-aware evaluation utilities, and provenance controls for auditable research development.
 
 BioSignal-FM **does not claim** that this repository contains a scientifically validated foundation model, a clinical device, a diagnostic system, or a regulatory-cleared product. Real-data performance claims require a documented dataset, license, protocol, split, seeds, baselines, and reproducible artifacts.
@@ -115,7 +111,7 @@ The CLI requires explicit opt-in for a synthetic pretraining smoke path:
 bsfm pretrain --config configs/exp.yaml --steps 1 --synthetic-demo
 ```
 
-For a real research result, use a real-data loader and registered adapter, document the license and data provenance, lock the split protocol, and preserve the run manifest.
+For a real research result, use a real-data loader and registered adapter, document the license and data provenance, lock the split protocol, and preserve the run manifest. The repository includes reproducible, opt-in **adapter/protocol smoke runners** for governed NinaPro DB5 EMG, PhysioNet EEGMMID EEG, and PhysioNet MIT-BIH ECG data; see the phase records below. These are deliberately non-benchmark checks and do not substitute for a preregistered cohort study.
 
 ## Multimodal research flow
 
@@ -179,15 +175,17 @@ Do not commit API keys, raw biosignal data, credentialed-data access material, o
 
 | Document | Purpose |
 |---|---|
-| [V4 architecture](docs/architecture_v4.md) | Contracts, boundaries, modality registry, and multimodal flow. |
-| [Migration notes](docs/migration_notes_v4.md) | Compatibility, deprecations, and the v3.3-to-V4 transition. |
-| [Migration closure audit](docs/migration_audit_v4.md) | Evidence for the completed V4 migration work. |
-| [Scientific integrity audit](docs/scientific_integrity_audit_v4.md) | Synthetic-data policy, claim boundaries, and protocol controls. |
+| [Master platform specification](docs/master_specification.md) | Single source of truth for architecture, science, reproducibility, release boundaries, and platform evolution. |
+| [Architecture](docs/architecture.md) | Canonical contracts, boundaries, modality registry, and multimodal flow. |
+| [Signal contract](docs/signal-contract.md) | Immutable data, time, missingness, processing history, and provenance semantics. |
 | [Data governance](docs/data_governance.md) | Dataset licenses, credentialed data, provenance, and prohibited egress. |
-| [Pre-publication risk register](docs/prepublication_risk_register_2026.md) | Release findings, severity, and remediation decisions. |
-| [External evidence register](docs/references_prepublication_review_2026.md) | Current research, regulatory, data, and supply-chain sources used in the release review. |
-| [Release verification report](docs/test_report_v4.md) | Measured verification results for the V4 release. |
-| [V4 roadmap](docs/roadmap_v4.md) | Prioritized work for real data, Git, ECoG, CI, and deployment. |
+| [Real-data source register](docs/data_source_register.md) | Source, license, access, and data-minimization records for EMG, EEG, and ECG tracks. |
+| [EMG phase record](docs/phase_04_emg_validation.md) | NinaPro DB5 adapter and held-out-participant protocol-smoke evidence. |
+| [EEG phase record](docs/phase_05_eeg_validation.md) | EEGMMID annotation-aware adapter and held-out-participant protocol-smoke evidence. |
+| [ECG phase record](docs/phase_06_ecg_validation.md) | MIT-BIH annotation-aware adapter and held-out-record protocol-smoke evidence. |
+| [Multimodal readiness gate](docs/phase_08_multimodal_readiness.md) | Explicit fusion capability and the remaining synchronized-data evidence gate. |
+| [Release dossier](docs/phase_09_release_dossier.md) | Clean-environment package, documentation, and installation validation. |
+| [Master execution report](docs/master_execution_report.md) | Overall architecture, modality evidence, limitations, roadmap, and release status. |
 
 ## Contributing and release policy
 

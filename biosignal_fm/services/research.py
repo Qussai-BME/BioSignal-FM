@@ -11,8 +11,9 @@ boundary.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
+from types import MappingProxyType
 from typing import Any, Protocol
 
 import numpy as np
@@ -38,7 +39,7 @@ class Representation:
     values: np.ndarray
     modality: str | None
     source_is_synthetic: bool
-    metadata: dict[str, Any]
+    metadata: Mapping[str, Any]
 
     def __post_init__(self) -> None:
         values = np.array(self.values, dtype=np.float32, copy=True)
@@ -46,6 +47,24 @@ class Representation:
             raise ValueError("Representation.values must be a non-empty 1D vector")
         values.setflags(write=False)
         object.__setattr__(self, "values", values)
+        object.__setattr__(self, "metadata", MappingProxyType(dict(self.metadata)))
+
+    @property
+    def present_modalities(self) -> tuple[str, ...]:
+        """Return the explicit modality availability context for this representation."""
+        value = self.metadata.get("present_modalities", ())
+        return tuple(value) if isinstance(value, (tuple, list)) else ()
+
+    def with_metadata(self, **context: Any) -> Representation:
+        """Return a new representation with immutable merged context metadata."""
+        metadata = dict(self.metadata)
+        metadata.update(context)
+        return Representation(
+            values=self.values,
+            modality=self.modality,
+            source_is_synthetic=self.source_is_synthetic,
+            metadata=metadata,
+        )
 
 
 class SignalPreprocessor(Protocol):
@@ -110,7 +129,11 @@ class ResearchPipeline:
         """Execute the V4 pipeline in its canonical architectural order."""
         self.registry.validate_signals(batch.signals)
         processed_signals = tuple(self._preprocess(signal) for signal in batch.signals)
-        representations = tuple(self.encoder.encode(signal) for signal in processed_signals)
+        present_modalities = batch.modalities
+        representations = tuple(
+            self.encoder.encode(signal).with_metadata(present_modalities=present_modalities)
+            for signal in processed_signals
+        )
         if len(representations) == 1:
             task_input = representations[0]
         elif self.fusion is not None:
@@ -120,6 +143,7 @@ class ResearchPipeline:
                 "A multimodal batch requires an explicit FusionStrategy before a TaskHead. "
                 "Late task-head fusion is not the V4 default path."
             )
+        task_input = task_input.with_metadata(present_modalities=present_modalities)
         return PipelineResult(
             processed_signals=processed_signals,
             representations=representations,

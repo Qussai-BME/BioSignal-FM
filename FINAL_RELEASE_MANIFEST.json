@@ -1,0 +1,60 @@
+{
+  "package": "BioSignal-FM-4.0.3",
+  "version": "4.0.3",
+  "source_commit": "1348090f9abccc6c5fcee894449a25fbc6f6f88e",
+  "source_clean_at_assembly": true,
+  "release_state": "READY_FOR_PUBLISHER_TAG_AND_ARCHIVAL",
+  "purpose": "منصة بحثية متعددة الوسائط لإشارات EMG وEEG وECG، تضم عقوداً وطبقات معالجة ونماذج وتقييماً ونشرَ بحثياً محلياً.",
+  "artifacts": [
+    {
+      "path": "README_AR.md",
+      "bytes": 1155,
+      "sha256": "200448d7fcfd84d159236c70675f62ebbda104c92525e0264e7b389efc1d0e96"
+    },
+    {
+      "path": "distributions/biosignal_fm-4.0.3-py3-none-any.whl",
+      "bytes": 167703,
+      "sha256": "9be606ff0c81b980333d4586915654b78e7ad02e9e0023c04b2c3d1901e2edb0"
+    },
+    {
+      "path": "distributions/biosignal_fm-4.0.3.tar.gz",
+      "bytes": 289492,
+      "sha256": "4d7f2f4b6bc070f7e595beeba2d6e9578384732cc0553ddc9673690b22d93090"
+    },
+    {
+      "path": "source/BioSignal-FM-4.0.3-source.tar.gz",
+      "bytes": 630914,
+      "sha256": "1c4ab23a7c6d7273c16866d47cc7e9415011eabf5e58ae3b0dc61fa5d89bcbe8"
+    },
+    {
+      "path": "validation/closure_biosignal_validation.txt",
+      "bytes": 19175,
+      "sha256": "20ecc4848c320995b8b7217230235d19409a8c97d4c6357f88846ba8d5fc32fd"
+    },
+    {
+      "path": "validation/final_rebuild_all_projects.txt",
+      "bytes": 79334,
+      "sha256": "aaa037217ecdf693cb461b7ea94bfa5497bc461bdcca86ff370a24ef32d116c0"
+    },
+    {
+      "path": "validation/final_triple_release_consistency_audit.txt",
+      "bytes": 735,
+      "sha256": "351e231f0f02cbc6170674ec110b111b0c67f26279235cea8cc138846685da30"
+    },
+    {
+      "path": "validation/final_wheel_smoke.txt",
+      "bytes": 231,
+      "sha256": "5aa3ffe3b3374c4deeb08d6b2d7d9e9c85f5f121b97626568e26bea3b8e3e52d"
+    }
+  ],
+  "known_limitations": [
+    "ثلاثة اختبارات تكامل ببيانات حقيقية متخطاة لأن جذور البيانات المرخصة محلياً غير مهيأة.",
+    "الإصدار بحثي فقط ولا يثبت أداءً سريرياً أو امتثالاً تنظيمياً."
+  ],
+  "publisher_actions": [
+    "Verify SHA-256 values from a clean checkout.",
+    "Create a publisher-controlled tag on the stated source commit.",
+    "Upload wheel and sdist as release assets.",
+    "Set a verified repository URL and DOI only after creation."
+  ]
+}
