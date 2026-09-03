@@ -1,5 +1,5 @@
 # BioSignal-FM V4
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22276347.svg)](https://zenodo.org/records/22276347)
 > **BioSignal-FM is a modular, research-only platform for reproducible multimodal biosignal workflows.** It provides signal contracts, modality-aware preprocessing, representation-learning components, protocol-aware evaluation utilities, and provenance controls for auditable research development.
 
 BioSignal-FM **does not claim** that this repository contains a scientifically validated foundation model, a clinical device, a diagnostic system, or a regulatory-cleared product. Real-data performance claims require a documented dataset, license, protocol, split, seeds, baselines, and reproducible artifacts.
