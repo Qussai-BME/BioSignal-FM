@@ -1,6 +1,6 @@
 # Master Specification Execution Report
 
-**Author:** Manus AI  
+**Author:** Qussai Adlbi  
 **Release basis:** Initial V4.0.1 execution evidence, superseded for distribution by the audited BioSignal-FM V4.0.2 patch release.  
 **Execution scope:** Implementation, real-data adapter validation, evidence controls, documentation, and release validation against the supplied master specification.
 
